@@ -10,14 +10,14 @@ import {Router} from '@angular/router';
 })
 export class UserService {
 
-  session : BehaviorSubject = null ;
+  session : BehaviorSubject<Object> = null ;
 
   constructor(
     private http : HttpClient,
     private router : Router
   ) {
 
-    this.session = new BehaviorSubject<any>(null);
+    this.session = new BehaviorSubject<Object>(null);
     this.session.subscribe( con =>{
       console.log(con);
     });
