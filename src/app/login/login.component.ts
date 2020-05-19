@@ -14,8 +14,9 @@ import {UserService} from '../services/user.service';
 export class LoginComponent implements OnInit {
 
   /**
-   * This component is user is not connected.
+   * This component is used if user is not connected.
    * Give possibility to login or create account
+   * using FormGroup
    */
 
   loginFormGroup : FormGroup ;
@@ -33,6 +34,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * This validator call backend to check if the value (as email) in the form control is in the database
+   * @param formControl
+   */
   validateEmail(formControl : FormControl): Promise<any> | Observable<any>{
     const self = this ;
     return new Promise( (resolve, reject)=>{
@@ -47,19 +52,19 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * ask to the user service to login and set password error if response is false
+   * @param formControl
+   */
   login(){
-
-    this.userService.login(this.loginFormGroup.value.email, this.loginFormGroup.value.password);
-
-    /*const self = this ;
-    this.http.get(`${environment.backURL}/readAccount?email=${this.loginFormGroup.value.email}&password=${this.loginFormGroup.value.password}`).subscribe((res)=>{
-      if ( res ){
-        self.userService.openSession(res);
-      }else{
-
+    const self = this ;
+    this.userService.login(this.loginFormGroup.value.email, this.loginFormGroup.value.password, function(res) {
+      if ( !res ){
+        self.loginFormGroup.controls.password.setErrors(
+          { password: false}
+        ) ;
       }
-    });*/
-
+    });
   }
 
 }

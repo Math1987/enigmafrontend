@@ -22,19 +22,21 @@ export class UserService {
       console.log(con);
     });
     if ( localStorage.getItem("enigmaJDR") ){
-      this.login('test@test.com', "test");
+      this.login('test@test.com', "test", function(res) {});
     }else{
       this.router.navigate(['login']);
     }
 
   }
 
-  login(email, password){
+  login(email, password, callBack){
     const self = this ;
     this.http.get(`${environment.backURL}/readAccount?email=${email}&password=${password}`).subscribe((res)=>{
       if ( res ){
+        callBack(true);
         self.session.next(res);
       }else{
+        callBack(false);
         self.router.navigate(['login']);
       }
     });

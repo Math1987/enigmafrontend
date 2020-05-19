@@ -10,6 +10,7 @@
       <mat-form-field appearance="fill">
         <label>Mot de passe</label>
         <input type="password" matInput formControlName="password">
+        <mat-error>mot de passe invalid</mat-error>
       </mat-form-field>
       <button type="submitLogin" mat-raised-button [disabled]="!loginFormGroup.valid">jouer</button>
     </form>
