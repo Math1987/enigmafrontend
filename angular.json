@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "enigmafrontend"
+  "defaultProject": "enigmafrontend",
+  "cli": {
+    "analytics": "2575d8a3-5390-4d0d-ab4e-e0d1f785eb63"
+  }
 }
