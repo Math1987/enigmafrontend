@@ -16,6 +16,7 @@ import { CharacterComponent } from './game/player/character/character.component'
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 import {LoginErrorPipePipe} from './account/LoginErrorPipe.pipe';
 import {CreateAccountErrorPipe} from './account/CreateAccountError.pipe';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
