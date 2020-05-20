@@ -10,7 +10,7 @@ import {UserService} from '../services/user.service';
 export class GameComponent implements OnInit {
 
   constructor(
-    private userService: UserService
+    public userService: UserService
   ) { }
 
   ngOnInit() {
