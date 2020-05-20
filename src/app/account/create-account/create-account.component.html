@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title><span>Créer un compte</span></mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="formGroup" (ngSubmit)="create()">
+      <mat-form-field appearance="fill">
+        <label>nom</label>
+        <input type="text" matInput formControlName="name">
+        <mat-error>{{formGroup.get('name').errors | CreateAccountErrorPipe}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill"  *ngIf="formGroup.get('name').valid">
+        <label>email</label>
+        <input type="text" matInput formControlName="email">
+        <mat-error>{{formGroup.get('email').errors | CreateAccountErrorPipe}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="formGroup.get('name').valid && formGroup.get('email').valid">
+        <label>Mot de passe</label>
+        <input type="password" matInput formControlName="password">
+      </mat-form-field>
+      <mat-form-field appearance="fill" *ngIf="formGroup.get('name').valid && formGroup.get('email').valid && formGroup.get('password').valid">
+        <label>Confirmer mot de passe</label>
+        <input type="password" matInput formControlName="confirm" >
+        <mat-error>les mots de passe ne correspondent pas</mat-error>
+      </mat-form-field>
+
+      <button *ngIf="formGroup.valid" type="submitLogin" mat-raised-button [disabled]="!formGroup.valid">créer</button>
+    </form>
+  </mat-card-content>
+</mat-card>

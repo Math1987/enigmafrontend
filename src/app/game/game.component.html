@@ -1,0 +1,32 @@
+<div class="skeleton" fxLayout="column">
+  <mat-toolbar color="accent">
+    <ul class="nav-left">
+      <li>
+        <a mat-icon-button routerLink="/u/jeu" matTooltip="Mondes">
+          <mat-icon>home</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a mat-icon-button routerLink="/u/admin" matTooltip="Admin">
+          <mat-icon>tune</mat-icon>
+        </a>
+      </li>
+    </ul>
+
+
+    <div>
+      <span class="user">user </span>
+      <button mat-icon-button (click)="userService.logout()" color="warn" matTooltip="Déconnexion">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <div class="main-content" fxFlex="1 1 0%">
+    <router-outlet></router-outlet>
+  </div>
+
+  <mat-toolbar color="primary" class="footer">
+    <span class="mat-small">v0.0.1</span>
+  </mat-toolbar>
+</div>

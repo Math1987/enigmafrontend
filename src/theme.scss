@@ -1,0 +1,33 @@
+@import '~@angular/material/_theming.scss';
+
+@include mat-core();
+
+// default theme:
+$primary: mat-palette($mat-brown,400, 200, 600);
+$accent: mat-palette($mat-indigo, 400, 100, 800);
+$warn:    mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+// "dark" theme
+$dark-p: mat-palette($mat-blue-grey, 500);
+$dark-a: mat-palette($mat-blue-grey,900);
+$dark-t: mat-dark-theme($dark-p, $dark-a);
+
+.darkTheme {
+  @include angular-material-theme($dark-t);
+}
+
+//default palette forground/background:
+$light-foreground-palette: map-get($theme, foreground);
+$light-background-palette: map-get($theme, background);
+
+//dark palette forground/background:
+$dark-foreground-palette: map-get($dark-t, foreground);
+$dark-background-palette: map-get($dark-t, background);
+
+
+$background: #ECEFF1;
+$heal: rgb(74, 198, 255);
+$hp: #0CA202;

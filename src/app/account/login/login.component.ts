@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
-import {UserService} from '../services/user.service';
+import {environment} from '../../../environments/environment';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,11 @@ export class LoginComponent implements OnInit {
 
   /**
    * This component is used if user is not connected.
-   * Give possibility to login or create account
+   * Give possibility to create account
    * using FormGroup
    */
 
-  loginFormGroup : FormGroup ;
-  createFormGroup : FormGroup ;
+  formGroup : FormGroup ;
 
   constructor(
     private http: HttpClient,
@@ -28,10 +28,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loginFormGroup = new FormGroup({
+    this.formGroup = new FormGroup({
       email : new FormControl("", [Validators.required, Validators.email], this.validateEmail.bind(this)),
       password : new FormControl("", Validators.required)
     });
+    console.log(this.formGroup);
   }
 
   /**
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit {
         if ( res ){
           resolve(null);
         }else{
-          resolve({email : false})
+          resolve({emailNotExist : true})
         }
       });
     });
@@ -58,9 +59,9 @@ export class LoginComponent implements OnInit {
    */
   login(){
     const self = this ;
-    this.userService.login(this.loginFormGroup.value.email, this.loginFormGroup.value.password, function(res) {
+    this.userService.login(this.formGroup.value.email, this.formGroup.value.password, function(res) {
       if ( !res ){
-        self.loginFormGroup.controls.password.setErrors(
+        self.formGroup.controls.password.setErrors(
           { password: false}
         ) ;
       }
