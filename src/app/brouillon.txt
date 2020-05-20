@@ -1,0 +1,5 @@
+      @angular/cdk                       8.2.3 -> 9.2.4           ng update @angular/cdk
+      @angular/cli                       8.3.26 -> 9.1.6          ng update @angular/cli
+      @angular/core                      8.2.14 -> 9.1.7          ng update @angular/core
+      @angular/material                  8.2.3 -> 9.2.4           ng update @angular/material
+      rxjs                               6.4.0 -> 6.5.5           ng update rxjs
