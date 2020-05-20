@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
       email : new FormControl("", [Validators.required, Validators.email], this.validateEmail.bind(this)),
       password : new FormControl("", Validators.required)
     });
-    console.log(this.formGroup);
   }
 
   /**
@@ -40,16 +39,21 @@ export class LoginComponent implements OnInit {
    * @param formControl
    */
   validateEmail(formControl : FormControl): Promise<any> | Observable<any>{
+    console.log('try validate email');
     const self = this ;
     return new Promise( (resolve, reject)=>{
-      self.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe((res)=>{
-        console.log(res);
+      self.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe(
+        (res) =>{
+          console.log('res');
         if ( res ){
           resolve(null);
         }else{
-          resolve({emailNotExist : true})
+          resolve({emailNotExist : true});
         }
-      });
+      }, (err) => {
+          console.log('error');
+          resolve({backend: true});
+        });
     });
   }
 

@@ -7,9 +7,6 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {map} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 
-
-
-
 interface Session{
   email : string,
   password : string
@@ -22,7 +19,7 @@ export class UserService implements CanActivate{
 
   static SESSION_LOCAL_NAME = "enigmaJDR" ;
 
-  session : BehaviorSubject<Object> = null ;
+  session : BehaviorSubject<{email:string,password:string}> = null ;
 
   constructor(
     private http : HttpClient,
@@ -32,35 +29,21 @@ export class UserService implements CanActivate{
     const self = this ;
 
     this.session = new BehaviorSubject<Session>(null);
-    if ( localStorage.getItem("enigmaJDR") ){
-      this.login('test@test.com', "test", function(res) {
-      });
-    }
-
     this.session.subscribe(state =>{
       if ( state ){
         this.router.navigate(['u','map']);
-        console.log('session created');
       }
-    })
+    });
+
+
+    let oldSession : Session = JSON.parse(localStorage.getItem(UserService.SESSION_LOCAL_NAME)) ;
+    if ( oldSession){
+      this.session.next(oldSession);
+      this.login(oldSession['email'], oldSession['password'], function(res) {
+      });
+    }
 
   }
-
-  /*canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const self = this ;
-    console.log(route.url);con
-    return this.session.pipe(
-      map( (user : Session) =>{
-        console.log('map can activate ' + user );
-        if ( user  ){
-          self.router.navigate(route.url);
-          return true ;
-        }else{
-          return false ;
-        }
-      })
-    );
-  }*/
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const self = this ;
     this.session.subscribe(session =>{
@@ -84,6 +67,7 @@ export class UserService implements CanActivate{
     const self = this ;
     this.http.get(`${environment.backURL}/readAccount?email=${email}&password=${password}`).subscribe((res)=>{
       if ( res ){
+        res['password'] = password ;
         self.openSession(res);
         callBack(true);
       }else{
@@ -99,7 +83,6 @@ export class UserService implements CanActivate{
   }
   openSession(session){
     this.session.next(session);
-    console.log(session);
     localStorage.setItem(UserService.SESSION_LOCAL_NAME, JSON.stringify(session));
   }
 

@@ -38,13 +38,16 @@ export class CreateAccountComponent implements OnInit {
   validateName(formControl : FormControl): Promise<any> | Observable<any>{
     const self = this ;
     return new Promise( (resolve, reject)=>{
-      self.http.get(`${environment.backURL}/checkAccountName?name=${formControl.value}`).subscribe((res)=>{
+      self.http.get(`${environment.backURL}/checkAccountName?name=${formControl.value}`).subscribe(
+        (res)=>{
         if ( res ){
           resolve({nameExist : true})
         }else{
           resolve(null);
         }
-      });
+      }, (err) =>{
+          resolve({backend : true});
+        });
     });
   }
   /**
@@ -54,28 +57,28 @@ export class CreateAccountComponent implements OnInit {
   validateEmail(formControl : FormControl): Promise<any> | Observable<any>{
     const self = this ;
     return new Promise( (resolve, reject)=>{
-      self.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe((res)=>{
+      self.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe(
+        (res)=>{
         if ( res ){
           resolve({emailExist : true})
         }else{
           resolve(null);
         }
-      });
+      }, (err) =>{
+          console.log('error');
+          resolve({backend: true});
+        });
     });
   }
   matchingPassword(formControl: FormControl){
-    //console.log(this.formGroup.value.password + ' ' + this.formGroup.value.confirm );
     if ( this.formGroup && this.formGroup.value.confirm !== formControl.value ){
-      console.log(this.formGroup.value.password + ' ' + this.formGroup.value.confirm );
       return {nomatch: true};
     }else{
       return null ;
     }
   }
   matchingConfirm(formControl: FormControl){
-    //console.log(this.formGroup.value.password + ' ' + this.formGroup.value.confirm );
     if ( this.formGroup && this.formGroup.value.password !== formControl.value ){
-      console.log(this.formGroup.value.password + ' ' + this.formGroup.value.confirm );
       return {nomatch: true};
     }else{
       return null ;
@@ -87,7 +90,6 @@ export class CreateAccountComponent implements OnInit {
    * @param formControl
    */
   create(){
-    console.log('create account ' + this.formGroup.value.email);
     const self = this ;
     this.http.post(`${environment.backURL}/createAccount`, {
       name : this.formGroup.value.name,
