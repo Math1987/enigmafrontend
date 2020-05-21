@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {UserService} from './services/user.service';
-import {BackService} from './services/back.service';
+import {UserService} from './shared/services/user.service';
+import {BackService} from './shared/services/back.service';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './account/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -19,8 +19,7 @@ import { GameComponent } from './game/game.component';
 import { MapComponent } from './game/player/map/map.component';
 import { CharacterComponent } from './game/player/character/character.component';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
-import {LoginErrorPipePipe} from './account/LoginErrorPipe.pipe';
-import {CreateAccountErrorPipe} from './account/CreateAccountError.pipe';
+import {InputMailPipe} from './shared/pipes/inputMail.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -33,9 +32,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CreateAccountComponent,
     LoginComponent,
     LoginComponent,
-    LoginComponent,
-    LoginErrorPipePipe,
-    CreateAccountErrorPipe
+    InputMailPipe
   ],
   imports: [
     BrowserModule,

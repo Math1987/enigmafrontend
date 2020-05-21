@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../shared/services/user.service';
 import {Router} from '@angular/router';
 
 @Component({

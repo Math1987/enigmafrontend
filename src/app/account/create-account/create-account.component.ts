@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../shared/services/user.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';

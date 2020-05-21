@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './account/login/login.component';
 import {GameComponent} from './game/game.component';
-import {UserService} from './services/user.service';
+import {UserService} from './shared/services/user.service';
 import {MapComponent} from './game/player/map/map.component';
 
 
