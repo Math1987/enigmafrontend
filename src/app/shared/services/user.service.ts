@@ -1,89 +1,74 @@
 import { Injectable } from '@angular/core';
-import {BackService} from './back.service';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import {map, tap} from 'rxjs/operators';
+import {UserModel} from '../models/user.model';
+import {JwtToken} from '../models/jwt.token';
 
-interface Session{
-  email : string,
-  password : string
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService implements CanActivate{
 
-  static SESSION_LOCAL_NAME = "enigmaJDR" ;
+  static LOCAL_JWT = "enigmaJDR_jwt" ;
 
-  session : BehaviorSubject<{email:string,password:string}> = null ;
+  public jwtToken: BehaviorSubject<JwtToken> = new BehaviorSubject<JwtToken>({
+    isAuthenticated: null,
+    token : null
+  });
 
   constructor(
     private http : HttpClient,
     private router : Router
   ) {
-
-    const self = this ;
-
-    this.session = new BehaviorSubject<Session>(null);
-    this.session.subscribe(state =>{
-      if ( state ){
-        this.router.navigate(['u','map']);
-      }
-    });
-
-
-    let oldSession : Session = JSON.parse(localStorage.getItem(UserService.SESSION_LOCAL_NAME)) ;
-    if ( oldSession){
-      this.session.next(oldSession);
-      this.login(oldSession['email'], oldSession['password'], function(res) {
+    this.initToken();
+  }
+  private initToken():void {
+    const token = localStorage.getItem(UserService.LOCAL_JWT);
+    if ( token ){
+      this.jwtToken.next({
+        isAuthenticated : true,
+        token : token
       });
+      this.router.navigate(['u','map']);
+    }else{
+      this.jwtToken.next({
+        isAuthenticated: false,
+        token : null
+      });
+      this.router.navigate(['login']);
     }
-
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const self = this ;
-    this.session.subscribe(session =>{
-      /*console.log(session);
-      console.log(route.url);
-      console.log(self.router.url);*/
-      if ( session ){
-        //console.log([`${route.url[0].path}`]);
-        //self.router.navigate(["u"]);
-      }
-    });
-    if ( this.session.getValue() ){
-      return true ;
-    }else{
-      this.router.navigate(['login']);
-      return false ;
-    }
+    return this.jwtToken.getValue().isAuthenticated ;
   }
 
-  login(email, password, callBack){
-    const self = this ;
-    this.http.get(`${environment.backURL}/readAccount?email=${email}&password=${password}`).subscribe((res)=>{
-      if ( res ){
-        res['password'] = password ;
-        self.openSession(res);
-        callBack(true);
-      }else{
-        callBack(false);
-        self.router.navigate(['login']);
-      }
-    });
+  signIn(credentials: {email:string, password: string}): Observable<string>{
+    // @ts-ignore
+    return this.http.post<string>(`${environment.backURL}/signin`, credentials, {responseType: 'text'} ).pipe(
+      tap( (token:string) => {
+        this.jwtToken.next({
+          isAuthenticated : true,
+          token : token
+        });
+        localStorage.setItem(UserService.LOCAL_JWT, token);
+      }),
+    );
   }
+  signUp(user:{email:string, password:string}): Observable<{email:string, password:string}>{
+    return this.http.post<{email:string, password:string}>(`${environment.backURL}/signup`,user) ;
+  }
+
   logout(){
-    localStorage.removeItem(UserService.SESSION_LOCAL_NAME);
-    this.session.next(null);
+    localStorage.removeItem(UserService.LOCAL_JWT);
+    this.jwtToken.next({
+      isAuthenticated : false,
+      token : null
+    });
     this.router.navigate(['login']);
-  }
-  openSession(session){
-    this.session.next(session);
-    localStorage.setItem(UserService.SESSION_LOCAL_NAME, JSON.stringify(session));
   }
 
 }

@@ -1,30 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {UserService} from '../../shared/services/user.service';
+import {trigger, state, style, transition, animate} from '@angular/animations';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class SigninComponent implements OnInit {
+
 
   /**
    * This component is used if user is not connected.
    * Give possibility to create account
    * using FormGroup
    */
-
   formGroup : FormGroup ;
 
   constructor(
     private http: HttpClient,
-    private userService : UserService
+    private userService : UserService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -58,18 +59,16 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * ask to the user service to login and set password error if response is false
+   * ask to the user service to signIn and set password error if response is false
    * @param formControl
    */
   login(){
-    const self = this ;
-    this.userService.login(this.formGroup.value.email, this.formGroup.value.password, function(res) {
-      if ( !res ){
-        self.formGroup.controls.password.setErrors(
-          { password: false}
-        ) ;
-      }
-    });
+    if ( this.formGroup.valid ){
+      const self = this ;
+      this.userService.signIn(this.formGroup.value).subscribe( (res) =>{
+        this.router.navigate(['u','map']);
+      });
+    }
   }
 
 }

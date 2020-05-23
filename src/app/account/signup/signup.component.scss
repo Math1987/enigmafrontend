@@ -1,16 +1,4 @@
-:host {
-  display: flex;
-  justify-content: center;
-  padding: 100px 0px;
-  flex-direction: column;
-  align-items: center;
-}
 mat-card{
-
-  &:not(:last-of-type){
-    margin-bottom: 40px;
-  }
-
   mat-card-title,
   mat-card-content {
     .mat-form-field {
@@ -30,7 +18,4 @@ mat-card{
       justify-content: flex-end;
     }
   }
-}
-mat-dialog-content{
-
 }

@@ -7,15 +7,15 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 @Component({
-  selector: 'app-create-account',
-  templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.scss']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss']
 })
-export class CreateAccountComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
   /**
    * This component is used if user is not connected.
-   * Give possibility to login or create account
+   * Give possibility to signIn or create account
    * using FormGroup
    */
 
@@ -23,7 +23,8 @@ export class CreateAccountComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private userService : UserService
+    private userService : UserService,
+    private router : Router
 ) { }
 
   ngOnInit() {
@@ -86,12 +87,24 @@ export class CreateAccountComponent implements OnInit {
   }
 
   /**
-   * ask to the user service to login and set password error if response is false
+   * ask to the user service to signIn and set password error if response is false
    * @param formControl
    */
   create(){
     const self = this ;
-    this.http.post(`${environment.backURL}/createAccount`, {
+
+    console.log(this.formGroup.value);
+
+    this.userService.signUp(this.formGroup.value).subscribe((res)=>{
+      if ( res ){
+        console.log(res);
+        this.userService.signIn(res).subscribe((signin)=>{
+          this.router.navigate(['u','map']);
+        });
+      }
+    });
+
+    /*this.http.post(`${environment.backURL}/createAccount`, {
       name : this.formGroup.value.name,
       email: this.formGroup.value.email,
       password: this.formGroup.value.password
@@ -103,7 +116,7 @@ export class CreateAccountComponent implements OnInit {
       }else{
         self.userService.openSession(res);
       }
-    });
+    });*/
   }
 
 }
