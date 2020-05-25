@@ -1,0 +1,20 @@
+.page{
+  height: 100%;
+}
+.accountConnection{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin{
+  position:relative;
+  opacity: 0.0;
+  top : -100px ;
+}
+.signout{
+  position:relative;
+  opacity: 0.0;
+  bottom : -100px ;
+}

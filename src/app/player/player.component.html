@@ -1,0 +1,49 @@
+<!--div class="skeleton" fxLayout="column">
+  <mat-toolbar color="accent">
+    <ul class="nav-left">
+      <li>
+        <a mat-icon-button routerLink="/u/jeu" matTooltip="Mondes">
+          <mat-icon>home</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a mat-icon-button routerLink="/u/admin" matTooltip="Admin">
+          <mat-icon>tune</mat-icon>
+        </a>
+      </li>
+    </ul>
+
+
+    <div>
+      <span class="user">user </span>
+      <button mat-icon-button (click)="userService.logout()" color="warn" matTooltip="Déconnexion">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <div class="main-content" fxFlex="1 1 0%">
+    <router-outlet></router-outlet>
+  </div>
+
+  <mat-toolbar color="primary" class="footer">
+    <span class="mat-small">v0.0.1</span>
+  </mat-toolbar>
+</div>-->
+<mat-toolbar color="accent" class="toolbar" fxLayoutGap="15px" [@intro]="'normal'">
+  <span routerLink="/">Enigma</span>
+  <span fxFlex="auto"></span>
+  <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+      <button mat-fab color="accent" class="link" [mat-menu-trigger-for]="menu"  style="overflow:hidden;">
+        <img [src]="'/assets/images/cat.png'" style="max-width:100%;position:relative;bottom: 15px;">
+      </button>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item (click)="deconnection()">deconnexion</button>
+      <button mat-menu-item routerLink="profile">profile</button>
+    </mat-menu>
+  </span>
+
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-title><span>Connexion</span></mat-card-title>
+  <mat-card-content>
+    <form
+      fxLayout="column nowrap"
+      fxLayoutAlign="center start"
+      fxFlex="350px"
+      [formGroup]="formGroup" (ngSubmit)="login()"
+    >
+      <mat-form-field>
+        <input matInput type="text" formControlName="email" placeholder="email">
+        <mat-error>{{formGroup.get('email').errors | inputMail:'signIn' }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput formControlName="password" placeholder="mot de passe">
+        <mat-error> mot de passe invalid</mat-error>
+      </mat-form-field>
+      <button type="submitLogin" style="width: 100%" mat-raised-button color="accent" [disabled]="!formGroup.valid">jouer</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+
+

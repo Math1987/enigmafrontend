@@ -7,14 +7,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* install Angular Material, create login formGroup with validators calling backend ([91be282](https://github.com/Math1987/enigmafrontend/commit/91be2828d656c15d9215d250625c18d3844e5d11))
-* login/create, set error in pipe when backend out ([b9af1ab](https://github.com/Math1987/enigmafrontend/commit/b9af1ab962a20245bf90f740fc42f4ed07dc0105))
-* start form login implementation ([3b38834](https://github.com/Math1987/enigmafrontend/commit/3b38834968a1d0137c05e16e3608afd355aec414))
-* update login and create account with pipes for errors ([4fac2d9](https://github.com/Math1987/enigmafrontend/commit/4fac2d90b3cb395c957d40d45ffb0746f9f69a1a))
+* install Angular Material, create signIn formGroup with validators calling backend ([91be282](https://github.com/Math1987/enigmafrontend/commit/91be2828d656c15d9215d250625c18d3844e5d11))
+* signIn/create, set error in pipe when backend out ([b9af1ab](https://github.com/Math1987/enigmafrontend/commit/b9af1ab962a20245bf90f740fc42f4ed07dc0105))
+* start form signIn implementation ([3b38834](https://github.com/Math1987/enigmafrontend/commit/3b38834968a1d0137c05e16e3608afd355aec414))
+* update signIn and create account with pipes for errors ([4fac2d9](https://github.com/Math1987/enigmafrontend/commit/4fac2d90b3cb395c957d40d45ffb0746f9f69a1a))
 
 ### 0.0.1 (2020-05-18)
 
 
 ### Features
 
-* add standard-version, create user.service with session as BehaviorSubject, create login component, back.service a004ea0
+* add standard-version, create user.service with session as BehaviorSubject, create signIn component, back.service a004ea0

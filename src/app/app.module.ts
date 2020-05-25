@@ -3,34 +3,39 @@ import { NgModule } from '@angular/core';
 
 import {AppRoutingModule } from './app-routing.module';
 import {AppComponent } from './app.component';
-import {UserService} from './shared/services/user.service';
-import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from './shared/services/auth.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule } from '@angular/flex-layout';
-import {GameModule} from './game/game.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TopbarComponent } from './shared/components/topbar/topbar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import {UserService} from './shared/services/user.service';
+import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
+
+/**
+ * Main app component import and provide necessary systems for all modules.
+ * All the modules will be load as lazy loading (see app-routing.module)
+ */
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TopbarComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    GameModule,
     FlexLayoutModule,
-    MatToolbarModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AuthService,
     UserService
   ],
-  exports: [
-    TopbarComponent
-  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

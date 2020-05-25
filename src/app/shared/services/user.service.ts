@@ -1,74 +1,35 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {map, tap} from 'rxjs/operators';
 import {UserModel} from '../models/user.model';
-import {JwtToken} from '../models/jwt.token';
+import {environment} from '../../../environments/environment';
+import {switchMap, tap} from 'rxjs/operators';
 
-
+/**
+ * UserService send currentUser, containing datas as email, name etc...
+ */
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements CanActivate{
+export class UserService {
 
-  static LOCAL_JWT = "enigmaJDR_jwt" ;
+  public currentUser: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null)
 
-  public jwtToken: BehaviorSubject<JwtToken> = new BehaviorSubject<JwtToken>({
-    isAuthenticated: null,
-    token : null
-  });
+  constructor(private http: HttpClient) { }
 
-  constructor(
-    private http : HttpClient,
-    private router : Router
-  ) {
-    this.initToken();
-  }
-  private initToken():void {
-    const token = localStorage.getItem(UserService.LOCAL_JWT);
-    if ( token ){
-      this.jwtToken.next({
-        isAuthenticated : true,
-        token : token
-      });
-      this.router.navigate(['u','map']);
+  public getCurrentUser(): Observable<UserModel> {
+    if ( this.currentUser.value){
+      return this.currentUser ;
     }else{
-      this.jwtToken.next({
-        isAuthenticated: false,
-        token : null
-      });
-      this.router.navigate(['login']);
+      return this.http.get<UserModel>(`${environment.backURL}/user`).pipe(
+        tap( (user : UserModel) =>{
+          this.currentUser.next(user);
+        }),
+        switchMap(() => {
+          return this.currentUser;
+        })
+      );
     }
-  }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.jwtToken.getValue().isAuthenticated ;
-  }
-
-  signIn(credentials: {email:string, password: string}): Observable<string>{
-    // @ts-ignore
-    return this.http.post<string>(`${environment.backURL}/signin`, credentials, {responseType: 'text'} ).pipe(
-      tap( (token:string) => {
-        this.jwtToken.next({
-          isAuthenticated : true,
-          token : token
-        });
-        localStorage.setItem(UserService.LOCAL_JWT, token);
-      }),
-    );
-  }
-  signUp(user:{email:string, password:string}): Observable<{email:string, password:string}>{
-    return this.http.post<{email:string, password:string}>(`${environment.backURL}/signup`,user) ;
-  }
-
-  logout(){
-    localStorage.removeItem(UserService.LOCAL_JWT);
-    this.jwtToken.next({
-      isAuthenticated : false,
-      token : null
-    });
-    this.router.navigate(['login']);
   }
 
 }

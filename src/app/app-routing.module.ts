@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  {path: '', redirectTo : '', pathMatch: "full" },
-  {path : 'login', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)}
+  {path:'', redirectTo: 'u', pathMatch:'full' },
+  {path : 'connexion', loadChildren: () => import('./connection/connection.module').then(m => m.ConnectionModule)},
+  {path : 'u', loadChildren: () => import('./player/player.module').then(m => m.PlayerModule)}
 ];
 
 @NgModule({

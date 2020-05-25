@@ -1,0 +1,12 @@
+<mat-card >
+  <mat-card-title><span>Mon compte</span></mat-card-title>
+  <mat-card-content fxLayout="column" *ngIf="currentUser | async; let user">
+    <div>email: {{ user.email}}</div>
+    <div>name: {{user.name}}</div>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+
