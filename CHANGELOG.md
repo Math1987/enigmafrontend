@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/Math1987/enigmafrontend/compare/v0.0.2...v0.0.3) (2020-05-25)
+
+
+### Features
+
+* add angular flex layout ([918b582](https://github.com/Math1987/enigmafrontend/commit/918b582c85068319dc7eb7a68f3afb3479036057))
+* add brouillon.txt for test ([70065f8](https://github.com/Math1987/enigmafrontend/commit/70065f8d89f2e45adf727e56a36ea37c6d57fd68))
+* create base securised environnement allowing creation and connection of user ([8bd3f60](https://github.com/Math1987/enigmafrontend/commit/8bd3f60e2a38e36e5e03309477893659866ad0b9))
+* update angular/cdk ([2e21a2b](https://github.com/Math1987/enigmafrontend/commit/2e21a2ba3c39b49884ac84b799cbb6c3bac576b4))
+
+
+### Bug Fixes
+
+* remove tsconfig.app.ts include path ([88a3399](https://github.com/Math1987/enigmafrontend/commit/88a3399bb482d93f923486ea2654eb8ee9926947))
+* set typescript version 3.5.2 ([42b0976](https://github.com/Math1987/enigmafrontend/commit/42b097695add26a9a7eb87c29f57cbc9e9253dc2))
+
 ### [0.0.2](https://github.com/Math1987/enigmafrontend/compare/v0.0.1...v0.0.2) (2020-05-20)
 
 
