@@ -17,7 +17,6 @@ import {MatButtonModule} from '@angular/material/button';
  * Connection module is lazy loded if called from base route or if player's token invalid
  * Manage the form for signin or signup
  */
-
 @NgModule({
   declarations: [
     SigninComponent,

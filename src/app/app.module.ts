@@ -14,7 +14,6 @@ import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
  * Main app component import and provide necessary systems for all modules.
  * All the modules will be load as lazy loading (see app-routing.module)
  */
-
 @NgModule({
   declarations: [
     AppComponent

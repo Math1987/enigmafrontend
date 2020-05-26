@@ -18,33 +18,32 @@ export class SigninComponent implements OnInit {
    * This component use GormGroup for sign in application
    * check dynamically if email exist with async validator and customised pipe
    */
-  formGroup : FormGroup ;
+  formGroup: FormGroup ;
 
   constructor(
     private http: HttpClient,
-    private userService : AuthService,
-    private router : Router
+    private userService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      email : new FormControl("", [Validators.required, Validators.email], this.validateEmail.bind(this)),
-      password : new FormControl("", Validators.required)
+      email : new FormControl('', [Validators.required, Validators.email], this.validateEmail.bind(this)),
+      password : new FormControl('', Validators.required)
     });
   }
 
   /**
    * This validator call backend to check if the value (as email) in the form control is in the database
-   * @param formControl
+   * @param formControl as email input
    */
-  validateEmail(formControl : FormControl): Promise<any> | Observable<any>{
-    const self = this ;
-    return new Promise( (resolve, reject)=>{
-      self.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe(
-        (res) =>{
-        if ( res ){
+  validateEmail(formControl: FormControl): Promise<any> | Observable<any> {
+    return new Promise( (resolve, reject) => {
+      this.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe(
+        (res) => {
+        if ( res ) {
           resolve(null);
-        }else{
+        } else {
           resolve({emailNotExist : true});
         }
       }, (err) => {
@@ -54,12 +53,13 @@ export class SigninComponent implements OnInit {
   }
 
   /**
-   * ask to the user service to signIn and set password error if response is false
-   * @param formControl
+   * ask to the user service to signIn
+   * if subscription is correct,
+   * navigate to the player's route
    */
-  login(){
-    if ( this.formGroup.valid ){
-      this.userService.signIn(this.formGroup.value).subscribe( (res) =>{
+  login() {
+    if ( this.formGroup.valid ) {
+      this.userService.signIn(this.formGroup.value).subscribe( (res) => {
         this.router.navigate(['u']);
       });
     }

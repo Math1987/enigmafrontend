@@ -21,7 +21,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./player.component.scss'],
   animations : [
     trigger('intro', [
-      state('normal',style({
+      state('normal', style({
         opacity: 1.0,
         top : `0px`
       })),
@@ -40,16 +40,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private router: Router
   ) {
-    this.http.get<UserModel>(`${environment.backURL}/user`).subscribe(( res)=>{
+    this.http.get<UserModel>(`${environment.backURL}/user`).subscribe(( res) => {
     }, (error) => {
       this.router.navigate(['connexion']);
     });
   }
 
   ngOnInit(): void {
-    const self = this;
     this.subscription = this.authService.jwtToken.subscribe((jwtToken) => {
-      self.jwtToken = jwtToken;
+      this.jwtToken = jwtToken;
     });
 
   }

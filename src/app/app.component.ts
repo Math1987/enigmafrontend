@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
 /**
- * app component just use router-outler to send to loaded modules
+ * app component use router-outler
  */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent{
-  constructor(){}
+export class AppComponent {
+  constructor() {}
 }

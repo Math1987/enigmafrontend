@@ -9,14 +9,21 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate{
+export class AuthGuard implements CanActivate {
 
+  /**
+   * AuthGuard block the player's routes access if not authenticated
+   * @param authService: used to check token and allow route if valid
+   */
   constructor(
-    private userService: AuthService
+    private authService: AuthService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userService.jwtToken.getValue().isAuthenticated;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean | UrlTree {
+    return this.authService.jwtToken.getValue().isAuthenticated;
   }
 
 }

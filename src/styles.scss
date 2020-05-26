@@ -27,6 +27,9 @@ body {
 .dib{
   display: inline-block;
 }
+.buttonForm{
+  width: 100%;
+}
 
 // Main
 html{
@@ -64,9 +67,4 @@ mat-card{
     display: flex !important;
     justify-content: center;
   }
-}
-
-
-mat-button-toggle{
-  background-color: red;
 }

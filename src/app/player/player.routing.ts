@@ -14,7 +14,7 @@ const GAME_ROUTES: Route[] = [
       {path : 'map', component: MapComponent},
       {path : 'character', component: CharacterComponent},
       {path : 'profile', component: ProfileComponent},
-      {path : '**', redirectTo : "map", pathMatch: "full"}
+      {path : '**', redirectTo : 'map', pathMatch: 'full'}
     ]},
 ];
 

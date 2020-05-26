@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
+/**
+ * Connection's component manage signIn component and signUp component
+ * Use animations trigger for fun
+ */
 @Component({
   selector: 'app-account.connection',
   templateUrl: './connection.component.html',
   styleUrls: ['./connection.component.scss'],
   animations : [
     trigger('intro', [
-      state('normal',style({
+      state('normal', style({
         opacity: 1.0,
         top : `0px`
       })),

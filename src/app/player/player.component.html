@@ -34,8 +34,8 @@
   <span routerLink="/">Enigma</span>
   <span fxFlex="auto"></span>
   <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <button mat-fab color="accent" class="link" [mat-menu-trigger-for]="menu"  style="overflow:hidden;">
-        <img [src]="'/assets/images/cat.png'" style="max-width:100%;position:relative;bottom: 15px;">
+      <button mat-fab color="accent" class="buttonUser link" [mat-menu-trigger-for]="menu" >
+        <img [src]="'/assets/images/cat.png'" class="iconUser">
       </button>
     <mat-menu #menu="matMenu" >
       <button mat-menu-item (click)="deconnection()">deconnexion</button>

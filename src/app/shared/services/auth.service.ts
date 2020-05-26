@@ -15,37 +15,52 @@ import {JwtToken} from '../models/jwt.token';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService{
+export class AuthService {
 
-  static LOCAL_JWT = "enigmaJDR_jwt" ;
-
-  subscription : Subscription ;
-
+  /**
+   * LOCAL_JWT is just the name used to store the token in local.
+   * To avoid confusion, the name of enigmaDDR is mentioned
+   */
+  static LOCAL_JWT = 'enigmaJDR_jwt' ;
+  /**
+   * the subscription need to be stored for unsubscribe if the timer
+   * used to check token must stop.
+   */
+  subscription: Subscription ;
   /**
    * the jwtToken is dynamically used with a BehaviorSubject,
    * dirrectly used in player's components to get status of connection
-   * (if user is not connected, kik him of game with router)
+   * (if user is not connected, kik him out of game with router)
    */
   public jwtToken: BehaviorSubject<JwtToken> = new BehaviorSubject<JwtToken>({
     isAuthenticated: null,
     token : null
   });
-
+  /**
+   * AuthService is build from main app component
+   * @param http: call backend api for tokens in signIn, signUp, or refreshToken methods
+   * @param router: used to redirect user on connection page if auth fail
+   */
   constructor(
-    private http : HttpClient,
-    private router : Router
+    private http: HttpClient,
+    private router: Router
   ) {
     this.initToken();
     this.subscription = this.initTimer();
   }
-  private initToken():void {
+  /**
+   * init token check local storage to get token.
+   * If got a token, put it in jwtToken observable,
+   * else set observable jwt to null and navigate to connection
+   */
+  private initToken(): void {
     const token = localStorage.getItem(AuthService.LOCAL_JWT);
-    if ( token ){
+    if ( token ) {
       this.jwtToken.next({
         isAuthenticated : true,
-        token : token
+        token
       });
-    }else{
+    } else {
       this.jwtToken.next({
         isAuthenticated: false,
         token : null
@@ -53,20 +68,25 @@ export class AuthService{
       this.router.navigate(['connexion']);
     }
   }
-  public initTimer(){
-    return timer(300000,150000).pipe(
-      switchMap( ()=>{
-        if ( localStorage.getItem(AuthService.LOCAL_JWT)){
+  /**
+   * initTimer run a timer to refresh token every 5 minutes.
+   * Call to backend a new token. If done, update jwtToken observable for all
+   * Else, kik off, go back to connexion route
+   */
+  public initTimer() {
+    return timer(300000, 150000).pipe(
+      switchMap( () => {
+        if ( localStorage.getItem(AuthService.LOCAL_JWT)) {
           return this.http.get<string>(`${environment.backURL}/refreshToken`).pipe(
-            tap((token:string) => {
+            tap((token: string) => {
               this.jwtToken.next({
                 isAuthenticated: true,
-                token : token
+                token
               });
               localStorage.setItem(AuthService.LOCAL_JWT, token);
             })
           );
-        } else{
+        } else {
           this.router.navigate(['connexion']);
           return of(null);
         }
@@ -80,24 +100,40 @@ export class AuthService{
       this.subscription.unsubscribe();
     });
   }
+  /**
+   * @signIn: call the backend signin, responding with a token
+   * if email and password are valid. Then update jwtToken observable for all
+   * and store it in local storage to get it with refresh or reconnection (before expired 15minutes)
+   */
 
-  signIn(credentials: {email:string, password: string}): Observable<string>{
+  /**
+   * signIn: call the backend signin, responding with a token
+   * if email and password are valid. Then update jwtToken observable for all
+   * and store it in local storage to get it with refresh or reconnection (before expired 15minutes)
+   * @param credentials: the user informations necessary for sign in the app
+   */
+  signIn(credentials: {email: string, password: string}): Observable<string> {
     return this.http.post<string>(`${environment.backURL}/signin`, credentials).pipe(
-      tap( (token:string) => {
-        console.log(token);
+      tap( (token: string) => {
         this.jwtToken.next({
           isAuthenticated : true,
-          token : token
+          token
         });
         localStorage.setItem(AuthService.LOCAL_JWT, token);
       }),
     );
   }
-  signUp(user:{email:string, password:string}): Observable<{email:string, password:string}>{
-    return this.http.post<{email:string, password:string}>(`${environment.backURL}/signup`,user) ;
+  /**
+   * ssignUp call api backend to create a new user in database
+   */
+  signUp(user: {email: string, password: string}): Observable<{email: string, password: string}> {
+    return this.http.post<{email: string, password: string}>(`${environment.backURL}/signup`, user) ;
   }
-
-  logout(){
+  /**
+   * logout clear token in local storage, and put jwtToken observable to null.
+   * Navigate to connection page
+   */
+  logout() {
     localStorage.removeItem(AuthService.LOCAL_JWT);
     this.jwtToken.next({
       isAuthenticated : false,
