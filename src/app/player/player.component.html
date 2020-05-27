@@ -32,6 +32,7 @@
 </div>-->
 <mat-toolbar color="accent" class="toolbar" fxLayoutGap="15px" [@intro]="'normal'">
   <span routerLink="/">Enigma</span>
+  <span *ngIf="currentUser | async; let user"><span *ngIf="user.admin" routerLink="admin">admin</span> </span>
   <span fxFlex="auto"></span>
   <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
       <button mat-fab color="accent" class="buttonUser link" [mat-menu-trigger-for]="menu" >

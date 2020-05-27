@@ -1,3 +1,4 @@
+
 <mat-card>
   <mat-card-title><span>Connexion</span></mat-card-title>
   <mat-card-content>
@@ -15,6 +16,7 @@
         <input type="password" matInput formControlName="password" placeholder="mot de passe">
         <mat-error> mot de passe invalid</mat-error>
       </mat-form-field>
+
       <button type="submitLogin" class="buttonForm" mat-raised-button color="accent" [disabled]="!formGroup.valid">jouer</button>
     </form>
   </mat-card-content>

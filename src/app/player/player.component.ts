@@ -1,13 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../shared/services/auth.service';
 import {JwtToken} from '../shared/models/jwt.token';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {UserModel} from '../shared/models/user.model';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {UserService} from '../shared/services/user.service';
 
 /**
  * Main player's component (calling "u" in routes)
@@ -33,12 +34,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   public jwtToken: JwtToken;
   public subscription: Subscription;
+  public currentUser: Observable<UserModel> ;
 
   constructor(
-
     private authService: AuthService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.http.get<UserModel>(`${environment.backURL}/user`).subscribe(( res) => {
     }, (error) => {
@@ -50,6 +52,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.jwtToken.subscribe((jwtToken) => {
       this.jwtToken = jwtToken;
     });
+    this.currentUser = this.userService.getCurrentUser();
 
   }
 
