@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/Math1987/enigmafrontend/compare/v0.0.4...v0.0.5) (2020-05-27)
+
+
+### Features
+
+* creation of admin module with protected route in player's module ([bf131c7](https://github.com/Math1987/enigmafrontend/commit/bf131c7c9924f91d2f7494e987e487f4591059df))
+
 ### [0.0.4](https://github.com/Math1987/enigmafrontend/compare/v0.0.3...v0.0.4) (2020-05-26)
 
 
