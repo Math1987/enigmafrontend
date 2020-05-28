@@ -7,12 +7,14 @@ import {AuthService} from '../services/auth.service';
  */
 export class AuthInterceptor implements HttpInterceptor {
 
+
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem(AuthService.LOCAL_JWT );
     if ( token ) {
-      const authReq = req.clone({
+      let authReq = req.clone({
         setHeaders: {
-          authorization: token
+          authorization: token,
         }
       });
       return next.handle(authReq);
@@ -21,5 +23,4 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
   }
-
 }

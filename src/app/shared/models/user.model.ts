@@ -3,5 +3,6 @@ export interface UserModel {
   email: string;
   password?: string;
   name: string;
+  world: string;
   admin: boolean;
 }

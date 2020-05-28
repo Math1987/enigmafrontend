@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 /**
  * Character component
@@ -10,9 +12,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CharacterComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private http : HttpClient
+  ) { }
 
   ngOnInit() {
+
+    this.http.get(`${environment.backURL}/u/test`).subscribe(res=>{
+      console.log(res);
+    });
   }
 
 }

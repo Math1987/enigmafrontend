@@ -3,6 +3,11 @@
   <mat-card-content fxLayout="column" *ngIf="currentUser | async; let user">
     <div>email: {{ user.email}}</div>
     <div>name: {{user.name}}</div>
+    <div *ngIf="currentChara | async ; let chara">
+      <div>perso: {{chara.name}}</div>
+      <div>monde: {{user}}</div>
+    </div>
+
   </mat-card-content>
 </mat-card>
 

@@ -1,5 +1,5 @@
 import {Route, RouterModule} from '@angular/router';
-import {ConnectionComponent} from './connection.component';
+
 import {AdminComponent} from './admin.component';
 import {AdminGuard} from '../shared/guards/admin.guard';
 

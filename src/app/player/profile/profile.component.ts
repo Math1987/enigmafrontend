@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../shared/services/user.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {UserModel} from '../../shared/models/user.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {CharaService} from '../../shared/services/chara.service';
+import {Chara} from '../../shared/models/chara.model';
 
 /**
  * profil component give a visual interface containing all the user personnal informations
@@ -22,13 +24,15 @@ export class ProfileComponent implements OnInit {
    * use pipe async in html to show informations how they come
    */
   public currentUser: Observable<UserModel> ;
+  public currentChara: Observable<Chara> ;
 
   /**
    * ProfileComponent is build when Player's module is lazy loaded (if user is connected)
    * @param userService: give the observable currentUser
    */
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private charaService: CharaService
   ) { }
 
   /**
@@ -36,6 +40,7 @@ export class ProfileComponent implements OnInit {
    */
   ngOnInit(): void {
     this.currentUser = this.userService.getCurrentUser();
+    this.currentChara = this.charaService.getCurrentChara();
   }
 
 }

@@ -32,7 +32,19 @@ export class UserService {
      * Reset the currentUser if a new jwtToken is observed in AuthService
      */
     this.authService.jwtToken.subscribe((res) => {
-      this.currentUser.next(null);
+      if ( res ) {
+        this.http.get<UserModel>(`${environment.backURL}/user`).subscribe((user) => {
+          if (user) {
+            this.currentUser.next(user);
+          } else {
+            this.currentUser.next(null);
+          }
+        });
+      }else{
+        console.log('no token so what?');
+        this.currentUser.next(null);
+      }
+
     });
   }
 
@@ -41,8 +53,8 @@ export class UserService {
    * If it value exist, sending it, else, check the backend to get it,
    * (the protected datas will check token in header used with interceptor)
    */
-  public getCurrentUser(): Observable<UserModel> {
-    if ( this.currentUser.value) {
+  public getCurrentUser(): BehaviorSubject<UserModel> {
+    /*if ( this.currentUser.value) {
       return this.currentUser ;
     } else {
       return this.http.get<UserModel>(`${environment.backURL}/user`).pipe(
@@ -53,7 +65,8 @@ export class UserService {
           return this.currentUser;
         })
       );
-    }
+    }*/
+    return this.currentUser ;
   }
 
 }

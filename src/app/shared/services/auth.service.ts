@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {JwtToken} from '../models/jwt.token';
 
+
 /**
  * Auth.Service work with JWT token sent from backend.
  * Manage signIn and signOut
@@ -16,6 +17,10 @@ import {JwtToken} from '../models/jwt.token';
   providedIn: 'root'
 })
 export class AuthService {
+
+  static headers: {
+    'Access-Control-Allow-Origin' : '*'
+  };
 
   /**
    * LOCAL_JWT is just the name used to store the token in local.
@@ -100,12 +105,25 @@ export class AuthService {
       this.subscription.unsubscribe();
     });
   }
-  /**
-   * @signIn: call the backend signin, responding with a token
-   * if email and password are valid. Then update jwtToken observable for all
-   * and store it in local storage to get it with refresh or reconnection (before expired 15minutes)
-   */
-
+  refreshToken(){
+    return this.http.get<string>(`${environment.backURL}/refreshToken`).pipe(
+      tap((token: string) => {
+        if ( token ){
+          this.jwtToken.next({
+            isAuthenticated: true,
+            token : token
+          });
+          localStorage.setItem(AuthService.LOCAL_JWT, token);
+        }else{
+          this.jwtToken.next({
+            isAuthenticated: false,
+            token : null
+          });
+          localStorage.setItem(AuthService.LOCAL_JWT, token);
+        }
+      })
+    );
+  }
   /**
    * signIn: call the backend signin, responding with a token
    * if email and password are valid. Then update jwtToken observable for all
@@ -115,11 +133,11 @@ export class AuthService {
   signIn(credentials: {email: string, password: string}): Observable<string> {
     return this.http.post<string>(`${environment.backURL}/signin`, credentials).pipe(
       tap( (token: string) => {
+        localStorage.setItem(AuthService.LOCAL_JWT, token);
         this.jwtToken.next({
           isAuthenticated : true,
           token
         });
-        localStorage.setItem(AuthService.LOCAL_JWT, token);
       }),
     );
   }

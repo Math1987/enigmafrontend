@@ -1,0 +1,20 @@
+
+<mat-card>
+  <mat-card-title><span>Connexion</span></mat-card-title>
+  <mat-card-content>
+    <form
+      fxLayout="column nowrap"
+      fxLayoutAlign="center start"
+      fxFlex="350px"
+      [formGroup]="formGroup"
+      (ngSubmit)="create()"
+    >
+      <mat-form-field>
+        <input matInput type="text" formControlName="name" placeholder="nom de votre personnage">
+        <mat-error>error</mat-error>
+      </mat-form-field>
+
+      <button type="submitLogin" class="buttonForm" mat-raised-button color="accent" [disabled]="!formGroup.valid">jouer</button>
+    </form>
+  </mat-card-content>
+</mat-card>

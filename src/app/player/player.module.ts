@@ -16,6 +16,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {UserService} from '../shared/services/user.service';
+import {CharaService} from '../shared/services/chara.service';
+import { CreateComponent } from './create/create.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {ReactiveFormsModule} from '@angular/forms';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -40,17 +45,22 @@ const MATERIALS = [
     PlayerComponent,
     ProfileComponent,
     MapComponent,
-    CharacterComponent
+    CharacterComponent,
+    CreateComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     PlayerRouting,
     FlexModule,
-    MATERIALS
+    MATERIALS,
+    MatButtonToggleModule,
+    ReactiveFormsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    UserService,
+    CharaService
   ]
 })
 export class PlayerModule { }
