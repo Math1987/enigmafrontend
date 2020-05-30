@@ -31,19 +31,19 @@
   </mat-toolbar>
 </div>-->
 <mat-toolbar color="accent" class="toolbar" fxLayoutGap="15px" [@intro]="'normal'" *ngIf="currentUser | async; let user">
-  <span routerLink="/">Enigma</span>
+  <span routerLink="map">Enigma</span>
   <span fxFlex="auto" >
     <span *ngIf="user.admin" routerLink="admin">admin</span>
   </span>
 
-  <span fxFlex="auto" *ngIf="currenChara | async; let chara">
-    <span>carte</span>
-    <span>perso</span>
-    <span>forum</span>
-    <span>classement</span>
+  <span fxFlex="auto" *ngIf="currenChara | async; let chara" >
+    <span routerLink="map">carte</span>
+    <span routerLink="perso">perso</span>
+    <span routerLink="forum">forum</span>
+    <span routerLink="ranks">classement</span>
   </span>
 
-  <span fxFlex="auto" *ngIf="!currenChara.getValue(); let chara">
+  <span fxFlex="auto" *ngIf="!getChara(); let chara">
     <span routerLink="bienvenue">créer un personnage</span>
   </span>
 

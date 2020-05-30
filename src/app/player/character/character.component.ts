@@ -18,9 +18,6 @@ export class CharacterComponent implements OnInit {
 
   ngOnInit() {
 
-    this.http.get(`${environment.backURL}/u/test`).subscribe(res=>{
-      console.log(res);
-    });
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AuthService} from '../shared/services/auth.service';
 
 /**
  * Connection's component manage signIn component and signUp component
@@ -21,7 +22,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class ConnectionComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    localStorage.removeItem(AuthService.LOCAL_JWT);
+  }
 
   ngOnInit(): void {
   }

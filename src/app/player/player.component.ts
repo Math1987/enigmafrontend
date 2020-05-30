@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../shared/services/auth.service';
 import {JwtToken} from '../shared/models/jwt.token';
-import {BehaviorSubject, interval, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, interval, Observable, ReplaySubject, Subscription} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {UserModel} from '../shared/models/user.model';
 import {environment} from '../../environments/environment';
@@ -34,10 +34,18 @@ import {Chara} from '../shared/models/chara.model';
 })
 export class PlayerComponent implements OnInit, OnDestroy {
 
+  /**
+   * @jwtToken is the token observed in AuthService
+   * @subscription used to avoid memory leak
+   * @currentUser is the Observable of User, used as pipe in template
+   * to show or not user's routes
+   * @currentChara is the Observable of Chara, used to give
+   * a route as "bienvenue" for creation of user's chara if null
+   */
   public jwtToken: JwtToken;
   public subscription: Subscription;
   public currentUser: Observable<UserModel> ;
-  public currenChara : BehaviorSubject<Chara> ;
+  public currenChara : ReplaySubject<Chara> ;
 
   constructor(
     private authService: AuthService,
@@ -46,40 +54,34 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private charaService : CharaService
   ) {
-    this.http.get<UserModel>(`${environment.backURL}/user`).subscribe(( res) => {
-      if ( res === null ){
-        localStorage.removeItem(AuthService.LOCAL_JWT);
-        this.router.navigate(['connexion']);
-      }
-    }, (error) => {
-      localStorage.removeItem(AuthService.LOCAL_JWT);
-      this.router.navigate(['connexion']);
-    });
+
   }
 
   ngOnInit(): void {
     this.subscription = this.authService.jwtToken.subscribe((jwtToken) => {
       this.jwtToken = jwtToken;
     });
-    this.currentUser = this.userService.getCurrentUser();
-    this.currenChara = this.charaService.getCurrentChara();
-
-    this.currenChara.subscribe(character =>{
-      console.log(character);
-      if ( character ){
-        console.log(this.currenChara.getValue());
-      }else{
-        this.router.navigate(["u/bienvenue"]);
-      }
-    });
-
+    this.currentUser = this.userService.getCurrentUserObservable();
+    this.currenChara = this.charaService.getCurrentCharaObservable();
   }
 
+  /**
+   * deconnection, logout AuthService, UserService,
+   * then send to connection's route to kik out
+   * in the appropriate place.
+   */
   public deconnection(): void {
     this.authService.logout();
+    this.userService.logout();
+    this.router.navigate(['connexion']);
   }
 
-
+  /**
+   * get the actual value of characte
+   */
+  getChara(){
+    return this.charaService.getCharacter();
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

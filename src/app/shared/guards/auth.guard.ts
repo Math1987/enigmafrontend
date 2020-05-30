@@ -19,6 +19,11 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService
   ) { }
 
+  /**
+   * check value of jwtToken as BehaviorSubject
+   * @param route
+   * @param state
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

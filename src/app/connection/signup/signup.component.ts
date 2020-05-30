@@ -127,7 +127,7 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(this.formGroup.value).subscribe((res) => {
       if ( res ) {
         this.authService.signIn(res).subscribe((signin) => {
-          this.router.navigate(['u', 'map']);
+          this.router.navigate(['u', 'bienvenue']);
         });
       }
     });

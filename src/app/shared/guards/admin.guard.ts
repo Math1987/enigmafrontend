@@ -20,11 +20,18 @@ export class AdminGuard implements CanActivate {
 
   }
 
+  /**
+   * check of iserService's currentUser ReplaySubject is actived
+   * then check actual currentUser if him admin's rights are ok
+   * if not, kik of, else allow admin's route.
+   * @param route
+   * @param state
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean | UrlTree {
-    if ( this.userService.currentUser && this.userService.currentUser.getValue() && this.userService.currentUser.getValue().admin ){
+    if ( this.userService.currentUser && this.userService.getCurrentUser() && this.userService.getCurrentUser().admin ){
       return true;
     }else{
       return false ;

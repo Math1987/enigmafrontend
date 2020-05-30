@@ -8,8 +8,14 @@ import {AuthService} from '../services/auth.service';
 export class AuthInterceptor implements HttpInterceptor {
 
 
-
+  /**
+   * add a token in header if found in localStorage,
+   * to get access to protected datas in backend
+   * @param req
+   * @param next
+   */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(req.url);
     const token = localStorage.getItem(AuthService.LOCAL_JWT );
     if ( token ) {
       let authReq = req.clone({

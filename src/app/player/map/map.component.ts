@@ -21,12 +21,5 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
 
-    const self = this;
-    setTimeout(function() {
-      self.http.get(`${environment.backURL}/u/test`, {responseType: 'json', headers: AuthService.headers }).subscribe(res =>{console.log(res)}, error => {
-        console.log(error);
-      });
-    },2000);
-
   }
 }

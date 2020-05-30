@@ -39,8 +39,8 @@ export class ProfileComponent implements OnInit {
    * take the userService's currentUser observable's pointer
    */
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUser();
-    this.currentChara = this.charaService.getCurrentChara();
+    this.currentUser = this.userService.getCurrentUserObservable();
+    this.currentChara = this.charaService.getCurrentCharaObservable();
   }
 
 }

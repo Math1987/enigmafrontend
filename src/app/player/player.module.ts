@@ -21,6 +21,7 @@ import {CharaService} from '../shared/services/chara.service';
 import { CreateComponent } from './create/create.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -55,12 +56,10 @@ const MATERIALS = [
     FlexModule,
     MATERIALS,
     MatButtonToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatGridListModule
   ],
   providers: [
-    AuthService,
-    UserService,
-    CharaService
   ]
 })
 export class PlayerModule { }

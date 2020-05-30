@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AdminComponent implements OnInit {
 
   constructor() {
-    console.log('build admin comp');
+
   }
 
   ngOnInit(): void {

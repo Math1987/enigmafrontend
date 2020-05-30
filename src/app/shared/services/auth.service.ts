@@ -63,7 +63,7 @@ export class AuthService {
     if ( token ) {
       this.jwtToken.next({
         isAuthenticated : true,
-        token
+        token : token
       });
     } else {
       this.jwtToken.next({
