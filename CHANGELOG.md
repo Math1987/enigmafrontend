@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/Math1987/enigmafrontend/compare/v0.0.5...v0.0.6) (2020-05-30)
+
+
+### Features
+
+* wip creation of a character if user is connected but have note ([f819aee](https://github.com/Math1987/enigmafrontend/commit/f819aeea2f8c911f16f15bf32d986bfd46518f64))
+
+
+### Bug Fixes
+
+* clean connection system, routes, creation of a character, observables. The user can create and connect account and character with security token. ([3c1eddc](https://github.com/Math1987/enigmafrontend/commit/3c1eddc4a4da7e0fe5aacfe6101470f160c9fdfd))
+
 ### [0.0.5](https://github.com/Math1987/enigmafrontend/compare/v0.0.4...v0.0.5) (2020-05-27)
 
 
