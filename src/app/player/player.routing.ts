@@ -2,10 +2,10 @@ import {Route, RouterModule} from '@angular/router';
 import {PlayerComponent} from './player.component';
 import {MapComponent} from './map/map.component';
 import {AuthGuard} from '../shared/guards/auth.guard';
-import {ProfileComponent} from './profile/profile.component';
 import {CharacterComponent} from './character/character.component';
 import {CreateComponent} from './create/create.component';
 import {CreateCharaGuard} from '../shared/guards/createChara.guard';
+import {ProfilComponent} from './profil/profil.component';
 
 /**
  * Routes players are actived when module is lazy loaded.
@@ -17,7 +17,7 @@ const GAME_ROUTES: Route[] = [
       {path : 'bienvenue', component: CreateComponent, canActivate: [CreateCharaGuard]},
       {path : 'map', component: MapComponent},
       {path : 'perso', component: CharacterComponent},
-      {path : 'profile', component: ProfileComponent},
+      {path : 'profil', component: ProfilComponent},
       {path : 'admin', loadChildren: () => import('./../admin/admin.module').then(m => m.AdminModule)},
       {path : '', redirectTo : 'map', pathMatch: 'full'},
       {path : '**', redirectTo : 'map', pathMatch: 'full'}

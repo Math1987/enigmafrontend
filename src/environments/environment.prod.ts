@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  backURL: `https://www.terrajdr.com` //"http://localhost:4040" //backURL: "https://www.math17api.com"
+  apiURL: 'https://www.terrajdr.com:4040/api',
+  apiUserURL: 'https://www.terrajdr.com:4040/api/u',
+  apiUserCharaURL: 'https://www.terrajdr.com:4040/api/u/chara'
 };

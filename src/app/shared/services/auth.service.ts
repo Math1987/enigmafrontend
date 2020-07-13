@@ -79,10 +79,12 @@ export class AuthService {
    * Else, kik off, go back to connexion route
    */
   public initTimer() {
-    return timer(300000, 150000).pipe(
+    return timer(30000, 15000).pipe(
       switchMap( () => {
+        console.log('refreshToken')
         if ( localStorage.getItem(AuthService.LOCAL_JWT)) {
-          return this.http.get<string>(`${environment.backURL}/refreshToken`).pipe(
+          console.log('ask token with httpRequest');
+          return this.http.get<string>(`${environment.apiURL}/refreshToken`).pipe(
             tap((token: string) => {
               this.jwtToken.next({
                 isAuthenticated: true,
@@ -106,7 +108,7 @@ export class AuthService {
     });
   }
   refreshToken(){
-    return this.http.get<string>(`${environment.backURL}/refreshToken`).pipe(
+    return this.http.get<string>(`${environment.apiURL}/refreshToken`).pipe(
       tap((token: string) => {
         if ( token ){
           this.jwtToken.next({
@@ -131,8 +133,9 @@ export class AuthService {
    * @param credentials: the user informations necessary for sign in the app
    */
   signIn(credentials: {email: string, password: string}): Observable<string> {
-    return this.http.post<string>(`${environment.backURL}/signin`, credentials).pipe(
+    return this.http.post<string>(`${environment.apiURL}/signin`, credentials).pipe(
       tap( (token: string) => {
+        console.log(token);
         localStorage.setItem(AuthService.LOCAL_JWT, token);
         this.jwtToken.next({
           isAuthenticated : true,
@@ -145,7 +148,7 @@ export class AuthService {
    * ssignUp call api backend to create a new user in database
    */
   signUp(user: {email: string, password: string}): Observable<{email: string, password: string}> {
-    return this.http.post<{email: string, password: string}>(`${environment.backURL}/signup`, user) ;
+    return this.http.post<{email: string, password: string}>(`${environment.apiURL}/signup`, user) ;
   }
   /**
    * logout clear token in local storage, and put jwtToken observable to null.

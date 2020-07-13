@@ -5,4 +5,5 @@ export interface UserModel {
   name: string;
   world: string;
   admin: boolean;
+  avatarPath : string ;
 }

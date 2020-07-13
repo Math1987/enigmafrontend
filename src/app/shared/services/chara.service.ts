@@ -16,6 +16,17 @@ export class CharaService {
   character : ReplaySubject<Chara> = new ReplaySubject<Chara>(null);
   actualCharacter : Chara = null ;
 
+  /**
+   * charaService is used only when player is connected, from player's module.
+   * When charaService is instancied, it observe the currentUser
+   * and when get id, ask the character to backend.
+   * If got it, then build it,
+   * else, navigate to creation page.
+   * @param http
+   * @param router
+   * @param authService
+   * @param userService
+   */
   constructor(
     private http: HttpClient,
     private router : Router,
@@ -24,15 +35,20 @@ export class CharaService {
   ) {
     this.userService.currentUser.subscribe(user =>{
       if ( user !== null ){
-        this.http.post<Chara>(`${environment.backURL}/u/chara`, user).subscribe(charaRes => {
+        this.http.post<Chara>(`${environment.apiURL}/u/chara`, user).subscribe(charaRes => {
           if ( charaRes ){
             this.actualCharacter = charaRes ;
             this.character.next(charaRes);
+
+            console.log(charaRes);
+
           }else{
+            this.router.navigate(['u/bienvenue']);
             this.actualCharacter = null ;
             this.character.next(null);
           }
         }, error => {
+          this.router.navigate(['u/bienvenue']);
           this.actualCharacter = null ;
           this.character.next(null) ;
         });
@@ -53,7 +69,7 @@ export class CharaService {
 
   create(chara:Chara){
     chara['id'] = this.userService.getCurrentUser().id ;
-    this.http.post(`${environment.backURL}/u/createChara`, chara).subscribe(newChara => {
+    this.http.post(`${environment.apiURL}/u/createChara`, chara).subscribe(newChara => {
       if ( newChara ){
         this.authService.refreshToken().subscribe( res => {
           if ( res && newChara){

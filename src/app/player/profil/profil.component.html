@@ -1,0 +1,72 @@
+<div
+  fxFlex="100%"
+  fxLayout="column nowrap"
+  fxLayoutAlign="center center"
+  class="profil-container"
+  [@intro]="'normal'"
+  >
+  <mat-card class="profil-content">
+    <mat-card-title><span>Mon compte</span></mat-card-title>
+    <mat-card-content
+      *ngIf="currentUser | async; let user"
+      fxLayout="row"
+    >
+      <div fxFlex="50%" fxLayout="column nowrap" fxLayoutAlign="start center" class="avatar">
+
+
+
+        <div  class="profil-raw" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <mat-icon>face</mat-icon>
+
+          <!--mat-form-field fxFlex="auto" value="{{user.name}}" >
+            <input #inputTest type="text" matInput formControlName="name" placeholder="nom">
+            <mat-error></mat-error>
+          </mat-form-field-->
+
+          <span fxFlex="auto" #nameDisplay>{{ user.name}}</span>
+          <mat-button-toggle id="test"><mat-icon>edit</mat-icon></mat-button-toggle>
+        </div>
+
+
+        <div class="profil-raw" fxLayout="start center" fxLayoutGap="10px">
+          <mat-icon >email</mat-icon>
+          <span fxFlex="auto" >{{ user.email}}</span>
+        </div>
+
+
+
+        <div *ngIf="currentChara | async ; let chara">
+          <div>perso: {{chara.name}}</div>
+          <div>monde: {{user}}</div>
+        </div>
+
+      </div >
+      <div fxFlex="50%" fxLayout="column nowrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+
+        <div
+          class="avatar"
+          fxLayout="column nowrap"
+          fxFlex="100%"
+          fxFlexAlign="center"
+        >
+
+          <img class="profil-avatar" [src]="user.avatarPath">
+          <mat-button-toggle class="avatar-upload" (click)="openAvatarFile()">
+            <mat-icon>cloud_upload</mat-icon>*
+            <input id="avatarInputFile" fxHide="true" type="file" (change)="setAvatarFile($event)"/>
+          </mat-button-toggle>
+        </div>
+
+      </div>
+
+
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+
+
+
+

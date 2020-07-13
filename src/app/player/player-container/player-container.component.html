@@ -1,0 +1,18 @@
+<div class="fullSize" fxLayout="column nowrap" fxLayoutAlign="center center">
+  <div class="playerContainer" fxLayout="column nowrap" fxLayoutAlign="start center">
+    <mat-toolbar
+      class="toolBarRes"
+      *ngIf="resources.resources | async ; let resources"
+      fxLayout="row nowrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="center center">
+
+        <div *ngFor="let res of resources " fxLayout="column nowrap" fxLayoutAlign="center center">
+          <app-icons [size]="32" [key]="res.key_"></app-icons>
+          {{res.value}}
+        </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+

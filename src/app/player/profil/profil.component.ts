@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../shared/services/user.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { Observable} from 'rxjs';
 import {UserModel} from '../../shared/models/user.model';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+
 import {CharaService} from '../../shared/services/chara.service';
 import {Chara} from '../../shared/models/chara.model';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 /**
  * profil component give a visual interface containing all the user personnal informations
@@ -13,10 +13,26 @@ import {Chara} from '../../shared/models/chara.model';
  */
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  templateUrl: './profil.component.html',
+  styleUrls: ['./profil.component.scss'],
+  animations : [
+    trigger('intro', [
+      state('normal', style({
+        opacity: 1.0,
+      })),
+      transition('* => normal', animate(`1s 0ms ease-out`))
+    ])
+  ]
 })
-export class ProfileComponent implements OnInit {
+export class ProfilComponent implements OnInit {
+
+  openAvatarFile(){
+    let input_ = document.getElementById("avatarInputFile") as HTMLInputElement ;
+    input_.click();
+  }
+  setAvatarFile(event){
+
+  }
 
   /**
    * CurrentUser is an observable taken from the userService.
@@ -42,5 +58,6 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.userService.getCurrentUserObservable();
     this.currentChara = this.charaService.getCurrentCharaObservable();
   }
+
 
 }

@@ -1,18 +1,44 @@
+
 <div
-  style="height: 100%; width:100%"
-  fxLayoutAlign="center center"
+  fxLayoutAlign="center start"
+  style="height: 100%"
+  class="connection-main"
+
+  [ngClass]="{
+     'connection-main-center' : heightIn(),
+     'connection-main-safe' : !heightIn()
+    }"
+
 >
   <div
+    id = "signContent"
     fxLayout="column nowrap"
-    fxLayoutAlign="center center"
+    fxFlex.lt-sm="100%"
+    fxFlex.gt-xs="400px"
+
+
+    [ngClass.lt-sm]="{
+     'connection-sm' : true,
+     'height-center' : heightIn(),
+     'height-safe' : !heightIn()
+    }"
+
+    [ngClass.gt-xs]="{
+      'connection-normal' : true,
+     'height-center' : heightIn(),
+     'height-safe' : !heightIn()
+    }"
+
   >
 
-      <app-signin [@intro]="'normal'" class="signin"></app-signin>
-      <p></p>
-      <app-signup [@intro]="'normal'" class="signout" ></app-signup>
+    <app-signin [@intro]="'normal'" class="signin" ></app-signin>
+    <p></p>
+    <app-signup [@intro]="'normal'" class="signout" ></app-signup>
 
   </div>
 
+
 </div>
+
 
 

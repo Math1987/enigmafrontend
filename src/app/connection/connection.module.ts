@@ -10,8 +10,9 @@ import {SigninComponent} from './signin/signin.component';
 import {SignupComponent} from './signup/signup.component';
 import {ConnectionComponent} from './connection.component';
 import {InputMailPipe} from '../shared/pipes/inputMail.pipe';
-import {FlexModule} from '@angular/flex-layout';
+import {ExtendedModule, FlexModule} from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 /**
  * Connection module is lazy loded if called from base route or if player's token invalid
@@ -34,7 +35,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatInputModule,
     ConnectionRouting,
     FlexModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    ExtendedModule
   ],
   providers: []
 })

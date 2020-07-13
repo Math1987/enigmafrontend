@@ -1,10 +1,9 @@
-<mat-card>
+<mat-card fxFlex="100%">
   <mat-card-title><span>Créer un compte</span></mat-card-title>
-  <mat-card-content>
+  <mat-card-content fxLayout="column nowrap">
     <form
       fxLayout="column nowrap"
       fxLayoutAlign="center start"
-      fxFlex="350px"
       [formGroup]="formGroup" (ngSubmit)="create()"
     >
       <mat-form-field>

@@ -3,12 +3,11 @@ import { NgModule } from '@angular/core';
 
 import {AppRoutingModule } from './app-routing.module';
 import {AppComponent } from './app.component';
-import {AuthService} from './shared/services/auth.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule } from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {UserService} from './shared/services/user.service';
 import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
+import {AnimationService} from './shared/services/animation.service';
 
 /**
  * Main app component import and provide necessary systems for all modules.
@@ -30,7 +29,8 @@ import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    AnimationService
   ],
   exports: [],
   bootstrap: [AppComponent]

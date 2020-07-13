@@ -1,3 +1,19 @@
 mat-form-field{
   width: 100%;
 }
+.social-networks{
+  margin : 4px;
+  padding: 4px;
+}
+.googleButton{
+  width: 180px ;
+  height: 43px;
+  background-image: url('/assets/images/signin_google.png');
+  background-size: contain;
+}
+.facebookButton{
+  width: 180px ;
+  height: 43px;
+  background-image: url('/assets/images/signin_facebook.png');
+  background-size: contain;
+}

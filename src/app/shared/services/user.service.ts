@@ -4,7 +4,6 @@ import {ReplaySubject} from 'rxjs';
 import {UserModel} from '../models/user.model';
 import {environment} from '../../../environments/environment';
 import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
 
 /**
  * UserService send currentUser, containing datas as email, name etc...
@@ -36,11 +35,12 @@ export class UserService {
      */
     this.authService.jwtToken.subscribe((res) => {
       if ( res && localStorage.getItem(AuthService.LOCAL_JWT) ) {
-        this.http.get<UserModel>(`${environment.backURL}/user`).subscribe(
+        this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
           (user) => {
               if (user) {
                 this.actualUser = user ;
-                this.currentUser.next(user);
+                this.actualUser.avatarPath = 'assets/images/homme.png' ;
+                this.currentUser.next(this.actualUser);
               } else {
                 this.actualUser = null ;
                 this.currentUser.next(null);
@@ -64,7 +64,7 @@ export class UserService {
     /*if ( this.currentUser.value) {
       return this.currentUser ;
     } else {
-      return this.http.get<UserModel>(`${environment.backURL}/user`).pipe(
+      return this.http.get<UserModel>(`${environment.apiURL}/user`).pipe(
         tap( (user: UserModel) => {
           this.currentUser.next(user);
         }),

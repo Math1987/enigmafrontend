@@ -11,6 +11,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {UserService} from '../shared/services/user.service';
 import {CharaService} from '../shared/services/chara.service';
 import {Chara} from '../shared/models/chara.model';
+import {MetaService} from '../shared/services/meta.service';
+import {AnimationService} from '../shared/services/animation.service';
 
 /**
  * Main player's component (calling "u" in routes)
@@ -26,7 +28,7 @@ import {Chara} from '../shared/models/chara.model';
     trigger('intro', [
       state('normal', style({
         opacity: 1.0,
-        top : `0px`
+        transform: "translate(0px,0px)"
       })),
       transition('* => normal', animate(`1s 0ms ease-out`))
     ])
@@ -52,9 +54,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
-    private charaService : CharaService
+    private charaService : CharaService,
+    private metaService : MetaService,
+    private animationService : AnimationService
   ) {
-
+    this.animationService.background_state.next("normal");
   }
 
   ngOnInit(): void {
@@ -63,6 +67,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     });
     this.currentUser = this.userService.getCurrentUserObservable();
     this.currenChara = this.charaService.getCurrentCharaObservable();
+
+
   }
 
   /**

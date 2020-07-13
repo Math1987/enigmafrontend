@@ -54,7 +54,7 @@ export class SignupComponent implements OnInit {
    */
   validateName(formControl: FormControl): Promise<any> | Observable<any> {
     return new Promise( (resolve, reject) => {
-      this.http.get(`${environment.backURL}/checkAccountName?name=${formControl.value}`).subscribe(
+      this.http.get(`${environment.apiURL}/checkAccountName?name=${formControl.value}`).subscribe(
         (res) => {
         if ( res ) {
           resolve({nameExist : true});
@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
    */
   validateEmail(formControl: FormControl): Promise<any> | Observable<any> {
     return new Promise( (resolve, reject) => {
-      this.http.get(`${environment.backURL}/checkEmail?email=${formControl.value}`).subscribe(
+      this.http.get(`${environment.apiURL}/checkEmail?email=${formControl.value}`).subscribe(
         (res) => {
         if ( res ) {
           resolve({emailExist : true});

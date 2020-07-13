@@ -1,78 +1,122 @@
-
-<mat-card>
-  <mat-card-title><span>Connexion</span></mat-card-title>
-  <mat-card-content>
-    <form
-      fxLayout="column nowrap"
-      fxLayoutAlign="center start"
-      fxFlex="350px"
-      [formGroup]="formGroup"
-      (ngSubmit)="create()"
-    >
-      <mat-form-field>
-        <input matInput type="text" formControlName="name" placeholder="nom de votre personnage">
-        <mat-error>error</mat-error>
-      </mat-form-field>
-
-      <button type="submitLogin" class="buttonForm" mat-raised-button color="accent" [disabled]="!formGroup.valid">jouer</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+<div *ngIf="metaDatasSubject | async" class="createPannel" [@start]="'normal'">
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="create()">
+    <mat-grid-list cols="4" gutterSize="20px" rowHeight="1.7:1">
+      <mat-grid-tile colspan="2">
+        <mat-card id="gender-selection" class="w-100">
+          <mat-card-title><span>Choix du sexe</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentGender of metaService.metaDatas['sexes']"
+                 (click)="formGroup.controls['sexe'].setValue(currentGender['name'])"
+                 [src]="currentGender['img']"
+                 [matTooltip]="currentGender['name_fr']"
+                 [class.active]="formGroup.controls.sexe.value === currentGender['name']">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
 
+      <mat-grid-tile colspan="2">
+        <mat-card id="name-selection" class="w-100">
+          <mat-card-title><span>Choix du nom</span></mat-card-title>
+          <mat-card-content class="pl-5 pr-5">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Nom</mat-label>
+              <input type="text" matInput name="charName" formControlName="name" >
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-<!--form id="character-creation" (ngSubmit)="create()">
-  <mat-grid-list cols="4" gutterSize="20px" rowHeight="1.7:1">
-    <mat-grid-tile colspan="2">
-      <mat-card id="gender-selection" class="w-100">
-        <mat-card-title><span>Choix du sexe</span></mat-card-title>
-        <mat-card-content class="d-flex justify-content-around">
-          <img *ngFor="let currentGender of getGenders()" (click)="setGender(currentGender.key)" [src]="currentGender.img" [matTooltip]="currentGender.name_fr" [class.active]="gender === currentGender.key">
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-card id="race-selection" class="w-100">
+          <mat-card-title><span>Choix de la race</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentRace of metaService.metaDatas['races']"
+                 (click)="formGroup.controls.race.setValue(currentRace.name)"
+                 [src]="currentRace['img']"
+                 [matTooltip]="currentRace['name_fr']"
+                 [class.active]="formGroup.controls.race.value === currentRace.name">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-    <mat-grid-tile colspan="2">
-      <mat-card id="name-selection" class="w-100">
-        <mat-card-title><span>Choix du nom</span></mat-card-title>
-        <mat-card-content class="pl-5 pr-5">
-          <mat-form-field appearance="fill" class="w-100">
-            <mat-label>Nom</mat-label>
-            <input type="text" matInput name="charName" #charName (keyup)="setName(charName.value)">
-          </mat-form-field>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-card id="religion-selection" class="w-100">
+          <mat-card-title><span>Choix de la religion</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentReligion of metaService.metaDatas['religions']"
+                 (click)="formGroup.controls.religion.setValue(currentReligion.name)"
+                 [src]="currentReligion['img']"
+                 [matTooltip]="currentReligion.name_fr"
+                 [class.active]="formGroup.controls.religion.value === currentReligion.name">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-    <mat-grid-tile colspan="2">
-      <mat-card id="race-selection" class="w-100">
-        <mat-card-title><span>Choix de la race</span></mat-card-title>
-        <mat-card-content class="d-flex justify-content-around">
-          <img *ngFor="let currentRace of getRaces()" (click)="setRace(currentRace.key)" [src]="currentRace.img" [matTooltip]="currentRace.name_fr" [class.active]="race === currentRace.key">
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <button type="submit" mat-raised-button matRipple color="accent" [disabled]="!formGroup.valid">Créer</button>
+      </mat-grid-tile>
 
-    <mat-grid-tile colspan="2" rowspan="2">
-      <mat-card id="gender-selection" class="w-100 h-75">
-        <mat-card-title><span>Histoire du personnage</span></mat-card-title>
-        <mat-card-content>
-          <p>[PROCHAINEMENT]</p>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
+    </mat-grid-list>
 
-    <mat-grid-tile colspan="2">
-      <mat-card id="religion-selection" class="w-100">
-        <mat-card-title><span>Choix de la religion</span></mat-card-title>
-        <mat-card-content class="d-flex justify-content-around">
-          <img *ngFor="let currentReligion of getReligions()" (click)="setReligion(currentReligion.key)" [src]="currentReligion.img" [matTooltip]="currentReligion.name_fr" [class.active]="religion === currentReligion.key">
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
+  </form>
 
-    <mat-grid-tile colspan="4">
-      <button type="submit" mat-raised-button matRipple color="accent">Créer</button>
-    </mat-grid-tile>
-  </mat-grid-list>
-</form-->
+  </div>
+
+  <!--form id="character-creation" (ngSubmit)="create()">
+    <mat-grid-list cols="4" gutterSize="20px" rowHeight="1.7:1">
+      <mat-grid-tile colspan="2">
+        <mat-card id="gender-selection" class="w-100">
+          <mat-card-title><span>Choix du sexe</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentGender of getGenders()" (click)="setGender(currentGender.key)" [src]="currentGender.img" [matTooltip]="currentGender.name_fr" [class.active]="gender === currentGender.key">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+        <mat-card id="name-selection" class="w-100">
+          <mat-card-title><span>Choix du nom</span></mat-card-title>
+          <mat-card-content class="pl-5 pr-5">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Nom</mat-label>
+              <input type="text" matInput name="charName" #charName (keyup)="setName(charName.value)">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+        <mat-card id="race-selection" class="w-100">
+          <mat-card-title><span>Choix de la race</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentRace of getRaces()" (click)="setRace(currentRace.key)" [src]="currentRace.img" [matTooltip]="currentRace.name_fr" [class.active]="race === currentRace.key">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-card id="gender-selection" class="w-100 h-75">
+          <mat-card-title><span>Histoire du personnage</span></mat-card-title>
+          <mat-card-content>
+            <p>[PROCHAINEMENT]</p>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+        <mat-card id="religion-selection" class="w-100">
+          <mat-card-title><span>Choix de la religion</span></mat-card-title>
+          <mat-card-content class="d-flex justify-content-around">
+            <img *ngFor="let currentReligion of getReligions()" (click)="setReligion(currentReligion.key)" [src]="currentReligion.img" [matTooltip]="currentReligion.name_fr" [class.active]="religion === currentReligion.key">
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="4">
+        <button type="submit" mat-raised-button matRipple color="accent">Créer</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form-->

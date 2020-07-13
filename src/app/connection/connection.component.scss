@@ -1,3 +1,4 @@
+
 .page{
   height: 100%;
 }
@@ -9,12 +10,41 @@
 }
 
 .signin{
-  position:relative;
+
   opacity: 0.0;
-  top : -100px ;
+  width: 100%;
+  transform: scale(0.9);
 }
 .signout{
-  position:relative;
+
   opacity: 0.0;
-  bottom : -100px ;
+  width: 100%;
+  transform: scale(0.9);
+}
+
+
+.connection-main-center{
+  overflow: hidden;
+}
+.connection-main-safe{
+
+}
+
+.connection-default{
+  padding: 10px;
+}
+.connection-sm{
+  padding: 10px;
+}
+.connection-normal{
+}
+.connection-big{
+}
+
+
+.height-center{
+  align-self: center;
+}
+.height-safe{
+  align-self: normal;
 }

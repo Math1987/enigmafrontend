@@ -1,0 +1,33 @@
+.profil-container{
+  opacity: 0.0;
+  height: 100%;
+}
+.profil-content{
+  width: 75%;
+  height: 100%;
+}
+.profil-raw{
+  width : 100% ;
+  padding : 10px ;
+
+  border-radius: 5px;
+  border : 1px solid gray;
+}
+.profil-avatar{
+  width: 100% ;
+  height: auto ;
+
+  border-radius: 5px;
+  border : 1px solid gray;
+}
+mat-card-content{
+  padding: 10px;
+}
+
+.avatar{
+  padding:10px;
+}
+.avatar-upload{
+  border : 1px dashed gray ;
+  height: 100px;
+}
