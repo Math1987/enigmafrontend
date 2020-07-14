@@ -35,9 +35,21 @@ export class ValuesService{
             }
           }
           this.resources.next(resources) ;
+
+          let skills = [] ;
+          for( let row of metadatas['skill'] ){
+            for ( let row2 of datas ){
+              if ( row2.key_ === row.key_ ){
+                skills.push(row2);
+              }
+            }
+          }
+          this.skills.next(skills) ;
+
+          this.values.next(datas);
         }
 
-        this.values.next(res);
+
       });
 
 

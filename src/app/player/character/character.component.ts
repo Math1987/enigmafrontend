@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {ValuesService} from '../../shared/services/values.service';
 
 /**
  * Character component
@@ -13,7 +14,8 @@ import {environment} from '../../../environments/environment';
 export class CharacterComponent implements OnInit {
 
   constructor(
-    private http : HttpClient
+    private http : HttpClient,
+    public valueService : ValuesService
   ) { }
 
   ngOnInit() {

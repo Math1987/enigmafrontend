@@ -4,10 +4,10 @@ import {MetaService} from '../../shared/services/meta.service';
 
 @Component({
   selector: 'app-player-container',
-  templateUrl: './player-container.component.html',
-  styleUrls: ['./player-container.component.scss']
+  templateUrl: './player-toolbar.component.html',
+  styleUrls: ['./player-toolbar.component.scss']
 })
-export class PlayerContainerComponent implements OnInit {
+export class PlayerToolbarComponent implements OnInit {
 
   constructor(
     public valueService : ValuesService,

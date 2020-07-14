@@ -1,2 +1,12 @@
-<app-player-container>
-</app-player-container>
+<app-player-container></app-player-container>
+
+<div *ngIf="valueService.skills | async ; let skills ">
+  <div *ngFor="let skill of skills">
+    <app-icons [size]="32" [key]="skill.key_"></app-icons>
+  </div>
+</div>
+
+
+
+
+

@@ -20,8 +20,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import {ProfilComponent} from './profil/profil.component';
-import { PlayerContainerComponent } from './player-container/player-container.component';
 import {IconsModule} from '../shared/modules/icons/icons.module';
+import {PlayerToolbarComponent} from './player-toolbar/player-toolbar.component';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -48,7 +48,7 @@ const MATERIALS = [
     MapComponent,
     CharacterComponent,
     CreateComponent,
-    PlayerContainerComponent
+    PlayerToolbarComponent
   ],
   imports: [
     CommonModule,

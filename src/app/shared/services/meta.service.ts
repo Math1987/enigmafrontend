@@ -48,4 +48,14 @@ export class MetaService {
     }
     return obj ;
   }
+  getAll(type:string){
+    let obj = {} ;
+    for ( let key of Object.keys(this.metaDatas) ){
+      for ( let arr of this.metaDatas[key] ){
+        obj[arr.key_] = arr ;
+      }
+    }
+    console.log(obj);
+    return obj ;
+  }
 }
