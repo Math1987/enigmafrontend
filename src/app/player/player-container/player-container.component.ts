@@ -10,13 +10,13 @@ import {MetaService} from '../../shared/services/meta.service';
 export class PlayerContainerComponent implements OnInit {
 
   constructor(
-    public resources : ValuesService,
+    public valueService : ValuesService,
     public metadatas : MetaService
   ) { }
 
   ngOnInit(): void {
 
-    this.resources.values.subscribe((res)=>{
+    this.valueService.values.subscribe((res)=>{
 
     });
 

@@ -2,7 +2,7 @@
   <div class="playerContainer" fxLayout="column nowrap" fxLayoutAlign="start center">
     <mat-toolbar
       class="toolBarRes"
-      *ngIf="resources.values | async ; let resources"
+      *ngIf="valueService.resources | async ; let resources"
       fxLayout="row nowrap"
       fxLayoutGap="10px"
       fxLayoutAlign="center center">
