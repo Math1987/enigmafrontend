@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {BehaviorSubject, ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 
@@ -11,16 +11,13 @@ export class MetaService {
   metaDatasSubject = new ReplaySubject<any>(null);
   metaDatas:any = null ;
 
+
   icons = {
     img : new Image(),
     src: 'assets/images/icons.png',
     rangeX : 16,
     rangeY : 6,
-    keys: {
-      'faith' : 3,
-      'water' : 53,
-      'food' : 73
-    }
+    keys: new BehaviorSubject<any>(null)
   } ;
 
   constructor(
@@ -32,6 +29,15 @@ export class MetaService {
     this.http.get<any>(`${environment.apiURL}/metadatas`).subscribe(res => {
       this.metaDatas = res ;
       this.metaDatasSubject.next(res);
+    });
+    this.http.get<any>(`${environment.apiURL}/metavalues`).subscribe(res => {
+
+      let obj = {} ;
+      for ( let row of res ){
+        obj[row.key_] = row ;
+      }
+      console.log(obj) ;
+      this.icons.keys.next(obj) ;
     });
 
   }
@@ -55,7 +61,6 @@ export class MetaService {
         obj[arr.key_] = arr ;
       }
     }
-    console.log(obj);
     return obj ;
   }
 }

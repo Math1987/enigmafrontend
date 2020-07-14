@@ -18,7 +18,6 @@ export class ValuesService{
     private http: HttpClient,
     private metadatas:  MetaService
   ) {
-    const self = this ;
     this.http.get(`${environment.apiUserCharaURL}/values`, {responseType:'json'}).subscribe(res=>{
 
       this.metadatas.metaDatasSubject.subscribe( metadatas =>{

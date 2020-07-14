@@ -1,8 +1,28 @@
 <app-player-container></app-player-container>
 
-<div *ngIf="valueService.skills | async ; let skills ">
-  <div *ngFor="let skill of skills">
-    <app-icons [size]="32" [key]="skill.key_"></app-icons>
+<div
+  *ngIf="valueService.skills | async ; let skills "
+  class="skills"
+  fxLayout="row wrap"
+  fxLayoutAlign="space-around center"
+>
+  <div
+    *ngFor="let skill of skills"
+    fxLayout="column nowrap"
+    fxLayoutAlign="center center"
+    class="skill"
+  >
+    <div
+      fxLayout="column nowrap"
+      fxLayoutAlign="center center">
+      <app-icons [size]="64" [key]="skill.key_"></app-icons>
+      <h3>{{skill.value}}</h3>
+    </div>
+    <div fxLayout="row nowrap">
+      <button mat-raised-button color="secondary"> + 1</button>
+      <button mat-raised-button color="secondary"> + 5</button>
+      <button mat-raised-button color="secondary"> + 10</button>
+    </div>
   </div>
 </div>
 
