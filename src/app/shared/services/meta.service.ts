@@ -38,4 +38,14 @@ export class MetaService {
   getMetaDatas():any{
     return this.metaDatas;
   }
+  getByType(type:string){
+    let obj = {} ;
+    if ( this.metaDatas[type]) {
+      for (let row of this.metaDatas[type]) {
+        obj[row.key_] = {...row} ;
+        Reflect.deleteProperty(obj[row.key_], 'key_');
+      }
+    }
+    return obj ;
+  }
 }

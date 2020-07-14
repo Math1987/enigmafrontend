@@ -26,9 +26,10 @@ export class IconsComponent implements OnInit, AfterViewInit  {
 
     this.metaService.metaDatasSubject.subscribe(datas=>{
 
-      if ( this.key && datas[this.key] && datas[this.key][0]){
-        console.log(datas[this.key][0]['description_fr']);
-        this.description = datas[this.key][0]['description_fr'];
+      const resources = this.metaService.getByType('resource');
+
+      if ( this.key && resources[this.key] && resources[this.key]['description_fr'] ){
+        this.description = resources[this.key]['description_fr'];
       }
     })
 

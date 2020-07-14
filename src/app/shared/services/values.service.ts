@@ -7,17 +7,15 @@ import {environment} from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ResourcesService{
+export class ValuesService{
 
-  resources : ReplaySubject<any> = new ReplaySubject<any>(null);
+  values : ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
     private http: HttpClient
   ) {
-    console.log(`${environment.apiUserCharaURL}/resources`);
-    this.http.get(`${environment.apiUserCharaURL}/resources`, {responseType:'json'}).subscribe(res=>{
-      console.log(res);
-      this.resources.next(res);
+    this.http.get(`${environment.apiUserCharaURL}/values`, {responseType:'json'}).subscribe(res=>{
+      this.values.next(res);
     });
 
   }

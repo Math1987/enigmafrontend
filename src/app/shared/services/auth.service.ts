@@ -81,9 +81,7 @@ export class AuthService {
   public initTimer() {
     return timer(30000, 15000).pipe(
       switchMap( () => {
-        console.log('refreshToken')
         if ( localStorage.getItem(AuthService.LOCAL_JWT)) {
-          console.log('ask token with httpRequest');
           return this.http.get<string>(`${environment.apiURL}/refreshToken`).pipe(
             tap((token: string) => {
               this.jwtToken.next({
@@ -135,7 +133,6 @@ export class AuthService {
   signIn(credentials: {email: string, password: string}): Observable<string> {
     return this.http.post<string>(`${environment.apiURL}/signin`, credentials).pipe(
       tap( (token: string) => {
-        console.log(token);
         localStorage.setItem(AuthService.LOCAL_JWT, token);
         this.jwtToken.next({
           isAuthenticated : true,

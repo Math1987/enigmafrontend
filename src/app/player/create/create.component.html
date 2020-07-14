@@ -8,10 +8,10 @@
           <mat-card-title><span>Choix du sexe</span></mat-card-title>
           <mat-card-content class="d-flex justify-content-around">
             <img *ngFor="let currentGender of metaService.metaDatas['sexes']"
-                 (click)="formGroup.controls['sexe'].setValue(currentGender['name'])"
+                 (click)="formGroup.controls['sexe'].setValue(currentGender['key_'])"
                  [src]="currentGender['img']"
                  [matTooltip]="currentGender['name_fr']"
-                 [class.active]="formGroup.controls.sexe.value === currentGender['name']">
+                 [class.active]="formGroup.controls.sexe.value === currentGender['key_']">
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -34,10 +34,10 @@
           <mat-card-title><span>Choix de la race</span></mat-card-title>
           <mat-card-content class="d-flex justify-content-around">
             <img *ngFor="let currentRace of metaService.metaDatas['races']"
-                 (click)="formGroup.controls.race.setValue(currentRace.name)"
+                 (click)="formGroup.controls.race.setValue(currentRace['key_'])"
                  [src]="currentRace['img']"
                  [matTooltip]="currentRace['name_fr']"
-                 [class.active]="formGroup.controls.race.value === currentRace.name">
+                 [class.active]="formGroup.controls.race.value === currentRace['key_']">
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -47,10 +47,10 @@
           <mat-card-title><span>Choix de la religion</span></mat-card-title>
           <mat-card-content class="d-flex justify-content-around">
             <img *ngFor="let currentReligion of metaService.metaDatas['religions']"
-                 (click)="formGroup.controls.religion.setValue(currentReligion.name)"
+                 (click)="formGroup.controls.religion.setValue(currentReligion['key_'])"
                  [src]="currentReligion['img']"
-                 [matTooltip]="currentReligion.name_fr"
-                 [class.active]="formGroup.controls.religion.value === currentReligion.name">
+                 [matTooltip]="currentReligion['name_fr']"
+                 [class.active]="formGroup.controls.religion.value === currentReligion['key_']">
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

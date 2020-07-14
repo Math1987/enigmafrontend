@@ -40,8 +40,6 @@ export class CharaService {
             this.actualCharacter = charaRes ;
             this.character.next(charaRes);
 
-            console.log(charaRes);
-
           }else{
             this.router.navigate(['u/bienvenue']);
             this.actualCharacter = null ;

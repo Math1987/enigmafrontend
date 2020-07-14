@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ResourcesService} from '../../shared/services/resources.service';
+import {ValuesService} from '../../shared/services/values.service';
 import {MetaService} from '../../shared/services/meta.service';
 
 @Component({
@@ -10,14 +10,14 @@ import {MetaService} from '../../shared/services/meta.service';
 export class PlayerContainerComponent implements OnInit {
 
   constructor(
-    public resources : ResourcesService,
+    public resources : ValuesService,
     public metadatas : MetaService
   ) { }
 
   ngOnInit(): void {
 
-    this.resources.resources.subscribe((res)=>{
-      console.log(res) ;
+    this.resources.values.subscribe((res)=>{
+
     });
 
   }

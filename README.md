@@ -3,7 +3,7 @@
 Enigma JDR is an indie rpg turn-based browser game.
 Inspired from the survival game "hordes", you get each day actions and movements to spend in a map.
 You can choose a race between human, dwarf, vampire or elf and a religion giving you specifics magics spells.
-Find resources, plant trees, get materials, protect you're territory, build fortifications, attack squeletons or enemy.
+Find values, plant trees, get materials, protect you're territory, build fortifications, attack squeletons or enemy.
 
 the game is powered with the framework angular for the front end and node js for the back end.
 

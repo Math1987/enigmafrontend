@@ -43,7 +43,6 @@ export class SigninComponent implements OnInit {
    * @param formControl as email input
    */
   validateEmail(formControl: FormControl): Promise<any> | Observable<any> {
-    console.log (`${environment.apiURL}/checkEmail?email=${formControl.value}`);
     return new Promise( (resolve, reject) => {
       this.http.get(`${environment.apiURL}/checkEmail?email=${formControl.value}`).subscribe(
         (res) => {
@@ -89,7 +88,7 @@ export class SigninComponent implements OnInit {
 
 
       }, (error) => {
-        console.log(JSON.stringify(error, undefined, 2));
+
       });
 
   }
