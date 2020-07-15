@@ -20,7 +20,6 @@ export class ValuesService{
   init(){
 
     if ( !this.subscription || this.subscription === null ) {
-      console.log('init values service');
       this.values = new BehaviorSubject<any>(null);
       this.resources = new ReplaySubject<any>(null);
       this.skills = new ReplaySubject<any>(null);
@@ -40,7 +39,6 @@ export class ValuesService{
               }
             }
             this.resources.next(resources);
-            console.log(res);
 
             let skills = [];
             for (let row of metadatas['skill']) {
@@ -102,9 +100,7 @@ export class ValuesService{
     for ( let row of newValue ){
 
       if ( row['key_'] === key_ ){
-
         row.value = value ;
-        console.log(row);
       }
     }
     //this.values.next(newValue);

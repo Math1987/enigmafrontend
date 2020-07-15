@@ -124,10 +124,14 @@ export class SignupComponent implements OnInit {
    * if the subscription is correct, navigate to main player's module route.
    */
   create() {
+
     this.authService.signUp(this.formGroup.value).subscribe((res) => {
+      console.log('signup') ;
+      console.log(res);
       if ( res ) {
         this.authService.signIn(res).subscribe((signin) => {
-          this.router.navigate(['u', 'bienvenue']);
+          console.log(signin);
+          this.router.navigate(['u']);
         });
       }
     });

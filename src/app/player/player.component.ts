@@ -47,7 +47,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   public jwtToken: JwtToken;
   public subscription: Subscription;
   public currentUser: Observable<UserModel> ;
-  public currenChara : ReplaySubject<Chara> ;
+  public currenChara : BehaviorSubject<Chara> ;
 
   constructor(
     private authService: AuthService,

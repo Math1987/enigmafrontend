@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {CharaService} from '../services/chara.service';
-import {map} from 'rxjs/operators';
+import {map, skip} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,9 @@ export class CreateCharaGuard implements CanActivate{
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.charaService.character.pipe(
+      skip(1),
       map(res=>{
+        console.log(res);
         if ( res ){
           this.router.navigate(['u']);
           return false ;

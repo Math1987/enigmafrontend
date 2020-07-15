@@ -13,18 +13,17 @@ import {Router} from '@angular/router';
 })
 export class CharaService {
 
-  character : ReplaySubject<Chara> = null;
+  character : BehaviorSubject<Chara> = null;
   actualCharacter : Chara = null ;
 
   subscription: Subscription = null ;
 
   init(){
 
-    this.character = new ReplaySubject<Chara>(null);
+    this.character = new BehaviorSubject<Chara>(null);
     this.actualCharacter = null ;
 
     if ( !this.subscription || this.subscription === null ){
-      console.log('init chara');
       this.subscription = this.userService.currentUser.subscribe(user =>{
         if ( user !== null ){
           this.http.post<Chara>(`${environment.apiURL}/u/chara`, user).subscribe(charaRes => {
@@ -52,7 +51,6 @@ export class CharaService {
 
   }
   destroy(){
-    console.log('destroy chara');
     this.subscription.unsubscribe();
     this.subscription = null ;
   }
@@ -78,7 +76,7 @@ export class CharaService {
 
   }
 
-  getCurrentCharaObservable():ReplaySubject<Chara>{
+  getCurrentCharaObservable():BehaviorSubject<Chara>{
     return this.character ;
   }
   getCharacter(){

@@ -35,7 +35,6 @@ export class UserService {
     this.actualUser = null ;
 
     if ( !this.tokenSubscription || this.tokenSubscription == null ) {
-      console.log('init user');
       this.tokenSubscription = this.authService.jwtToken.subscribe((res) => {
         if (res && localStorage.getItem(AuthService.LOCAL_JWT)) {
           this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
@@ -61,7 +60,6 @@ export class UserService {
     }
   }
   destroy(){
-    console.log('destroy user Service');
     this.tokenSubscription.unsubscribe();
     this.tokenSubscription = null ;
     this.currentUser = null;

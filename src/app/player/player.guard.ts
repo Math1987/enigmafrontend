@@ -22,14 +22,12 @@ export class PlayerGuard implements CanActivate, CanDeactivate<PlayerComponent> 
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('can activate PlayerGuard');
     this.userService.init() ;
     this.charaService.init();
     this.valuesService.init() ;
     return true ;
   }
   canDeactivate(component: PlayerComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('can deactivate PlayerGuard');
     this.userService.destroy() ;
     this.charaService.destroy();
     this.valuesService.destroy() ;
