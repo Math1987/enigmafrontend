@@ -16,10 +16,6 @@ export class PlayerToolbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.valueService.values.subscribe((res)=>{
-
-    });
-
   }
 
 }

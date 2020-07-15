@@ -21,5 +21,13 @@ export class CharacterComponent implements OnInit {
   ngOnInit() {
 
   }
+  addSkill(skill: {id: string, key_: string, value: number}, value:number){
+    this.valueService.addSkill(skill, value).subscribe(res =>{
+      if ( res ){
+        skill.value = res[skill.key_] ;
+        this.valueService.setValue('addskills', res['addskills']);
+      }
+    }) ;
+  }
 
 }

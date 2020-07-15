@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PlayerComponent} from './player.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -22,6 +22,7 @@ import {MatListModule} from '@angular/material/list';
 import {ProfilComponent} from './profil/profil.component';
 import {IconsModule} from '../shared/modules/icons/icons.module';
 import {PlayerToolbarComponent} from './player-toolbar/player-toolbar.component';
+import {UserService} from '../shared/services/user.service';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -66,4 +67,6 @@ const MATERIALS = [
   providers: [
   ]
 })
-export class PlayerModule { }
+export class PlayerModule{
+
+}

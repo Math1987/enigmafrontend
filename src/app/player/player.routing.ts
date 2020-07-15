@@ -6,6 +6,7 @@ import {CharacterComponent} from './character/character.component';
 import {CreateComponent} from './create/create.component';
 import {CreateCharaGuard} from '../shared/guards/createChara.guard';
 import {ProfilComponent} from './profil/profil.component';
+import {PlayerGuard} from './player.guard';
 
 /**
  * Routes players are actived when module is lazy loaded.
@@ -13,7 +14,7 @@ import {ProfilComponent} from './profil/profil.component';
  * If user have admin's right, set route to lazy loading admin part
  */
 const GAME_ROUTES: Route[] = [
-  {path: '', component : PlayerComponent, canActivate: [AuthGuard], children : [
+  {path: '', component : PlayerComponent, canActivate: [AuthGuard, PlayerGuard], canDeactivate: [PlayerGuard], children : [
       {path : 'bienvenue', component: CreateComponent, canActivate: [CreateCharaGuard]},
       {path : 'map', component: MapComponent},
       {path : 'perso', component: CharacterComponent},

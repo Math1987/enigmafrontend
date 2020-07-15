@@ -36,7 +36,6 @@ export class MetaService {
       for ( let row of res ){
         obj[row.key_] = row ;
       }
-      console.log(obj) ;
       this.icons.keys.next(obj) ;
     });
 

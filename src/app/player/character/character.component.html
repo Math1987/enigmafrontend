@@ -1,5 +1,5 @@
 <app-player-container></app-player-container>
-
+<h1>Compétences {{valueService.getValue("addskills") | async}}</h1>
 <div
   *ngIf="valueService.skills | async ; let skills "
   class="skills"
@@ -19,9 +19,9 @@
       <h3>{{skill.value}}</h3>
     </div>
     <div fxLayout="row nowrap">
-      <button mat-raised-button color="secondary"> + 1</button>
-      <button mat-raised-button color="secondary"> + 5</button>
-      <button mat-raised-button color="secondary"> + 10</button>
+      <button mat-raised-button color="secondary" (click)="addSkill(skill,1)"> + 1</button>
+      <button mat-raised-button color="secondary" (click)="addSkill(skill,5)"> + 5</button>
+      <button mat-raised-button color="secondary" (click)="addSkill(skill,10)"> + 10</button>
     </div>
   </div>
 </div>
