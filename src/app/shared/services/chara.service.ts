@@ -7,53 +7,17 @@ import {environment} from '../../../environments/environment';
 import {UserModel} from '../models/user.model';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
+import {map, skip} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharaService {
 
-  character : BehaviorSubject<Chara> = null;
+  character : ReplaySubject<Chara> = null;
   actualCharacter : Chara = null ;
 
   subscription: Subscription = null ;
-
-  init(){
-
-    this.character = new BehaviorSubject<Chara>(null);
-    this.actualCharacter = null ;
-
-    if ( !this.subscription || this.subscription === null ){
-      this.subscription = this.userService.currentUser.subscribe(user =>{
-        if ( user !== null ){
-          this.http.post<Chara>(`${environment.apiURL}/u/chara`, user).subscribe(charaRes => {
-            if ( charaRes ){
-              this.actualCharacter = charaRes ;
-              this.character.next(charaRes);
-
-            }else{
-              this.router.navigate(['u/bienvenue']);
-              this.actualCharacter = null ;
-              this.character.next(null);
-            }
-          }, error => {
-            this.router.navigate(['u/bienvenue']);
-            this.actualCharacter = null ;
-            this.character.next(null) ;
-          });
-        }else{
-          this.actualCharacter = null ;
-          this.character.next(null);
-        }
-      });
-    }
-
-
-  }
-  destroy(){
-    this.subscription.unsubscribe();
-    this.subscription = null ;
-  }
 
   /**
    * charaService is used only when player is connected, from player's module.
@@ -76,21 +40,52 @@ export class CharaService {
 
   }
 
-  getCurrentCharaObservable():BehaviorSubject<Chara>{
-    return this.character ;
+
+  init(){
+
+    this.character = new ReplaySubject<Chara>();
+    this.actualCharacter = null ;
+
+    this.subscription = this.userService.currentUser.pipe(
+    ).subscribe(user =>{
+      if ( user !== null ){
+        this.http.post<Chara>(`${environment.apiURL}/u/chara`, user).subscribe(charaRes => {
+          console.log("chara " + charaRes);
+          if ( charaRes ){
+            this.actualCharacter = charaRes ;
+            this.character.next(charaRes);
+          }else{
+            this.actualCharacter = null ;
+            this.character.next(null);
+          }
+        }, error => {
+          this.actualCharacter = null ;
+          this.character.next(null) ;
+        });
+      }else{
+        this.actualCharacter = null ;
+        this.character.next(null);
+      }
+    });
+
+
+
   }
-  getCharacter(){
-    return this.actualCharacter ;
+  destroy(){
+    this.subscription.unsubscribe();
+    this.subscription = null ;
   }
 
   create(chara:Chara){
     chara['id'] = this.userService.getCurrentUser().id ;
     this.http.post(`${environment.apiURL}/u/createChara`, chara).subscribe(newChara => {
       if ( newChara ){
-        this.authService.refreshToken().subscribe( res => {
+        console.log(newChara) ;
+        this.authService.newToken(newChara).subscribe( res => {
           if ( res && newChara){
+            console.log('token ok');
             this.character.next(<Chara> newChara);
-            this.router.navigate(['u']);
+            this.router.navigate(['/u/map']);
           }
 
         });

@@ -25,9 +25,6 @@ export class AuthGuard implements CanActivate {
    * @param state
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    console.log(this.authService.jwtToken.getValue().isAuthenticated);
-
     return this.authService.jwtToken.getValue().isAuthenticated;
   }
 

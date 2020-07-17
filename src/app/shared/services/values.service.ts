@@ -5,11 +5,13 @@ import {Chara} from '../models/chara.model';
 import {environment} from '../../../environments/environment';
 import {MetaService} from './meta.service';
 import {map} from 'rxjs/operators';
+import {CharaService} from './chara.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValuesService{
+
 
   values = new BehaviorSubject<any>(null);
   resources = new ReplaySubject<any>(null);
@@ -23,43 +25,57 @@ export class ValuesService{
       this.values = new BehaviorSubject<any>(null);
       this.resources = new ReplaySubject<any>(null);
       this.skills = new ReplaySubject<any>(null);
-      this.subscription = this.http.get(`${environment.apiUserCharaURL}/values`, {responseType: 'json'}).subscribe(res => {
+      this.subscription = this.callValues();
+    }
 
-        this.metadatas.metaDatasSubject.subscribe(metadatas => {
+    this.characterService.character.subscribe(res =>{
+      console.log('chara subsciption in values.service')
+      if ( res && !this.values.getValue() ){
+        console.log('NEED TO SET VALUES!');
+        this.subscription = this.callValues();
+        //this.destroy();
+        //this.init();
+      }
+    })
 
-          if (res instanceof Array) {
+  }
 
-            let datas = res.slice();
-            let resources = [];
-            for (let row of metadatas['resource']) {
-              for (let row2 of datas) {
-                if (row2.key_ === row.key_) {
-                  resources.push(row2);
-                }
+  callValues(){
+    return this.http.get(`${environment.apiUserCharaURL}/values`, {responseType: 'json'}).subscribe(res => {
+
+      this.metadatas.metaDatasSubject.subscribe(metadatas => {
+
+        if (res instanceof Array) {
+
+          let datas = res.slice();
+          let resources = [];
+          for (let row of metadatas['resource']) {
+            for (let row2 of datas) {
+              if (row2.key_ === row.key_) {
+                resources.push(row2);
               }
             }
-            this.resources.next(resources);
-
-            let skills = [];
-            for (let row of metadatas['skill']) {
-              for (let row2 of datas) {
-                if (row2.key_ === row.key_) {
-                  skills.push(row2);
-                }
-              }
-            }
-            this.skills.next(skills);
-
-            this.values.next(datas);
           }
+          this.resources.next(resources);
 
+          let skills = [];
+          for (let row of metadatas['skill']) {
+            for (let row2 of datas) {
+              if (row2.key_ === row.key_) {
+                skills.push(row2);
+              }
+            }
+          }
+          this.skills.next(skills);
 
-        });
+          this.values.next(datas);
+        }
 
 
       });
-    }
 
+
+    });
   }
 
   destroy(){
@@ -70,10 +86,13 @@ export class ValuesService{
     this.subscription = null ;
   }
 
+
   constructor(
     private http: HttpClient,
-    private metadatas:  MetaService
+    private metadatas:  MetaService,
+    private characterService: CharaService
   ) {
+
   }
 
   getValue(key_ : string) : Observable<number>{

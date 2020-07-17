@@ -23,12 +23,12 @@ export class CreateCharaGuard implements CanActivate{
    * @param state
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
     return this.charaService.character.pipe(
-      skip(1),
       map(res=>{
-        console.log(res);
+        console.log('chara guard ' + res );
         if ( res ){
-          this.router.navigate(['u']);
+          this.router.navigate(['u/map']);
           return false ;
         }else{
           return true ;

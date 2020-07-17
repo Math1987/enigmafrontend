@@ -35,14 +35,6 @@ export class ProfilComponent implements OnInit {
   }
 
   /**
-   * CurrentUser is an observable taken from the userService.
-   * see the userService to see how it work.
-   * use pipe async in html to show informations how they come
-   */
-  public currentUser: Observable<UserModel> ;
-  public currentChara: Observable<Chara> ;
-
-  /**
    * ProfileComponent is build when Player's module is lazy loaded (if user is connected)
    * @param userService: give the observable currentUser
    */
@@ -55,8 +47,7 @@ export class ProfilComponent implements OnInit {
    * take the userService's currentUser observable's pointer
    */
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUserObservable();
-    this.currentChara = this.charaService.getCurrentCharaObservable();
+
   }
 
 

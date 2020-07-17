@@ -19,7 +19,7 @@ export class UserService {
    * after creation of it with no value.
    * actual user is the value saved from subscription of currentUser
    */
-  public currentUser: ReplaySubject<UserModel> =null;
+  public currentUser: ReplaySubject<UserModel> = null;
   public actualUser : UserModel = null ;
   /**
    * CurentUser is called as one instance from the main app component
@@ -29,43 +29,6 @@ export class UserService {
 
   private tokenSubscription : Subscription = null ;
 
-  init(){
-
-    this.currentUser = new ReplaySubject<UserModel>(undefined);
-    this.actualUser = null ;
-
-    if ( !this.tokenSubscription || this.tokenSubscription == null ) {
-      this.tokenSubscription = this.authService.jwtToken.subscribe((res) => {
-        if (res && localStorage.getItem(AuthService.LOCAL_JWT)) {
-          this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
-            (user) => {
-              if (user) {
-                this.actualUser = user;
-                this.actualUser.avatarPath = 'assets/images/homme.png';
-                this.currentUser.next(this.actualUser);
-              } else {
-                this.actualUser = null;
-                this.currentUser.next(null);
-              }
-            }, (error => {
-              this.authService.logout();
-              console.log(error);
-            }));
-        } else {
-          this.actualUser = null;
-          this.currentUser.next(null);
-        }
-
-      });
-    }
-  }
-  destroy(){
-    this.tokenSubscription.unsubscribe();
-    this.tokenSubscription = null ;
-    this.currentUser = null;
-    this.actualUser = null ;
-  }
-
   constructor(
     private http: HttpClient,
     private authService: AuthService
@@ -74,6 +37,45 @@ export class UserService {
      * Reset the currentUser if a new jwtToken is observed in AuthService
      */
   }
+
+  init(){
+
+    this.currentUser = new ReplaySubject<UserModel>(null);
+    this.actualUser = null ;
+
+
+    this.tokenSubscription = this.authService.jwtToken.subscribe((res) => {
+      if (res && localStorage.getItem(AuthService.LOCAL_JWT)) {
+        this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
+          (user) => {
+            console.log('user ' + user );
+            if (user) {
+              this.actualUser = user;
+              this.actualUser.avatarPath = 'assets/images/homme.png';
+              this.currentUser.next(this.actualUser);
+            } else {
+              this.actualUser = null;
+              this.currentUser.next(null);
+            }
+          }, (error => {
+            this.authService.logout();
+            console.log(error);
+          }));
+      } else {
+        this.actualUser = null;
+        this.currentUser.next(null);
+      }
+
+    });
+
+  }
+  destroy(){
+    this.tokenSubscription.unsubscribe();
+    this.tokenSubscription = null ;
+    this.currentUser = null;
+    this.actualUser = null ;
+  }
+
 
   /**
    * give the currentUser ReplaySubject that's all.

@@ -124,6 +124,25 @@ export class AuthService {
       })
     );
   }
+  newToken( values : Object ){
+    return this.http.post<string>(`${environment.apiURL}/newToken`, values ).pipe(
+      tap((token: string) => {
+        if ( token ){
+          this.jwtToken.next({
+            isAuthenticated: true,
+            token : token
+          });
+          localStorage.setItem(AuthService.LOCAL_JWT, token);
+        }else{
+          this.jwtToken.next({
+            isAuthenticated: false,
+            token : null
+          });
+          localStorage.setItem(AuthService.LOCAL_JWT, token);
+        }
+      })
+    );
+  }
   /**
    * signIn: call the backend signin, responding with a token
    * if email and password are valid. Then update jwtToken observable for all

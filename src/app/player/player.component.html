@@ -1,10 +1,12 @@
-<div class="fullSize" fxLayout="column nowrap" fxLayoutAlign="start center">
+<div class="fullSize"
+     fxLayout="column nowrap"
+     fxLayoutAlign="start center"
+     *ngIf="userService.currentUser | async; let user">
   <mat-toolbar
     color="accent"
     class="toolbar"
     fxLayoutGap="15px"
-    [@intro]="'normal'"
-    *ngIf="currentUser | async; let user" >
+    [@intro]="'normal'">
 
     <a mat-icon-button routerLink="map"><mat-icon>home</mat-icon></a>
     <div fxFlex="auto" >
@@ -18,7 +20,7 @@
       fxLayout="row"
       fxLayoutAlign="center center"
       fxFlex="1 1 100%"
-      *ngIf="currenChara | async; let chara"
+      *ngIf="charaService.character | async as chara ; else createChara "
       [@intro]="'normal'"
     >
       <button mat-button routerLink="map">carte</button>
@@ -27,9 +29,13 @@
       <button mat-button routerLink="ranks">classement</button>
     </div>
 
-    <div fxFlex="auto" *ngIf="!getChara(); let chara">
-      <span routerLink="bienvenue">créer un personnage</span>
-    </div>
+
+    <ng-template #createChara >
+      <div fxFlex="auto">
+        <span routerLink="bienvenue">créer un personnage</span>
+      </div>
+    </ng-template>
+
 
 
     <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
@@ -41,7 +47,9 @@
       <button mat-menu-item routerLink="profil">profil</button>
     </mat-menu>
   </span>
+
   </mat-toolbar>
+
 
 
   <div class="playerContainer"  fxLayout="column nowrap" >

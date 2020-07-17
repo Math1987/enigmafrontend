@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {UserModel} from '../shared/models/user.model';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
-import {tap, withLatestFrom} from 'rxjs/operators';
+import {skip, tap, withLatestFrom} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {UserService} from '../shared/services/user.service';
 import {CharaService} from '../shared/services/chara.service';
@@ -46,15 +46,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
    */
   public jwtToken: JwtToken;
   public subscription: Subscription;
-  public currentUser: Observable<UserModel> ;
-  public currenChara : BehaviorSubject<Chara> ;
 
   constructor(
     private authService: AuthService,
     private http: HttpClient,
     private router: Router,
-    private userService: UserService,
-    private charaService : CharaService,
+    public userService: UserService,
+    public charaService : CharaService,
     private metaService : MetaService,
     private animationService : AnimationService
   ) {
@@ -65,9 +63,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.jwtToken.subscribe((jwtToken) => {
       this.jwtToken = jwtToken;
     });
-    this.currentUser = this.userService.getCurrentUserObservable();
-    this.currenChara = this.charaService.getCurrentCharaObservable();
-
 
   }
 
@@ -82,12 +77,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.router.navigate(['connexion']);
   }
 
-  /**
-   * get the actual value of characte
-   */
-  getChara(){
-    return this.charaService.getCharacter();
-  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
