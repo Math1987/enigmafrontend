@@ -1,29 +1,36 @@
-<app-player-container></app-player-container>
-<h1>Compétences {{valueService.getValue("addskills") | async}}</h1>
 <div
+  fxLayout="column nowrap"
+  fxLayoutAlign="center center"
+  [@pops]="skillsAnimator"
   *ngIf="valueService.skills | async ; let skills "
-  class="skills"
-  fxLayout="row wrap"
-  fxLayoutAlign="space-around center"
 >
+  <h1>Compétences {{valueService.getValue("addskills") | async}}</h1>
   <div
-    *ngFor="let skill of skills"
-    fxLayout="column nowrap"
-    fxLayoutAlign="center center"
-    class="skill"
+
+    class="skills"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-around center"
   >
     <div
+      *ngFor="let skill of skills"
       fxLayout="column nowrap"
-      fxLayoutAlign="center center">
-      <app-icons [size]="64" [key]="skill.key_"></app-icons>
-      <h3>{{skill.value}}</h3>
-    </div>
-    <div fxLayout="row nowrap">
-      <button mat-raised-button color="secondary" (click)="addSkill(skill,1)"> + 1</button>
-      <button mat-raised-button color="secondary" (click)="addSkill(skill,5)"> + 5</button>
-      <button mat-raised-button color="secondary" (click)="addSkill(skill,10)"> + 10</button>
+      fxLayoutAlign="center center"
+      class="skill"
+    >
+      <div
+        fxLayout="column nowrap"
+        fxLayoutAlign="center center">
+        <app-icons [size]="64" [key]="skill.key_"></app-icons>
+        <h3>{{skill.value}}</h3>
+      </div>
+      <div fxLayout="row nowrap">
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,1)"> + 1</button>
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,5)"> + 5</button>
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,10)"> + 10</button>
+      </div>
     </div>
   </div>
+
 </div>
 
 

@@ -4,9 +4,11 @@
   *ngIf="valueService.resources | async ; let resources"
   fxLayout="row nowrap"
   fxLayoutGap="10px"
-  fxLayoutAlign="center center">
+  fxLayoutAlign="start center"
+  [@pops]="popsAnimator"
+>
 
-    <div *ngFor="let res of resources " fxLayout="column nowrap" fxLayoutAlign="center center">
+    <div *ngFor="let res of resources " fxLayout="row nowrap" fxLayoutAlign="center center">
       <app-icons [size]="32" [key]="res.key_"></app-icons>
       {{res.value}}
     </div>

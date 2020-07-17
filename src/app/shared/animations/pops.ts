@@ -1,0 +1,13 @@
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
+export let pops = trigger('pops', [
+  state('start', style({
+    opacity: 0.0,
+    scale: 0.9
+  })),
+  state('normal', style({
+    opacity: 1.0,
+    scale : 1.0
+  })),
+  transition('* => normal', animate(`500ms 0ms ease-out`))
+]);

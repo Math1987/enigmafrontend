@@ -13,7 +13,7 @@ import {BehaviorSubject} from 'rxjs';
   styleUrls: ['./app.component.scss'],
   animations : [ trigger('intro', [
     state('null', style({
-      transform: 'scale(1.5)',
+      transform: 'scale(1.2)',
       filter: 'blur(10px)',
       opacity:'0'
     })),

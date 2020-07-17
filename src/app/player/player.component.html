@@ -21,10 +21,10 @@
       fxLayoutAlign="center center"
       fxFlex="1 1 100%"
       *ngIf="charaService.character | async as chara ; else createChara "
-      [@intro]="'normal'"
+      [@intro]="'normal'" (@intro.done)="startContent($event)"
     >
-      <button mat-button routerLink="map">carte</button>
-      <button mat-button routerLink="perso">perso</button>
+      <button mat-button routerLink="game/map">carte</button>
+      <button mat-button routerLink="game/perso">perso</button>
       <button mat-button routerLink="forum">forum</button>
       <button mat-button routerLink="ranks">classement</button>
     </div>
@@ -52,7 +52,10 @@
 
 
 
-  <div class="playerContainer"  fxLayout="column nowrap" >
+  <!--div [@pops]="containerAnimation" class="playerContainer"  fxLayout="column nowrap" >
+    <router-outlet></router-outlet>
+  </div-->
+  <div [@pops]="containerAnimation" class="playerContainer"  fxLayout="column nowrap" >
     <router-outlet></router-outlet>
   </div>
 

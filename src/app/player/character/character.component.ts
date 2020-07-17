@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ValuesService} from '../../shared/services/values.service';
+import {pops} from '../../shared/animations/pops';
 
 /**
  * Character component
@@ -9,9 +10,14 @@ import {ValuesService} from '../../shared/services/values.service';
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
-  styleUrls: ['./character.component.scss']
+  styleUrls: ['./character.component.scss'],
+  animations: [
+    pops
+  ]
 })
 export class CharacterComponent implements OnInit {
+
+  skillsAnimator: string = 'start' ;
 
   constructor(
     private http : HttpClient,
@@ -19,6 +25,11 @@ export class CharacterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    setTimeout(()=>{
+      this.skillsAnimator = "normal" ;
+    }, 10);
+
 
   }
   addSkill(skill: {id: string, key_: string, value: number}, value:number){

@@ -13,6 +13,7 @@ import {CharaService} from '../shared/services/chara.service';
 import {Chara} from '../shared/models/chara.model';
 import {MetaService} from '../shared/services/meta.service';
 import {AnimationService} from '../shared/services/animation.service';
+import {pops} from '../shared/animations/pops';
 
 /**
  * Main player's component (calling "u" in routes)
@@ -25,12 +26,13 @@ import {AnimationService} from '../shared/services/animation.service';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
   animations : [
+    pops,
     trigger('intro', [
       state('normal', style({
         opacity: 1.0,
         transform: "translate(0px,0px)"
       })),
-      transition('* => normal', animate(`1s 0ms ease-out`))
+      transition('* => normal', animate(`500ms 0ms ease-out`))
     ])
   ]
 })
@@ -46,6 +48,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
    */
   public jwtToken: JwtToken;
   public subscription: Subscription;
+  public containerAnimation: string = "start" ;
 
   constructor(
     private authService: AuthService,
@@ -64,6 +67,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.jwtToken = jwtToken;
     });
 
+
+  }
+  public startContent(event){
+    this.containerAnimation = "normal" ;
   }
 
   /**
