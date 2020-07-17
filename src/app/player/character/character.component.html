@@ -24,9 +24,9 @@
         <h3>{{skill.value}}</h3>
       </div>
       <div fxLayout="row nowrap">
-        <button mat-raised-button color="secondary" (click)="addSkill(skill,1)"> + 1</button>
-        <button mat-raised-button color="secondary" (click)="addSkill(skill,5)"> + 5</button>
-        <button mat-raised-button color="secondary" (click)="addSkill(skill,10)"> + 10</button>
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,1)" [disabled]="gotSkillsAdder(1) | async"> + 1</button>
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,5)" [disabled]="gotSkillsAdder(5) | async"> + 5</button>
+        <button mat-raised-button color="secondary" (click)="addSkill(skill,10)" [disabled]="gotSkillsAdder(10) | async"> + 10</button>
       </div>
     </div>
   </div>

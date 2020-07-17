@@ -15,6 +15,7 @@ export class ValuesService{
 
   values = new BehaviorSubject<any>(null);
   resources = new ReplaySubject<any>(null);
+  resourceActions = new ReplaySubject<any>(null);
   skills = new ReplaySubject<any>(null);
 
   subscription : Subscription = null ;
@@ -25,6 +26,7 @@ export class ValuesService{
       this.values = new BehaviorSubject<any>(null);
       this.resources = new ReplaySubject<any>(null);
       this.skills = new ReplaySubject<any>(null);
+      this.resourceActions = new ReplaySubject<any>(null);
       this.subscription = this.callValues();
     }
 
@@ -57,6 +59,18 @@ export class ValuesService{
             }
           }
           this.resources.next(resources);
+
+
+          let resourceActions = [];
+          for (let row of metadatas['resourceAction']) {
+            for (let row2 of datas) {
+              if (row2.key_ === row.key_) {
+                resourceActions.push(row2);
+              }
+            }
+          }
+          this.resourceActions.next(resourceActions);
+
 
           let skills = [];
           for (let row of metadatas['skill']) {

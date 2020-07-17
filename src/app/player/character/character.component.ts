@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ValuesService} from '../../shared/services/values.service';
 import {pops} from '../../shared/animations/pops';
+import {map} from 'rxjs/operators';
 
 /**
  * Character component
@@ -31,6 +32,18 @@ export class CharacterComponent implements OnInit {
     }, 10);
 
 
+  }
+  gotSkillsAdder(number: number){
+    return this.valueService.getValue('addskills').pipe(
+      map( res =>{
+      console.log(res );
+      if ( res < number ){
+        return true ;
+      }else{
+        return false ;
+      }
+    })
+  );
   }
   addSkill(skill: {id: string, key_: string, value: number}, value:number){
     this.valueService.addSkill(skill, value).subscribe(res =>{
