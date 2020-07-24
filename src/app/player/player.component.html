@@ -6,7 +6,7 @@
     color="accent"
     class="toolbar"
     fxLayoutGap="15px"
-    [@intro]="'normal'">
+    [@intro]="'normal'"  (@intro.done)="startContent($event)">
 
     <a mat-icon-button routerLink="map"><mat-icon>home</mat-icon></a>
     <div fxFlex="auto" >
@@ -21,7 +21,7 @@
       fxLayoutAlign="center center"
       fxFlex="1 1 100%"
       *ngIf="charaService.character | async as chara ; else createChara "
-      [@intro]="'normal'" (@intro.done)="startContent($event)"
+      [@intro]="'normal'"
     >
       <button mat-button routerLink="game/map">carte</button>
       <button mat-button routerLink="game/perso">perso</button>

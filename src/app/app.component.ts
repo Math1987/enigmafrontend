@@ -13,22 +13,22 @@ import {BehaviorSubject} from 'rxjs';
   styleUrls: ['./app.component.scss'],
   animations : [ trigger('intro', [
     state('null', style({
-      transform: 'scale(1.2)',
+      transform: 'scale(1.2, 1.2)',
       filter: 'blur(10px)',
       opacity:'0'
     })),
     state('wait', style({
-      transform: 'scale(1.1)',
+      transform: 'scale(1.1, 1.1)',
       opacity:'1.0'
     })),
     state('normal', style({
-      transform: 'scale(1.1)',
+      transform: 'scale(1.1, 1.1)',
       filter: 'blur(0px)',
       opacity:'1.0'
     })),
     transition('null => normal', animate(`1s 0ms ease-out`)),
     transition('null => wait', group([
-      animate(`1s 0ms ease-out`, style({opacity:'1.0',transform:'scale(1.1)'})),
+      animate(`1s 0ms ease-out`, style({opacity:'1.0',transform:'scale(1.1,1.1)'})),
       animate(`3s 1000ms ease-out`, style({ filter: 'blur(0px)'})),
     ])),
 

@@ -6,9 +6,9 @@ const routes: Routes = [
 
   {path : 'connexion', loadChildren: () => import('./connection/connection.module').then(m => m.ConnectionModule)},
   {path : 'u', loadChildren: () => import('./player/player.module').then(m => m.PlayerModule) },
-  {path: '', redirectTo: 'u', pathMatch: 'full' },
-  {path: '*', redirectTo: 'u', pathMatch: 'full' },
-  {path: '**', redirectTo: 'u', pathMatch: 'full' },
+  {path: '', redirectTo: 'connexion', pathMatch: 'full' },
+  {path: '*', redirectTo: 'connexion', pathMatch: 'full' },
+  {path: '**', redirectTo: 'connexion', pathMatch: 'full' },
 ];
 
 @NgModule({

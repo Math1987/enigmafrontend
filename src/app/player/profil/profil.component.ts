@@ -39,8 +39,8 @@ export class ProfilComponent implements OnInit {
    * @param userService: give the observable currentUser
    */
   constructor(
-    private userService: UserService,
-    private charaService: CharaService
+    public userService: UserService,
+    public charaService: CharaService
   ) { }
 
   /**

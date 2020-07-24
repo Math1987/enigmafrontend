@@ -28,6 +28,10 @@ import {pops} from '../shared/animations/pops';
   animations : [
     pops,
     trigger('intro', [
+      state('start', style({
+        opacity: 0.0,
+        transform: "translate(0px,-100px)"
+      })),
       state('normal', style({
         opacity: 1.0,
         transform: "translate(0px,0px)"
@@ -70,6 +74,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   }
   public startContent(event){
+    console.log('starting content');
     this.containerAnimation = "normal" ;
   }
 
