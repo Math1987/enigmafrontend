@@ -1,28 +1,29 @@
-import {NgModule, OnDestroy, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {PlayerComponent} from './player.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {RouterModule} from '@angular/router';
-import {PlayerRouting} from './player.routing';
-import {ExtendedModule, FlexModule} from '@angular/flex-layout';
-import {MapComponent} from './map/map.component';
-import {CharacterComponent} from './character/character.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import { CreateComponent } from './create/create.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatListModule} from '@angular/material/list';
-import {ProfilComponent} from './profil/profil.component';
-import {IconsModule} from '../shared/modules/icons/icons.module';
-import {PlayerToolbarComponent} from './player-toolbar/player-toolbar.component';
-import {GameComponent} from './game/game.component';
+import { MapViewverModule } from "./../shared/modules/map-viewver/map-viewver.module";
+import { NgModule, OnDestroy, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { PlayerComponent } from "./player.component";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { RouterModule } from "@angular/router";
+import { PlayerRouting } from "./player.routing";
+import { ExtendedModule, FlexModule } from "@angular/flex-layout";
+import { MapComponent } from "./map/map.component";
+import { CharacterComponent } from "./character/character.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { CreateComponent } from "./create/create.component";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatListModule } from "@angular/material/list";
+import { ProfilComponent } from "./profil/profil.component";
+import { IconsModule } from "../shared/modules/icons/icons.module";
+import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.component";
+import { GameComponent } from "./game/game.component";
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -39,7 +40,7 @@ const MATERIALS = [
   MatTooltipModule,
   MatToolbarModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
 ];
 
 @NgModule({
@@ -50,7 +51,7 @@ const MATERIALS = [
     GameComponent,
     CharacterComponent,
     CreateComponent,
-    PlayerToolbarComponent
+    PlayerToolbarComponent,
   ],
   imports: [
     CommonModule,
@@ -64,10 +65,8 @@ const MATERIALS = [
     MatListModule,
     ExtendedModule,
     IconsModule,
+    MapViewverModule,
   ],
-  providers: [
-  ]
+  providers: [],
 })
-export class PlayerModule{
-
-}
+export class PlayerModule {}
