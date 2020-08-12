@@ -93,9 +93,10 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
       }
     }
     if (!foundInCash) {
+      console.log("obj not in cash");
       for (
         let r = 0;
-        r < this.mapViewverService.ROUND_MATRIX[this.rayon + 1];
+        r < this.mapViewverService.ROUND_MATRIX[this.rayon + 1].length;
         r++
       ) {
         let concretPosition = this.mapViewverService.ROUND_MATRIX[
@@ -106,8 +107,11 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
           obj.x === concretPosition.x + this.position.x &&
           obj.y === concretPosition.y + this.position.y
         ) {
+          console.log("obj added in cash");
+          console.log(obj);
           this.cash.push(obj);
           this.addObjInView(obj, this.matrix.rounds[r]);
+          this.draw();
           moveDone = true;
         }
       }
@@ -139,6 +143,7 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
     this.draw();
   }
   updateViewCash() {
+    let cashKeeper = [];
     let emptyCases = [];
     for (
       let r = 0;
@@ -157,11 +162,23 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
           drawer.x === this.position.x + rx &&
           drawer.y === this.position.y + ry
         ) {
+          cashKeeper.push(drawer);
           this.addObjInView(drawer, this.matrix.rounds[r]);
         }
       }
       if (this.matrix.rounds[r].length <= 0) {
         emptyCases.push({ x: this.position.x + rx, y: this.position.y + ry });
+      }
+    }
+    for (let i = this.cash.length - 1; i >= 0; i--) {
+      let destroy = true;
+      for (let newCash of cashKeeper) {
+        if (newCash === this.cash[i]) {
+          destroy = false;
+        }
+      }
+      if (destroy) {
+        this.cash.splice(i, 1);
       }
     }
     return emptyCases;

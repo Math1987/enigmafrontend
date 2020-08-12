@@ -82,6 +82,7 @@ export class CharaService {
             if (res && newChara) {
               this.character.next(<Chara>newChara);
               this.router.navigate(["/u/map"]);
+              window.location.reload();
             }
           });
         }

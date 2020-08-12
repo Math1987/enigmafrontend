@@ -36,12 +36,26 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.IMAGES.floor.addEventListener("load", () => {});
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+  ngAfterViewInit() {
     this.socketService.socketObservable.subscribe((socket) => {
       if (socket) {
+        let subscription = this.charaService.character.subscribe(
+          (character) => {
+            if (character && character["position"]) {
+              let emptyCases = this.viewver.move(
+                character["position"].x,
+                character["position"].y
+              );
+              this.askCash(emptyCases);
+              subscription.unsubscribe();
+            }
+          }
+        );
+
         socket.on("move", (obj, moveX, moveY) => {
-          console.log("move");
           if (this.viewver.moveObject(obj)) {
+            console.log("move");
             if (obj["id"] === this.userService.actualUser["id"]) {
               let emptyCases = this.viewver.move(moveX, moveY);
               this.askCash(emptyCases);
@@ -50,19 +64,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         });
       }
     });
-  }
-  ngAfterViewInit() {
-    let subscription = this.charaService.character.subscribe((character) => {
-      if (character && character["position"]) {
-        console.log("character in map component ");
-        let emptyCases = this.viewver.move(
-          character["position"].x,
-          character["position"].y
-        );
-        this.askCash(emptyCases);
-        subscription.unsubscribe();
-      }
-    });
+
     /*this.viewver.init(0, 0);
     let emptyCases = this.viewver.move(0, 0);
     this.askCash(emptyCases);*/
@@ -83,6 +85,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   move(x: number, y: number) {
     this.socketService.socket.emit("move", x, y);
+
+    // this.http
+    //   .post(`${environment.apiUserCharaURL}/move`, { x: x, y: y })
+    //   .subscribe((moveRes) => {});
 
     //let emptyCases = this.viewver.move(x, y);
     //this.askCash(emptyCases);
