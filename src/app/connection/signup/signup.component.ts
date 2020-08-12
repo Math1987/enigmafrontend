@@ -1,15 +1,15 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
-import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {AuthService} from '../../shared/services/auth.service';
-import {environment} from '../../../environments/environment';
+import { Component, ElementRef, OnInit } from "@angular/core";
+import { Form, FormControl, FormGroup, Validators } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { AuthService } from "../../shared/services/auth.service";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: "app-signup",
+  templateUrl: "./signup.component.html",
+  styleUrls: ["./signup.component.scss"],
 })
 /**
  * SignUp, create new account.
@@ -17,11 +17,10 @@ import {environment} from '../../../environments/environment';
  * check dynamically if email and name are free, with async validators and customised pipe
  */
 export class SignupComponent implements OnInit {
-
   /**
    * the formGroup angular containing controls as name, email, password and confirm
    */
-  public formGroup: FormGroup ;
+  public formGroup: FormGroup;
 
   /**
    * form control is used from connection's component lazy loaded by connection's module
@@ -33,7 +32,7 @@ export class SignupComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService,
     private router: Router
-) { }
+  ) {}
 
   /**
    * init formGroup as data-driven model
@@ -41,10 +40,24 @@ export class SignupComponent implements OnInit {
    */
   ngOnInit() {
     this.formGroup = new FormGroup({
-      name : new FormControl('', Validators.required, this.validateName.bind(this)),
-      email : new FormControl('', [Validators.required, Validators.email], this.validateEmail.bind(this)),
-      password : new FormControl('', [Validators.required, this.matchingPassword.bind(this)]),
-      confirm : new FormControl('', [Validators.required, this.matchingConfirm.bind(this)])
+      name: new FormControl(
+        "",
+        Validators.required,
+        this.validateName.bind(this)
+      ),
+      email: new FormControl(
+        "",
+        [Validators.required, Validators.email],
+        this.validateEmail.bind(this)
+      ),
+      password: new FormControl("", [
+        Validators.required,
+        this.matchingPassword.bind(this),
+      ]),
+      confirm: new FormControl("", [
+        Validators.required,
+        this.matchingConfirm.bind(this),
+      ]),
     });
   }
   /**
@@ -53,17 +66,21 @@ export class SignupComponent implements OnInit {
    * @param formControl: as name input control
    */
   validateName(formControl: FormControl): Promise<any> | Observable<any> {
-    return new Promise( (resolve, reject) => {
-      this.http.get(`${environment.apiURL}/checkAccountName?name=${formControl.value}`).subscribe(
-        (res) => {
-        if ( res ) {
-          resolve({nameExist : true});
-        } else {
-          resolve(null);
-        }
-      }, (err) => {
-          resolve({backend : true});
-        });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(`${environment.apiURL}/checkAccountName?name=${formControl.value}`)
+        .subscribe(
+          (res) => {
+            if (res) {
+              resolve({ nameExist: true });
+            } else {
+              resolve(null);
+            }
+          },
+          (err) => {
+            resolve({ backend: true });
+          }
+        );
     });
   }
   /**
@@ -72,17 +89,21 @@ export class SignupComponent implements OnInit {
    * @param formControl: as email input control
    */
   validateEmail(formControl: FormControl): Promise<any> | Observable<any> {
-    return new Promise( (resolve, reject) => {
-      this.http.get(`${environment.apiURL}/checkEmail?email=${formControl.value}`).subscribe(
-        (res) => {
-        if ( res ) {
-          resolve({emailExist : true});
-        } else {
-          resolve(null);
-        }
-      }, (err) => {
-          resolve({backend: true});
-        });
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(`${environment.apiURL}/checkEmail?email=${formControl.value}`)
+        .subscribe(
+          (res) => {
+            if (res) {
+              resolve({ emailExist: true });
+            } else {
+              resolve(null);
+            }
+          },
+          (err) => {
+            resolve({ backend: true });
+          }
+        );
     });
   }
 
@@ -93,13 +114,13 @@ export class SignupComponent implements OnInit {
    * @param formControl: as password input
    */
   matchingPassword(formControl: FormControl) {
-    if ( this.formGroup && this.formGroup.value.confirm !== formControl.value ) {
-      return {nomatch: true};
+    if (this.formGroup && this.formGroup.value.confirm !== formControl.value) {
+      return { nomatch: true };
     } else {
-      if ( this.formGroup ) {
+      if (this.formGroup) {
         this.formGroup.controls.confirm.setErrors(null);
       }
-      return null ;
+      return null;
     }
   }
 
@@ -110,13 +131,17 @@ export class SignupComponent implements OnInit {
    * @param formControl: as confirm input
    */
   matchingConfirm(formControl: FormControl) {
-    if ( this.formGroup && this.formGroup.value.password !== formControl.value ) {
-      return {nomatch: true};
+    if (this.formGroup && this.formGroup.value.password !== formControl.value) {
+      return { nomatch: true };
     } else {
-      if ( this.formGroup && this.formGroup.value && this.formGroup.value.password ) {
+      if (
+        this.formGroup &&
+        this.formGroup.value &&
+        this.formGroup.value.password
+      ) {
         this.formGroup.controls.password.setErrors(null);
       }
-      return null ;
+      return null;
     }
   }
   /**
@@ -124,17 +149,12 @@ export class SignupComponent implements OnInit {
    * if the subscription is correct, navigate to main player's module route.
    */
   create() {
-
     this.authService.signUp(this.formGroup.value).subscribe((res) => {
-      console.log('signup') ;
-      console.log(res);
-      if ( res ) {
+      if (res) {
         this.authService.signIn(res).subscribe((signin) => {
-          console.log(signin);
-          this.router.navigate(['u']);
+          this.router.navigate(["u"]);
         });
       }
     });
   }
-
 }

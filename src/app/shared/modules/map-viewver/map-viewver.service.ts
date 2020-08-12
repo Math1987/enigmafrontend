@@ -73,8 +73,6 @@ export class MapViewverService {
       }
       this.VIEW_MATRIX.push(view);
     }
-    console.log(this.ROUND_MATRIX);
-    console.log(this.VIEW_MATRIX);
   }
   /**
    * create arrays for the view.
@@ -114,7 +112,6 @@ export class MapViewverService {
         }
       }
     }
-    console.log(viewMatrix);
 
     return {
       rounds: roundMatrix,

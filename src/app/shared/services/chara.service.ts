@@ -1,23 +1,22 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, ReplaySubject, Subscription} from 'rxjs';
-import {Chara} from '../models/chara.model';
-import {UserService} from './user.service';
-import {environment} from '../../../environments/environment';
-import {UserModel} from '../models/user.model';
-import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
-import {map, skip} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, ReplaySubject, Subscription } from "rxjs";
+import { Chara } from "../models/chara.model";
+import { UserService } from "./user.service";
+import { environment } from "../../../environments/environment";
+import { UserModel } from "../models/user.model";
+import { AuthService } from "./auth.service";
+import { Router } from "@angular/router";
+import { map, skip } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CharaService {
+  character: ReplaySubject<Chara> = null;
+  actualCharacter: Chara = null;
 
-  character : ReplaySubject<Chara> = null;
-  actualCharacter : Chara = null ;
-
-  subscription: Subscription = null ;
+  subscription: Subscription = null;
 
   /**
    * charaService is used only when player is connected, from player's module.
@@ -32,67 +31,60 @@ export class CharaService {
    */
   constructor(
     private http: HttpClient,
-    private router : Router,
+    private router: Router,
     private authService: AuthService,
-    private userService : UserService
-  ) {
+    private userService: UserService
+  ) {}
 
-
-  }
-
-
-  init(){
-
+  init() {
     this.character = new ReplaySubject<Chara>();
-    this.actualCharacter = null ;
+    this.actualCharacter = null;
 
-    this.subscription = this.userService.currentUser.pipe(
-    ).subscribe(user =>{
-      if ( user !== null ){
-        this.http.post<Chara>(`${environment.apiURL}/u/chara`, user).subscribe(charaRes => {
-          console.log("chara " + charaRes);
-          if ( charaRes ){
-            this.actualCharacter = charaRes ;
-            this.character.next(charaRes);
-          }else{
-            this.actualCharacter = null ;
-            this.character.next(null);
-          }
-        }, error => {
-          this.actualCharacter = null ;
-          this.character.next(null) ;
-        });
-      }else{
-        this.actualCharacter = null ;
-        this.character.next(null);
-      }
-    });
-
-
-
+    this.subscription = this.userService.currentUser
+      .pipe()
+      .subscribe((user) => {
+        if (user !== null) {
+          this.http
+            .post<Chara>(`${environment.apiURL}/u/chara`, user)
+            .subscribe(
+              (charaRes) => {
+                if (charaRes) {
+                  this.actualCharacter = charaRes;
+                  this.character.next(charaRes);
+                } else {
+                  this.actualCharacter = null;
+                  this.character.next(null);
+                }
+              },
+              (error) => {
+                this.actualCharacter = null;
+                this.character.next(null);
+              }
+            );
+        } else {
+          this.actualCharacter = null;
+          this.character.next(null);
+        }
+      });
   }
-  destroy(){
+  destroy() {
     this.subscription.unsubscribe();
-    this.subscription = null ;
+    this.subscription = null;
   }
 
-  create(chara:Chara){
-    chara['id'] = this.userService.getCurrentUser().id ;
-    this.http.post(`${environment.apiURL}/u/createChara`, chara).subscribe(newChara => {
-      if ( newChara ){
-        console.log(newChara) ;
-        this.authService.newToken(newChara).subscribe( res => {
-          if ( res && newChara){
-            console.log('token ok');
-            this.character.next(<Chara> newChara);
-            this.router.navigate(['/u/map']);
-          }
-
-        });
-      }
-    });
+  create(chara: Chara) {
+    chara["id"] = this.userService.getCurrentUser().id;
+    this.http
+      .post(`${environment.apiURL}/u/createChara`, chara)
+      .subscribe((newChara) => {
+        if (newChara) {
+          this.authService.newToken(newChara).subscribe((res) => {
+            if (res && newChara) {
+              this.character.next(<Chara>newChara);
+              this.router.navigate(["/u/map"]);
+            }
+          });
+        }
+      });
   }
-
-
-
 }

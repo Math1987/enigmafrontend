@@ -37,14 +37,14 @@ export class ConnectionComponent implements OnInit {
   ) {
     localStorage.removeItem(AuthService.LOCAL_JWT);
     this.animationService.background_state.next('wait') ;
-    console.log('build connection component');
+
   }
 
   ngOnInit(): void {
     setTimeout(()=>{
       this.introAnimation = "normal";
     },10);
-    console.log('init connection component');
+
   }
 
   heightIn(){

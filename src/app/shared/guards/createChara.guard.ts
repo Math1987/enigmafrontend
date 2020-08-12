@@ -1,18 +1,20 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
-import {CharaService} from '../services/chara.service';
-import {map, skip} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from "@angular/router";
+import { Observable } from "rxjs";
+import { CharaService } from "../services/chara.service";
+import { map, skip } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class CreateCharaGuard implements CanActivate{
-
-  constructor(
-    private charaService: CharaService,
-    private router: Router
-  ){}
+export class CreateCharaGuard implements CanActivate {
+  constructor(private charaService: CharaService, private router: Router) {}
   /**
    * check if the user got a character registed and actived.
    * use characterService's ReplaySubject character
@@ -22,21 +24,23 @@ export class CreateCharaGuard implements CanActivate{
    * @param route
    * @param state
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
     return this.charaService.character.pipe(
-      map(res=>{
-        console.log('chara guard ' + res );
-        if ( res ){
-          this.router.navigate(['u/map']);
-          return false ;
-        }else{
-          return true ;
+      map((res) => {
+        if (res) {
+          this.router.navigate(["u/map"]);
+          return false;
+        } else {
+          return true;
         }
       })
     );
   }
-
-
-
 }
