@@ -24,6 +24,8 @@ import { ProfilComponent } from "./profil/profil.component";
 import { IconsModule } from "../shared/modules/icons/icons.module";
 import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.component";
 import { GameComponent } from "./game/game.component";
+import { ActionComponent } from './map/action/action.component';
+import { ViewComponent } from './map/view/view.component';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -52,6 +54,8 @@ const MATERIALS = [
     CharacterComponent,
     CreateComponent,
     PlayerToolbarComponent,
+    ActionComponent,
+    ViewComponent,
   ],
   imports: [
     CommonModule,

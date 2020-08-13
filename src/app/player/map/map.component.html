@@ -1,9 +1,35 @@
-<h1>MAP</h1>
-<div class="map-viewver">
-  <app-map-viewver #viewver [rayon]="5" [images]="IMAGES"></app-map-viewver>
-  <p>x:{{viewver.position.x}},y:{{viewver.position.y}}</p>
-  <button (click)="move(0,-1)">move+X</button>
-  <button (click)="move(0,1)">move-X</button>
-  <button (click)="move(1,0)">move+Y</button>
-  <button (click)="move(-1,0)">move-Y</button>
+<div fxLayout="row wrap">
+  <div class="map-viewver">
+    <app-map-viewver
+      #viewver
+      [rayon]="5"
+      [images]="IMAGES"
+      (focus)="focusCase($event)"
+      (move)="moveEvent($event)"
+    ></app-map-viewver>
+    <p>x:{{ viewver.position.x }},y:{{ viewver.position.y }}</p>
+    <button (click)="move(0, -1)">move+X</button>
+    <button (click)="move(0, 1)">move-X</button>
+    <button (click)="move(1, 0)">move+Y</button>
+    <button (click)="move(-1, 0)">move-Y</button>
+  </div>
+
+  <div
+    *ngIf="focused | async; let objs"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+  >
+    <div
+      *ngFor="let obj of objs"
+      class="target"
+      fxLayout="column nowrap"
+      fxLayoutAlign="start center"
+    >
+      <app-view [target]="obj"></app-view>
+      <app-action
+        [user]="charaService.character | async"
+        [target]="obj"
+      ></app-action>
+    </div>
+  </div>
 </div>

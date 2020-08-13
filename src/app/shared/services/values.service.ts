@@ -24,7 +24,7 @@ export class ValuesService {
       this.resources = new ReplaySubject<any>(null);
       this.skills = new ReplaySubject<any>(null);
       this.resourceActions = new ReplaySubject<any>(null);
-      this.subscription = this.callValues();
+      //this.subscription = this.callValues();
     }
 
     this.characterService.character.subscribe((res) => {
@@ -70,6 +70,7 @@ export class ValuesService {
           }
         }
       }
+      console.log(skills);
       this.skills.next(skills);
 
       this.values.next(datas);

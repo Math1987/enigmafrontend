@@ -42,6 +42,7 @@ export class UserService {
       if (res && localStorage.getItem(AuthService.LOCAL_JWT)) {
         this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
           (user) => {
+            console.log("subscribe user");
             if (user) {
               this.actualUser = user;
               this.actualUser.avatarPath = "assets/images/homme.png";

@@ -1,6 +1,14 @@
+import { HttpEvent } from "@angular/common/http";
 import { Drawer } from "./../../models/drawer";
 import { MapViewverService } from "./map-viewver.service";
-import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import { query } from "@angular/animations";
 
 @Component({
@@ -14,7 +22,14 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
   @Input("rayon") public rayon = 9;
   @Input("ratioY") public ratioY = 0.59;
   @Input("images") public images: {} = {};
-  @Input("position") public position: { x: 0; y: 0 } = { x: 0, y: 0 };
+
+  public position: { x: number; y: number } = { x: 0, y: 0 };
+
+  @Output("focus")
+  private focus: EventEmitter<Object[]> = new EventEmitter();
+  private focusedRound = 0;
+
+  @Output("move") private moveEvent: EventEmitter<Object> = new EventEmitter();
 
   private matrix: {
     rounds: { x: number; y: number }[][];
@@ -50,6 +65,7 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
       .catch((err) => {});
   }
   moveObject(obj) {
+    let objAdded = false;
     let moveDone = false;
     let foundInCash = false;
     for (let drawer of this.cash) {
@@ -66,21 +82,21 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
           ][r];
 
           if (
-            obj.x === concretPosition.x + this.position.x &&
-            obj.y === concretPosition.y + this.position.y
+            obj.x == concretPosition.x + this.position.x &&
+            obj.y == concretPosition.y + this.position.y
           ) {
             this.addObjInView(drawer, this.matrix.rounds[r]);
-            //this.matrix.rounds[r].push(drawer);
             moveDone = true;
+            objAdded = true;
           }
 
           if (
-            drawer.x === concretPosition.x + this.position.x &&
-            drawer.y === concretPosition.y + this.position.y
+            drawer.x == concretPosition.x + this.position.x &&
+            drawer.y == concretPosition.y + this.position.y
           ) {
             for (let i = this.matrix.rounds[r].length - 1; i >= 0; i--) {
               if (this.matrix.rounds[r][i] === drawer) {
-                this.matrix.rounds[r].splice(i, 1);
+                this.removeObjInView(drawer, this.matrix.rounds[r]);
                 moveDone = true;
               }
             }
@@ -89,11 +105,15 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
 
         drawer.x = obj.x;
         drawer.y = obj.y;
+
+        if (!objAdded) {
+          this.removeInCash(drawer);
+        }
+
         this.draw();
       }
     }
     if (!foundInCash) {
-      console.log("obj not in cash");
       for (
         let r = 0;
         r < this.mapViewverService.ROUND_MATRIX[this.rayon + 1].length;
@@ -109,15 +129,19 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
         ) {
           console.log("obj added in cash");
           console.log(obj);
-          this.cash.push(obj);
+
           this.addObjInView(obj, this.matrix.rounds[r]);
           this.draw();
           moveDone = true;
         }
       }
     }
+    if (moveDone) {
+      this.moveEvent.emit(obj);
+    }
     return moveDone;
   }
+
   addObjInView(obj, round_container: {}[]) {
     let index = 0;
     while (
@@ -128,18 +152,61 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
     }
     round_container.splice(index, 0, obj);
   }
+  removeObjInView(obj, round_containre: {}[]) {
+    for (let i = round_containre.length - 1; i >= 0; i--) {
+      if (round_containre[i] === obj) {
+        round_containre.splice(i, 1);
+      }
+    }
+  }
+  removeInCash(obj) {
+    for (let i = this.cash.length - 1; i >= 0; i--) {
+      if (
+        this.cash[i] === obj ||
+        (this.cash["id"] && obj["id"] && this.cash["id"] === obj["id"])
+      ) {
+        this.cash.slice(i, 1);
+      }
+    }
+  }
   move(x: number, y: number): { x: number; y: number }[] {
     this.position.x += x;
     this.position.y += y;
     let emptyCases = this.updateViewCash();
+
     this.draw();
     return emptyCases;
   }
+
+  moveOn(x: number, y: number) {
+    this.position["x"] = x;
+    this.position["y"] = y;
+    let emptyCases = this.updateViewCash();
+
+    this.focus.emit(this.matrix.rounds[this.focusedRound]);
+
+    this.draw();
+    return emptyCases;
+  }
+
   addCash(objs: Drawer[]) {
     for (let obj of objs) {
       this.cash.push(obj);
+      for (
+        let r = 0;
+        r < this.mapViewverService.ROUND_MATRIX[this.rayon + 1].length;
+        r++
+      ) {
+        let rx = this.mapViewverService.ROUND_MATRIX[this.rayon + 1][r].x;
+        let ry = this.mapViewverService.ROUND_MATRIX[this.rayon + 1][r].y;
+        if (
+          obj["x"] === rx + this.position.x &&
+          obj["y"] === ry + this.position.y
+        ) {
+          this.addObjInView(obj, this.matrix.rounds[r]);
+        }
+      }
     }
-    this.updateViewCash();
     this.draw();
   }
   updateViewCash() {
@@ -159,8 +226,8 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
 
       for (let drawer of this.cash) {
         if (
-          drawer.x === this.position.x + rx &&
-          drawer.y === this.position.y + ry
+          drawer.x == this.position.x + rx &&
+          drawer.y == this.position.y + ry
         ) {
           cashKeeper.push(drawer);
           this.addObjInView(drawer, this.matrix.rounds[r]);
@@ -182,6 +249,42 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
       }
     }
     return emptyCases;
+  }
+  updateObjs(objs: {}[]) {
+    for (let target of objs) {
+      let foundInCash = false;
+      for (let obj of this.cash) {
+        if (target["id"] === obj["id"]) {
+          foundInCash = true;
+          for (let key in obj) {
+            if (target[key]) {
+              obj[key] = target[key];
+            }
+          }
+          console.log("found obj " + target["name"]);
+          console.log(obj);
+          if (
+            target["position"].x !== obj["x"] ||
+            target["position"].y !== obj["y"]
+          ) {
+            let newObj = {};
+            Object.assign(newObj, obj);
+            newObj["x"] = target["position"].x;
+            newObj["y"] = target["position"].y;
+            console.log("move obj");
+            console.log(newObj);
+            this.moveObject(newObj);
+          }
+        }
+      }
+      if (!foundInCash) {
+        this.moveObject(target);
+      }
+    }
+
+    console.log(this.matrix.rounds[this.focusedRound]);
+    this.focus.emit(this.matrix.rounds[this.focusedRound]);
+    this.draw();
   }
 
   draw() {
@@ -217,9 +320,9 @@ export class MapViewverComponent implements OnInit, AfterViewInit {
 
         if (vBoxes !== null) {
           for (let vBox of vBoxes) {
-            if (this.images[vBox["key"]]) {
+            if (this.images[vBox["key_"]]) {
               context.drawImage(
-                this.images[vBox["key"]],
+                this.images[vBox["key_"]],
                 -size / 2,
                 -size / 2,
                 size,

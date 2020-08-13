@@ -1,3 +1,5 @@
+import { ValuesService } from "./../../shared/services/values.service";
+import { BehaviorSubject } from "rxjs";
 import { CharaService } from "./../../shared/services/chara.service";
 import { AuthService } from "./../../shared/services/auth.service";
 import { Socket } from "socket.io";
@@ -20,50 +22,83 @@ import { HttpClient } from "@angular/common/http";
 export class MapComponent implements OnInit, AfterViewInit {
   IMAGES = {
     floor: new Image(),
-    elf: new Image(),
+    humanmasculin: new Image(),
+    humanfeminine: new Image(),
+    dwarfmasculin: new Image(),
+    dwarffeminine: new Image(),
+    elfmasculin: new Image(),
+    elffeminine: new Image(),
+    vampiremasculin: new Image(),
+    vampirefeminine: new Image(),
   };
   @ViewChild("viewver") public viewver: MapViewverComponent;
+
+  focused: BehaviorSubject<Object[]> = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private charaService: CharaService,
+    public charaService: CharaService,
     private socketService: SocketService
   ) {
     this.IMAGES.floor.src = "assets/images/g_neutral.png";
-    this.IMAGES.elf.src = "assets/images/elf_man.png";
+    this.IMAGES.humanmasculin.src = "assets/images/humanmasculin.png";
+    this.IMAGES.humanfeminine.src = "assets/images/humanfeminine.png";
+    this.IMAGES.dwarfmasculin.src = "assets/images/dwarfmasculin.png";
+    this.IMAGES.dwarffeminine.src = "assets/images/dwarffeminine.png";
+    this.IMAGES.elfmasculin.src = "assets/images/elfmasculin.png";
+    this.IMAGES.elffeminine.src = "assets/images/elffeminine.png";
+    this.IMAGES.vampiremasculin.src = "assets/images/vampiremasculin.png";
+    this.IMAGES.vampirefeminine.src = "assets/images/vampirefeminine.png";
 
-    this.IMAGES.floor.addEventListener("load", () => {});
+    for (let imgKey in this.IMAGES) {
+      this.IMAGES[imgKey].addEventListener("load", () => {});
+    }
   }
 
   ngOnInit() {}
   ngAfterViewInit() {
-    this.socketService.socketObservable.subscribe((socket) => {
-      if (socket) {
-        let subscription = this.charaService.character.subscribe(
-          (character) => {
+    setTimeout(() => {
+      this.socketService.socketObservable.subscribe((socket) => {
+        if (socket) {
+          this.charaService.character.subscribe((character) => {
             if (character && character["position"]) {
-              let emptyCases = this.viewver.move(
+              console.log(character);
+              let emptyCases = this.viewver.moveOn(
                 character["position"].x,
                 character["position"].y
               );
               this.askCash(emptyCases);
-              subscription.unsubscribe();
             }
-          }
-        );
+          });
 
-        socket.on("move", (obj, moveX, moveY) => {
-          if (this.viewver.moveObject(obj)) {
-            console.log("move");
-            if (obj["id"] === this.userService.actualUser["id"]) {
-              let emptyCases = this.viewver.move(moveX, moveY);
-              this.askCash(emptyCases);
+          socket.on("move", (obj, moveX, moveY) => {
+            if (this.viewver.moveObject(obj)) {
+              if (obj["id"] === this.userService.actualUser["id"]) {
+              }
             }
-          }
-        });
-      }
-    });
+          });
+
+          socket.on("attack", (values) => {
+            console.log(values);
+            this.viewver.updateObjs([values["user"], values["target"]]);
+
+            if (
+              values["result"] === "kill" &&
+              ((values["type"] === "attack" &&
+                values["target"]["id"] ===
+                  this.charaService.actualCharacter["id"]) ||
+                (values["type"] === "counter" &&
+                  values["user"]["id"] ===
+                    this.charaService.actualCharacter["id"]))
+            ) {
+              alert("vous êtes mort...");
+              window.location.reload();
+            }
+          });
+        }
+      });
+    }, 50);
 
     /*this.viewver.init(0, 0);
     let emptyCases = this.viewver.move(0, 0);
@@ -85,12 +120,15 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   move(x: number, y: number) {
     this.socketService.socket.emit("move", x, y);
-
-    // this.http
-    //   .post(`${environment.apiUserCharaURL}/move`, { x: x, y: y })
-    //   .subscribe((moveRes) => {});
-
-    //let emptyCases = this.viewver.move(x, y);
-    //this.askCash(emptyCases);
+  }
+  moveEvent(obj) {
+    if (obj && obj["id"] === this.charaService.actualCharacter["id"]) {
+      let emptyCases = this.viewver.moveOn(obj["x"], obj["y"]);
+      this.askCash(emptyCases);
+    }
+  }
+  focusCase(caseArray: Object[]) {
+    this.focused.next(caseArray);
+    console.log(caseArray);
   }
 }
