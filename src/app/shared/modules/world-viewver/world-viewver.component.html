@@ -1,4 +1,8 @@
 <canvas #canvas class="canvas"></canvas>
+<p style="color: white;" *ngIf="worldService.posBehavior | async; let pos">
+  position
+  {{ pos["x"] }}x, {{ pos["y"] }}y
+</p>
 <button (click)="move(0, -1)">move+X</button>
 <button (click)="move(0, 1)">move-X</button>
 <button (click)="move(1, 0)">move+Y</button>

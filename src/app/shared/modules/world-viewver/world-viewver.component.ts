@@ -8,6 +8,7 @@ import {
   Input,
   AfterViewInit,
   ElementRef,
+  AfterContentInit,
 } from "@angular/core";
 
 @Component({
@@ -25,19 +26,21 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    if (this.socket) {
-      this.socket.subscribe((socket) => {
-        console.log(socket);
-        if (socket) {
-          this.worldService.init(
-            this.character,
-            socket,
-            this.canvas.nativeElement
-          );
-          this.character.subscribe((chara) => {});
-        }
-      });
-    }
+    setTimeout(() => {
+      if (this.socket) {
+        this.socket.subscribe((socket) => {
+          console.log(socket);
+          if (socket) {
+            this.worldService.init(
+              this.character,
+              socket,
+              this.canvas.nativeElement
+            );
+            this.character.subscribe((chara) => {});
+          }
+        });
+      }
+    }, 300);
   }
 
   move(x: number, y: number) {
@@ -49,7 +52,11 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
     ) {
       this.socket.getValue().emit("move", x, y, (moverRes) => {
         if (moverRes) {
-          this.worldService.move(x, y);
+          // let newChara = this.character.getValue();
+          // newChara["position"]["x"] += x;
+          // newChara["position"]["y"] += y;
+          //this.character.next(newChara);
+          this.worldService.moveView(x, y);
         }
       });
     }

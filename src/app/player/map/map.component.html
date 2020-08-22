@@ -1,25 +1,26 @@
 <div fxLayout="row wrap">
   <div class="map-viewver">
     <app-world-viewver
+    [@pops]="mapPops"
       #worldViewver
       [character]="charaService.character"
       [socket]="socketService.socketObservable"
     >
     </app-world-viewver>
 
-    <app-map-viewver
+    <!-- <app-map-viewver
       #viewver
       [rayon]="5"
       [images]="IMAGES"
       (focus)="focusCase($event)"
       (move)="moveEvent($event)"
-    ></app-map-viewver>
-
+    ></app-map-viewver> -->
+    <!-- 
     <p>x:{{ viewver.position.x }},y:{{ viewver.position.y }}</p>
     <button (click)="move(0, -1)">move+X</button>
     <button (click)="move(0, 1)">move-X</button>
     <button (click)="move(1, 0)">move+Y</button>
-    <button (click)="move(-1, 0)">move-Y</button>
+    <button (click)="move(-1, 0)">move-Y</button> -->
   </div>
 
   <div

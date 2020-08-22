@@ -39,9 +39,16 @@ export class WorldViewverService {
   rayon: number = 4;
   x: number = 0;
   y: number = 0;
-  roundMatrix: { x: number; y: number }[][] = [];
-  viewMatrix: { x: number; y: number }[][] = [];
+  roundMatrix: Object[][] = [];
+  viewMatrix: Object[][] = [];
 
+  public posBehavior: BehaviorSubject<{
+    x: number;
+    y: number;
+  }> = new BehaviorSubject({
+    x: 0,
+    y: 0,
+  });
   chara: BehaviorSubject<Object> = null;
   socket: Socket = null;
   canvas: HTMLCanvasElement = null;
@@ -127,14 +134,19 @@ export class WorldViewverService {
     this.canvas = canvas;
     if (this.chara) {
       this.chara.subscribe((newChara) => {
+        console.log("world view", newChara);
         if (newChara && newChara["position"]) {
           this.x = newChara["position"]["x"];
           this.y = newChara["position"]["y"];
+          this.posBehavior.next({ x: this.x, y: this.y });
           this.createViewMatrix(4);
-          this.updateAround();
+          this.initRounds();
         }
       });
     }
+    this.socket.on("move", (obj, callback) => {
+      this.moveObj(obj);
+    });
   }
 
   createViewMatrix(
@@ -175,7 +187,7 @@ export class WorldViewverService {
       views: viewMatrix,
     };
   }
-  updateAround() {
+  initRounds() {
     let positions = [];
 
     for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
@@ -184,9 +196,9 @@ export class WorldViewverService {
     }
 
     this.getOnPositions(positions, (objs) => {
-      console.log(objs);
       this.addPositions(objs);
       this.draw();
+      this.moveView(0, 0);
     });
   }
   addPositions(objs) {
@@ -202,12 +214,11 @@ export class WorldViewverService {
       }
       objs.splice(0, 1);
     }
-    console.log(this.roundMatrix);
   }
   getOnPositions(positions: { x: number; y: number }[], callback) {
     this.socket.emit("getOnPositions", positions, callback);
   }
-  move(x: number, y: number) {
+  moveView(x: number, y: number) {
     let newCenterX = this.x + x;
     let newCenterY = this.y + y;
     let need = [];
@@ -246,12 +257,35 @@ export class WorldViewverService {
     }
     this.x += x;
     this.y += y;
+    this.posBehavior.next({ x: this.x, y: this.y });
     this.draw();
 
     this.getOnPositions(need, (objs) => {
       this.addPositions(objs);
       this.draw();
     });
+  }
+  moveObj(obj: Object) {
+    //1-tu trouve l'objet => l'effacer de la case.
+    //2-tu trouve la position nouvelle de l'objet => l'ajouter dans la case
+
+    for (let mats of this.roundMatrix) {
+      for (let i = mats.length - 1; i >= 0; i--) {
+        if (mats[i]["id"] === obj["id"]) {
+          mats.splice(i, 1);
+        }
+      }
+    }
+
+    for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
+      let round = this.ROUND_MATRIX[this.rayon + 1][r];
+      let px = round.x + this.x;
+      let py = round.y + this.y;
+      if (obj["position"]["x"] === px && obj["position"]["y"] === py) {
+        this.roundMatrix[r].push(obj);
+      }
+    }
+    this.draw();
   }
 
   draw() {
@@ -265,8 +299,6 @@ export class WorldViewverService {
     );
 
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    context.fillStyle = "red";
-    context.fillRect(0, 0, width, height);
 
     context.save();
     context.translate(width / 2, height / 2 - size / 4);

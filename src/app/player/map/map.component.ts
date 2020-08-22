@@ -7,6 +7,7 @@ import { environment } from "./../../../environments/environment";
 import { MapViewverComponent } from "./../../shared/modules/map-viewver/map-viewver.component";
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { pops } from "src/app/shared/animations/pops";
 
 /**
  * Map component
@@ -15,8 +16,11 @@ import { HttpClient } from "@angular/common/http";
   selector: "app-map",
   templateUrl: "./map.component.html",
   styleUrls: ["./map.component.scss"],
+  animations: [pops],
 })
 export class MapComponent implements OnInit, AfterViewInit {
+  mapPops = "start";
+
   IMAGES = {
     floor: new Image(),
     humanmasculin: new Image(),
@@ -38,6 +42,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     public charaService: CharaService,
     public socketService: SocketService
   ) {
+    this.mapPops = "start";
+
     this.IMAGES.floor.src = "assets/images/g_neutral.png";
     this.IMAGES.humanmasculin.src = "assets/images/humanmasculin.png";
     this.IMAGES.humanfeminine.src = "assets/images/humanfeminine.png";
@@ -53,48 +59,53 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mapPops = "start";
+    setTimeout(() => {
+      this.mapPops = "normal";
+    }, 50);
+  }
   ngAfterViewInit() {
     setTimeout(() => {
-      this.socketService.socketObservable.subscribe((socket) => {
-        if (socket) {
-          this.charaService.character.subscribe((character) => {
-            if (character && character["position"]) {
-              console.log(character);
-              let emptyCases = this.viewver.moveOn(
-                character["position"].x,
-                character["position"].y
-              );
-              this.askCash(emptyCases);
-            }
-          });
-
-          socket.on("move", (obj, moveX, moveY) => {
-            if (this.viewver.moveObject(obj)) {
-            }
-          });
-
-          socket.on("attack", (values) => {
-            console.log(values);
-            this.viewver.updateObjs([values["user"], values["target"]]);
-
-            if (
-              values["result"] === "kill" &&
-              ((values["type"] === "attack" &&
-                values["target"]["id"] ===
-                  this.charaService.actualCharacter["id"]) ||
-                (values["type"] === "counter" &&
-                  values["user"]["id"] ===
-                    this.charaService.actualCharacter["id"]))
-            ) {
-              alert("vous êtes mort...");
-              window.location.reload();
-            }
-          });
-        }
-      });
+      this.mapPops = "normal";
     }, 50);
 
+    // setTimeout(() => {
+    //   this.socketService.socketObservable.subscribe((socket) => {
+    //     if (socket) {
+    //       this.charaService.character.subscribe((character) => {
+    //         if (character && character["position"]) {
+    //           console.log(character);
+    //           let emptyCases = this.viewver.moveOn(
+    //             character["position"].x,
+    //             character["position"].y
+    //           );
+    //           this.askCash(emptyCases);
+    //         }
+    //       });
+    //       socket.on("move", (obj, moveX, moveY) => {
+    //         if (this.viewver.moveObject(obj)) {
+    //         }
+    //       });
+    //       socket.on("attack", (values) => {
+    //         console.log(values);
+    //         this.viewver.updateObjs([values["user"], values["target"]]);
+    //         if (
+    //           values["result"] === "kill" &&
+    //           ((values["type"] === "attack" &&
+    //             values["target"]["id"] ===
+    //               this.charaService.actualCharacter["id"]) ||
+    //             (values["type"] === "counter" &&
+    //               values["user"]["id"] ===
+    //                 this.charaService.actualCharacter["id"]))
+    //         ) {
+    //           alert("vous êtes mort...");
+    //           window.location.reload();
+    //         }
+    //       });
+    //     }
+    //   });
+    // }, 50);
     /*this.viewver.init(0, 0);
     let emptyCases = this.viewver.move(0, 0);
     this.askCash(emptyCases);*/
