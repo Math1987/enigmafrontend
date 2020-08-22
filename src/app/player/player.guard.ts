@@ -9,7 +9,6 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { PlayerComponent } from "./player.component";
-import { UserService } from "../shared/services/user.service";
 import { CharaService } from "../shared/services/chara.service";
 import { skip } from "rxjs/operators";
 
@@ -18,11 +17,7 @@ import { skip } from "rxjs/operators";
 })
 export class PlayerGuard
   implements CanActivate, CanDeactivate<PlayerComponent> {
-  constructor(
-    private userService: UserService,
-    private charaService: CharaService,
-    private router: Router
-  ) {}
+  constructor(private charaService: CharaService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -33,7 +28,6 @@ export class PlayerGuard
     | boolean
     | UrlTree {
     console.log("player guard start");
-    this.userService.init();
     this.charaService.init();
 
     this.charaService.character.pipe().subscribe((res) => {
@@ -55,7 +49,6 @@ export class PlayerGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    this.userService.destroy();
     this.charaService.destroy();
     return true;
   }

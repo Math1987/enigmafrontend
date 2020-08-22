@@ -1,7 +1,6 @@
 import { Route, RouterModule } from "@angular/router";
 import { PlayerComponent } from "./player.component";
 import { MapComponent } from "./map/map.component";
-import { AuthGuard } from "../shared/guards/auth.guard";
 import { CharacterComponent } from "./character/character.component";
 import { CreateComponent } from "./create/create.component";
 import { CreateCharaGuard } from "../shared/guards/createChara.guard";

@@ -6,7 +6,6 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { AuthService } from "../shared/services/auth.service";
 import { AnimationService } from "../shared/services/animation.service";
 
 /**

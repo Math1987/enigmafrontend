@@ -2,7 +2,6 @@ import { ConfirmGuard } from "./../shared/guards/confirm.guard";
 import { PlayerConfirmComponent } from "./signup/player-confirm/player-confirm.component";
 import { Route, RouterModule } from "@angular/router";
 import { ConnectionComponent } from "./connection.component";
-import { AuthGuard } from "../shared/guards/auth.guard";
 import { ConnexionGuard } from "../shared/guards/connexion.guard";
 
 /**

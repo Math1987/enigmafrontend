@@ -8,7 +8,7 @@
   <mat-card class="profil-content">
     <mat-card-title><span>Mon compte</span></mat-card-title>
     <mat-card-content
-      *ngIf="userService.currentUser | async; let user"
+      *ngIf="accountService.account | async; let user"
       fxLayout="row"
     >
       <div fxFlex="50%" fxLayout="column nowrap" fxLayoutAlign="start center" class="avatar">

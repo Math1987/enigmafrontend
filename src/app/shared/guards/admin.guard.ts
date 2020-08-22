@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
-import {AuthService} from '../services/auth.service';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
-import {UserService} from '../services/user.service';
+import { Injectable } from "@angular/core";
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  RouterStateSnapshot,
+  UrlTree,
+} from "@angular/router";
+import { Observable } from "rxjs";
+
 /**
  * Guard canActivate if the user is authenticated and have admin rights.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AdminGuard implements CanActivate {
   /**
    * AdminGuard block the user's admin access if not admin rights
    * @param userService: used to check admin rights
    */
-  constructor(
-    private userService : UserService
-  ) {
-
-  }
+  constructor() {}
 
   /**
    * check of iserService's currentUser ReplaySubject is actived
@@ -27,15 +27,14 @@ export class AdminGuard implements CanActivate {
    * @param route
    * @param state
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<boolean | UrlTree>
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
-    | boolean | UrlTree {
-    if ( this.userService.currentUser && this.userService.getCurrentUser() && this.userService.getCurrentUser().admin ){
-      return true;
-    }else{
-      return false ;
-    }
+    | boolean
+    | UrlTree {
+    return true;
   }
-
 }

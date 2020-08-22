@@ -1,7 +1,6 @@
 import { AccountService } from "./../shared/services/account.service";
 import { SocketService } from "./../shared/services/socket.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { AuthService } from "../shared/services/auth.service";
 import { JwtToken } from "../shared/models/jwt.token";
 import {
   BehaviorSubject,
@@ -22,7 +21,6 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { UserService } from "../shared/services/user.service";
 import { CharaService } from "../shared/services/chara.service";
 import { Chara } from "../shared/models/chara.model";
 import { MetaService } from "../shared/services/meta.service";
@@ -69,16 +67,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * @currentChara is the Observable of Chara, used to give
    * a route as "bienvenue" for creation of user's chara if null
    */
-  public jwtToken: JwtToken;
   public subscription: Subscription;
   public containerAnimation: string = "start";
 
   constructor(
-    private authService: AuthService,
     public accountService: AccountService,
     private http: HttpClient,
     private router: Router,
-    public userService: UserService,
     public charaService: CharaService,
     private metaService: MetaService,
     private animationService: AnimationService,
@@ -87,11 +82,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.animationService.background_state.next("normal");
   }
 
-  ngOnInit(): void {
-    this.subscription = this.authService.jwtToken.subscribe((jwtToken) => {
-      this.jwtToken = jwtToken;
-    });
-  }
+  ngOnInit(): void {}
   public startContent(event) {
     this.containerAnimation = "normal";
   }
@@ -102,9 +93,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * in the appropriate place.
    */
   public deconnection(): void {
-    this.authService.logout();
-    this.userService.logout();
-    // this.router.navigate(["connexion"]);
     window.location.reload();
   }
 

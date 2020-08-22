@@ -4,8 +4,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { AuthService } from "../../shared/services/auth.service";
-import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-signin",
@@ -26,7 +24,6 @@ export class SigninComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private accountService: AccountService,
-    private userService: AuthService,
     private router: Router
   ) {}
 

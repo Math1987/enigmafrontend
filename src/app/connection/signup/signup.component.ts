@@ -4,8 +4,6 @@ import { Form, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { AuthService } from "../../shared/services/auth.service";
-import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-signup",
@@ -31,7 +29,6 @@ export class SignupComponent implements OnInit {
    */
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
     private accountService: AccountService,
     private router: Router
   ) {}
@@ -149,8 +146,6 @@ export class SignupComponent implements OnInit {
   create() {
     this.accountService.signUp(this.formGroup.value).subscribe((res) => {
       if (res) {
-        console.log("signup res");
-        console.log(res);
         localStorage.setItem("confirm", "wait");
         // this.router.navigate(["/connexion/confirmer"]);
         // this.authService.signIn(res).subscribe((signin) => {

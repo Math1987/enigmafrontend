@@ -35,10 +35,10 @@ export class CharacterComponent implements OnInit {
     );
   }
   addSkill(skill: { id: string; key_: string; value: number }, value: number) {
-    this.charaService.addValue(skill.key_, value).subscribe((res) => {
-      if (res && res["value"]) {
-        skill.value = res["value"];
-      }
+    this.charaService.addSkill(skill.key_, value).subscribe((res) => {
+      // if (res && res["skill"]) {
+      //   skill.value = res["skill"];
+      // }
     });
   }
 }

@@ -1,7 +1,5 @@
 import { Router } from "@angular/router";
 import { TokenService } from "./token.service";
-import { Account } from "./../models/account.model";
-import { AuthService } from "./auth.service";
 import { tap } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -77,5 +75,13 @@ export class AccountService {
     return this.http.post(`${environment.apiURL}/account/readAccount`, {
       token: token,
     });
+  }
+
+  setChara(chara: Object) {
+    let account = this.account.getValue();
+    let newObj = {};
+    Object.assign(newObj, account);
+    newObj["chara"] = chara;
+    this.account.next(newObj);
   }
 }

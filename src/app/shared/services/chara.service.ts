@@ -3,13 +3,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, ReplaySubject, Subscription } from "rxjs";
 import { Chara } from "../models/chara.model";
-import { UserService } from "./user.service";
 import { environment } from "../../../environments/environment";
-import { UserModel } from "../models/user.model";
-import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
-import { map, skip } from "rxjs/operators";
 import { MetaService } from "./meta.service";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -39,19 +36,16 @@ export class CharaService {
     private http: HttpClient,
     private router: Router,
     private accountService: AccountService,
-    private authService: AuthService,
-    private userService: UserService,
     private metaData: MetaService
   ) {
     console.log("init chara");
     this.accountService.account.subscribe((account) => {
       if (account && account["chara"]) {
-        console.log("chara", account["chara"]);
-        this.updateChara(account["chara"]);
+        this.updateLocalChara(account["chara"]);
       }
     });
   }
-  updateChara(chara: Object) {
+  updateLocalChara(chara: Object) {
     if (chara) {
       console.log("update chara");
       this.character.next(chara);
@@ -149,22 +143,36 @@ export class CharaService {
       .post(`${environment.apiURL}/u/chara/create`, chara)
       .subscribe((newChara) => {
         if (newChara) {
-          this.authService.newToken(newChara).subscribe((res) => {
-            if (res && newChara) {
-              this.character.next(<Chara>newChara);
-              // this.router.navigate(["/u/map"]);
-              window.location.reload();
-            }
-          });
+          this.accountService.setChara(newChara);
         }
       });
   }
 
-  addValue(key_: string, adder: number) {
+  updateLocalValues(values) {
+    let newChara = {};
+    let oldChara = this.character.getValue();
+    if (oldChara) {
+      Object.assign(newChara, oldChara);
+      for (let key in values) {
+        if (oldChara[key]) {
+          newChara[key] = values[key];
+        }
+      }
+      this.updateLocalChara(newChara);
+    }
+  }
+
+  addSkill(key_: string, adder: number) {
     console.log("adding value " + key_ + " " + adder);
-    return this.http.post(`${environment.apiURL}/u/chara/addValue`, {
-      key: key_,
-      value: adder,
-    });
+    return this.http
+      .post(`${environment.apiURL}/u/chara/addSkill`, {
+        key: key_,
+        adder: adder,
+      })
+      .pipe(
+        map((values) => {
+          this.updateLocalValues(values);
+        })
+      );
   }
 }

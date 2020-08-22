@@ -1,22 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import {AppRoutingModule } from './app-routing.module';
-import {AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FlexLayoutModule } from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
-import {AnimationService} from './shared/services/animation.service';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
+import { AnimationService } from "./shared/services/animation.service";
 
 /**
  * Main app component import and provide necessary systems for all modules.
  * All the modules will be load as lazy loading (see app-routing.module)
  */
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,11 +26,11 @@ import {AnimationService} from './shared/services/animation.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
-    AnimationService
+    AnimationService,
   ],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,10 +1,8 @@
+import { AccountService } from "./../../shared/services/account.service";
 import { BehaviorSubject } from "rxjs";
 import { CharaService } from "./../../shared/services/chara.service";
-import { AuthService } from "./../../shared/services/auth.service";
-import { Socket } from "socket.io";
 import { SocketService } from "./../../shared/services/socket.service";
 import { Drawer } from "./../../shared/models/drawer";
-import { UserService } from "./../../shared/services/user.service";
 import { environment } from "./../../../environments/environment";
 import { MapViewverComponent } from "./../../shared/modules/map-viewver/map-viewver.component";
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
@@ -36,9 +34,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    public accountService: AccountService,
     public charaService: CharaService,
-    private socketService: SocketService
+    public socketService: SocketService
   ) {
     this.IMAGES.floor.src = "assets/images/g_neutral.png";
     this.IMAGES.humanmasculin.src = "assets/images/humanmasculin.png";
@@ -73,8 +71,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
           socket.on("move", (obj, moveX, moveY) => {
             if (this.viewver.moveObject(obj)) {
-              if (obj["id"] === this.userService.actualUser["id"]) {
-              }
             }
           });
 
@@ -106,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   askCash(emptyCases) {
     this.http
       .post(`${environment.apiUserURL}/getViews`, {
-        world: this.userService.actualUser.world,
+        world: this.accountService.account.getValue()["world"],
         cases: emptyCases,
       })
       .subscribe((res) => {
