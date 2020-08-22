@@ -1,48 +1,49 @@
-.fullSize{
-  width:100% ;
-  height:100% ;
+.fullSize {
+  width: 100%;
+  height: 100%;
 }
-.toolbar{
-  position:relative;
+.toolbar {
+  position: fixed;
   padding: 0px;
   margin: 0px;
+  z-index: 10000;
 }
-.buttonUser{
+.buttonUser {
   overflow: hidden;
 }
-.iconUser{
-  max-width:100%;
-  position:relative;
+.iconUser {
+  max-width: 100%;
+  position: relative;
   bottom: 15px;
 }
-.menu{
+.menu {
   padding: 10px;
 }
 .flexExpand {
   flex: 1 1 auto;
 }
-.playerMenu{
-  width:100% ;
+.playerMenu {
+  width: 100%;
   height: 100%;
-  opacity: 0.0;
+  opacity: 0;
 }
-.playermenuButon{
+.playermenuButon {
   height: 100%;
 }
 
-.player-content{
+.player-content {
   padding: 0px;
   margin: 0px;
   width: 100%;
   background-color: red;
 }
-.playerContainer{
-  width: 90%;
-  height: 100% ;
-  padding : 20px ;
-  background-color: rgba(255,255,255,0.8);
+.playerContainer {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin-top: 60px;
+  //background-color: rgba(255, 255, 255, 0.8);
   visibility: visible;
-  opacity: 1.0;
+  opacity: 1;
   z-index: 1000;
-
 }

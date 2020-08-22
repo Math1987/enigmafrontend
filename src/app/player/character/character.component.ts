@@ -1,3 +1,4 @@
+import { CharaService } from "./../../shared/services/chara.service";
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
@@ -17,7 +18,11 @@ import { map } from "rxjs/operators";
 export class CharacterComponent implements OnInit {
   skillsAnimator: string = "start";
 
-  constructor(private http: HttpClient, public valueService: ValuesService) {}
+  constructor(
+    private http: HttpClient,
+    public valueService: ValuesService,
+    public charaService: CharaService
+  ) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -25,9 +30,9 @@ export class CharacterComponent implements OnInit {
     }, 10);
   }
   gotSkillsAdder(number: number) {
-    return this.valueService.getValue("addskills").pipe(
+    return this.charaService.character.pipe(
       map((res) => {
-        if (res < number) {
+        if (res["xp"] < number) {
           return true;
         } else {
           return false;
@@ -36,10 +41,9 @@ export class CharacterComponent implements OnInit {
     );
   }
   addSkill(skill: { id: string; key_: string; value: number }, value: number) {
-    this.valueService.addSkill(skill, value).subscribe((res) => {
-      if (res) {
-        skill.value = res[skill.key_];
-        this.valueService.setValue("addskills", res["addskills"]);
+    this.charaService.addValue(skill.key_, value).subscribe((res) => {
+      if (res && res["value"]) {
+        skill.value = res["value"];
       }
     });
   }

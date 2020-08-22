@@ -8,7 +8,11 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { RouterModule } from "@angular/router";
 import { PlayerRouting } from "./player.routing";
-import { ExtendedModule, FlexModule } from "@angular/flex-layout";
+import {
+  ExtendedModule,
+  FlexModule,
+  FlexLayoutModule,
+} from "@angular/flex-layout";
 import { MapComponent } from "./map/map.component";
 import { CharacterComponent } from "./character/character.component";
 import { MatCardModule } from "@angular/material/card";
@@ -24,8 +28,8 @@ import { ProfilComponent } from "./profil/profil.component";
 import { IconsModule } from "../shared/modules/icons/icons.module";
 import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.component";
 import { GameComponent } from "./game/game.component";
-import { ActionComponent } from './map/action/action.component';
-import { ViewComponent } from './map/view/view.component';
+import { ActionComponent } from "./map/action/action.component";
+import { ViewComponent } from "./map/view/view.component";
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -62,6 +66,7 @@ const MATERIALS = [
     RouterModule,
     PlayerRouting,
     FlexModule,
+    FlexLayoutModule,
     MATERIALS,
     MatButtonToggleModule,
     ReactiveFormsModule,

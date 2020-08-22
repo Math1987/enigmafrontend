@@ -1,3 +1,4 @@
+import { AccountService } from "./../../shared/services/account.service";
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { Form, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
@@ -31,6 +32,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
+    private accountService: AccountService,
     private router: Router
   ) {}
 
@@ -67,20 +69,18 @@ export class SignupComponent implements OnInit {
    */
   validateName(formControl: FormControl): Promise<any> | Observable<any> {
     return new Promise((resolve, reject) => {
-      this.http
-        .get(`${environment.apiURL}/checkAccountName?name=${formControl.value}`)
-        .subscribe(
-          (res) => {
-            if (res) {
-              resolve({ nameExist: true });
-            } else {
-              resolve(null);
-            }
-          },
-          (err) => {
-            resolve({ backend: true });
+      this.accountService.checkName(formControl.value).subscribe(
+        (res) => {
+          if (res) {
+            resolve({ nameExist: true });
+          } else {
+            resolve(null);
           }
-        );
+        },
+        (err) => {
+          resolve({ backend: true });
+        }
+      );
     });
   }
   /**
@@ -90,20 +90,18 @@ export class SignupComponent implements OnInit {
    */
   validateEmail(formControl: FormControl): Promise<any> | Observable<any> {
     return new Promise((resolve, reject) => {
-      this.http
-        .get(`${environment.apiURL}/checkEmail?email=${formControl.value}`)
-        .subscribe(
-          (res) => {
-            if (res) {
-              resolve({ emailExist: true });
-            } else {
-              resolve(null);
-            }
-          },
-          (err) => {
-            resolve({ backend: true });
+      this.accountService.checkEmail(formControl.value).subscribe(
+        (res) => {
+          if (res) {
+            resolve({ emailExist: true });
+          } else {
+            resolve(null);
           }
-        );
+        },
+        (err) => {
+          resolve({ backend: true });
+        }
+      );
     });
   }
 
@@ -149,11 +147,15 @@ export class SignupComponent implements OnInit {
    * if the subscription is correct, navigate to main player's module route.
    */
   create() {
-    this.authService.signUp(this.formGroup.value).subscribe((res) => {
+    this.accountService.signUp(this.formGroup.value).subscribe((res) => {
       if (res) {
-        this.authService.signIn(res).subscribe((signin) => {
-          this.router.navigate(["u"]);
-        });
+        console.log("signup res");
+        console.log(res);
+        localStorage.setItem("confirm", "wait");
+        // this.router.navigate(["/connexion/confirmer"]);
+        // this.authService.signIn(res).subscribe((signin) => {
+        //   this.router.navigate(["confirmer"]);
+        // });
       }
     });
   }

@@ -1,3 +1,4 @@
+import { PlayerConfirmComponent } from './signup/player-confirm/player-confirm.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -23,7 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
     SigninComponent,
     SignupComponent,
     InputMailPipe,
-    ConnectionComponent
+    ConnectionComponent,
+    PlayerConfirmComponent
   ],
   imports: [
     CommonModule,

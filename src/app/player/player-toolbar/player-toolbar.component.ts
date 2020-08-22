@@ -1,3 +1,4 @@
+import { CharaService } from './../../shared/services/chara.service';
 import { Component, OnInit } from '@angular/core';
 import {ValuesService} from '../../shared/services/values.service';
 import {MetaService} from '../../shared/services/meta.service';
@@ -16,6 +17,7 @@ export class PlayerToolbarComponent implements OnInit {
   popsAnimator = 'start' ;
 
   constructor(
+    public charaService : CharaService,
     public valueService : ValuesService,
     public metadatas : MetaService
   ) { }

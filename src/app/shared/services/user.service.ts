@@ -39,7 +39,7 @@ export class UserService {
     this.actualUser = null;
 
     this.tokenSubscription = this.authService.jwtToken.subscribe((res) => {
-      if (res && localStorage.getItem(AuthService.LOCAL_JWT)) {
+      if (res) {
         this.http.get<UserModel>(`${environment.apiUserURL}/datas`).subscribe(
           (user) => {
             console.log("subscribe user");
@@ -63,8 +63,10 @@ export class UserService {
     });
   }
   destroy() {
-    this.tokenSubscription.unsubscribe();
-    this.tokenSubscription = null;
+    if (this.tokenSubscription) {
+      this.tokenSubscription.unsubscribe();
+      this.tokenSubscription = null;
+    }
     this.currentUser = null;
     this.actualUser = null;
   }

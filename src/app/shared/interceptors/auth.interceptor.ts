@@ -1,12 +1,18 @@
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {AuthService} from '../services/auth.service';
+import { TokenService } from "./../services/token.service";
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+} from "@angular/common/http";
+import { Observable } from "rxjs";
 
 /**
  * Intercept all the http request, and add token in header if exist for security
  */
 export class AuthInterceptor implements HttpInterceptor {
-
+  //constructor(private tokenService: TokenService) {}
 
   /**
    * add a token in header if found in localStorage,
@@ -14,18 +20,24 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param req
    * @param next
    */
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem(AuthService.LOCAL_JWT );
-    if ( token ) {
-      let authReq = req.clone({
-        setHeaders: {
-          authorization: token,
-        }
-      });
-      return next.handle(authReq);
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem("token");
+    let newHeaders = req.headers;
+    if (token) {
+      newHeaders = newHeaders.append("authtoken", token);
+      // let authReq = req.clone({
+      //   setHeaders: {
+      //     authorization: "test______________________________________test",
+      //   },
+      // });
+      // return next.handle(authReq);
     } else {
-      return next.handle(req);
+      // return next.handle(req);
     }
-
+    const authReq = req.clone({ headers: newHeaders });
+    return next.handle(authReq);
   }
 }

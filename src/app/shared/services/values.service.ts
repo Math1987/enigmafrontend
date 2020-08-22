@@ -124,8 +124,10 @@ export class ValuesService {
     this.values = null;
     this.resources = null;
     this.skills = null;
-    this.subscription.unsubscribe();
-    this.subscription = null;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 
   constructor(

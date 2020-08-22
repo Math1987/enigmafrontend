@@ -1,3 +1,7 @@
-<button *ngIf="canAttack()" (click)="attack()" [disabled]="user.actions <= 0">
+<button
+  *ngIf="canAttack()"
+  (click)="attack()"
+  [disabled]="user['actions'] <= 0"
+>
   attaquer
 </button>

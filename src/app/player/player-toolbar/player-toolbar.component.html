@@ -1,4 +1,3 @@
-
 <mat-toolbar
   class="toolBarRes"
   fxLayout="row nowrap"
@@ -6,24 +5,31 @@
   fxLayoutAlign="space-between center"
   [@pops]="popsAnimator"
 >
-
-  <div *ngIf="valueService.resources | async ; let resources"   fxLayoutAlign="start center">
-    <div *ngFor="let res of resources " fxLayout="row nowrap" fxLayoutAlign="center center">
+  <div
+    *ngIf="charaService.resources | async; let resources"
+    fxLayoutAlign="start center"
+  >
+    <div
+      *ngFor="let res of resources"
+      fxLayout="row nowrap"
+      fxLayoutAlign="center center"
+    >
       <app-icons [size]="32" [key]="res.key_"></app-icons>
-      {{res.value}}
+      {{ res.value }}
     </div>
   </div>
 
-
-  <div   *ngIf="valueService.resourceActions | async ; let resources" fxLayoutAlign="start center" >
-    <div *ngFor="let res of resources " fxLayout="row nowrap" fxLayoutAlign="center center">
+  <div
+    *ngIf="charaService.playTokens | async; let resources"
+    fxLayoutAlign="start center"
+  >
+    <div
+      *ngFor="let res of resources"
+      fxLayout="row nowrap"
+      fxLayoutAlign="center center"
+    >
       <app-icons [size]="32" [key]="res.key_"></app-icons>
-      {{res.value}}
+      {{ res.value }}
     </div>
   </div>
-
 </mat-toolbar>
-
-
-
-

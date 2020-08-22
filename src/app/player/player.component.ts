@@ -1,3 +1,4 @@
+import { AccountService } from "./../shared/services/account.service";
 import { SocketService } from "./../shared/services/socket.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "../shared/services/auth.service";
@@ -13,7 +14,7 @@ import { HttpClient } from "@angular/common/http";
 import { UserModel } from "../shared/models/user.model";
 import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
-import { skip, tap, withLatestFrom } from "rxjs/operators";
+import { skip, tap, withLatestFrom, windowWhen } from "rxjs/operators";
 import {
   animate,
   state,
@@ -74,6 +75,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    public accountService: AccountService,
     private http: HttpClient,
     private router: Router,
     public userService: UserService,
@@ -102,12 +104,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
   public deconnection(): void {
     this.authService.logout();
     this.userService.logout();
-    this.router.navigate(["connexion"]);
+    // this.router.navigate(["connexion"]);
+    window.location.reload();
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    console.log("destroy player");
+    // if (this.subscription) {
+    //   this.subscription.unsubscribe();
+    // }
   }
 }
