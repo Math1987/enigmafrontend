@@ -1,4 +1,3 @@
-import { ValuesService } from "./../../shared/services/values.service";
 import { BehaviorSubject } from "rxjs";
 import { CharaService } from "./../../shared/services/chara.service";
 import { AuthService } from "./../../shared/services/auth.service";

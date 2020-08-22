@@ -1,6 +1,5 @@
 import { environment } from "./../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { ValuesService } from "./../../../shared/services/values.service";
 import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
@@ -12,7 +11,7 @@ export class ActionComponent implements OnInit {
   @Input("user") public user: Object = null;
   @Input("target") public target: Object = null;
 
-  constructor(private http: HttpClient, public valueService: ValuesService) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 

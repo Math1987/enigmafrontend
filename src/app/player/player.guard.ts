@@ -10,7 +10,6 @@ import {
 import { Observable } from "rxjs";
 import { PlayerComponent } from "./player.component";
 import { UserService } from "../shared/services/user.service";
-import { ValuesService } from "../shared/services/values.service";
 import { CharaService } from "../shared/services/chara.service";
 import { skip } from "rxjs/operators";
 
@@ -22,7 +21,6 @@ export class PlayerGuard
   constructor(
     private userService: UserService,
     private charaService: CharaService,
-    private valuesService: ValuesService,
     private router: Router
   ) {}
 
@@ -37,7 +35,6 @@ export class PlayerGuard
     console.log("player guard start");
     this.userService.init();
     this.charaService.init();
-    this.valuesService.init();
 
     this.charaService.character.pipe().subscribe((res) => {
       console.log("player guard chara pipe");
@@ -60,7 +57,6 @@ export class PlayerGuard
     | UrlTree {
     this.userService.destroy();
     this.charaService.destroy();
-    this.valuesService.destroy();
     return true;
   }
 }
