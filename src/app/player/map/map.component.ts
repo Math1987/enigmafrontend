@@ -110,6 +110,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     let emptyCases = this.viewver.move(0, 0);
     this.askCash(emptyCases);*/
   }
+  focus(cases: Object[]) {
+    this.focused.next(cases);
+  }
   askCash(emptyCases) {
     this.http
       .post(`${environment.apiUserURL}/getViews`, {

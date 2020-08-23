@@ -13,7 +13,7 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {}
 
   getImg() {
-    return `assets/images/${this.target["key_"]}_illu.png`;
+    return `assets/images/${this.target["key"]}_illu.png`;
   }
   getLife() {
     return `${this.target["life"]}/${this.target["life_max"]}`;

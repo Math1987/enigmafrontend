@@ -8,6 +8,7 @@ import { newArray } from "@angular/compiler/src/util";
   providedIn: "root",
 })
 export class WorldViewverService {
+  
   images = {
     desert: new Image(),
     humanmasculin: new Image(),
@@ -49,6 +50,7 @@ export class WorldViewverService {
     x: 0,
     y: 0,
   });
+  public focused: BehaviorSubject<Object[]> = new BehaviorSubject(null);
   chara: BehaviorSubject<Object> = null;
   socket: Socket = null;
   canvas: HTMLCanvasElement = null;
@@ -146,6 +148,10 @@ export class WorldViewverService {
     }
     this.socket.on("move", (obj, callback) => {
       this.moveObj(obj);
+    });
+
+    this.canvas.addEventListener("mousedown", (event) => {
+      this.mouseDown(event);
     });
   }
 
@@ -262,6 +268,7 @@ export class WorldViewverService {
 
     this.getOnPositions(need, (objs) => {
       this.addPositions(objs);
+      this.focused.next(this.roundMatrix[0]);
       this.draw();
     });
   }
@@ -286,6 +293,37 @@ export class WorldViewverService {
       }
     }
     this.draw();
+  }
+
+  mouseDown(event) {
+    const width = this.canvas.clientWidth;
+    const height = this.canvas.clientHeight;
+    const size = Math.min(
+      width / this.rayon / 2,
+      height / this.rayon / 2 / this.ratioY
+    );
+    let px = event.clientX - width / 2;
+    let py = event.clientY - width / 2;
+
+    let caseX = Math.floor(px / size + 0.5 - py / size / this.ratioY);
+    let caseY = Math.floor(py / size / this.ratioY + (px / size + 0.5));
+
+    console.log(caseX, caseY);
+
+    for (let i = 0; i < this.viewMatrix.length; i++) {
+      let view = this.VIEW_MATRIX[this.rayon][i];
+      if (view.x == caseX && view.y == caseY) {
+        console.log("TOUCHE");
+        this.focusCase(this.viewMatrix[i]);
+        this.draw();
+        break;
+      }
+    }
+  }
+  focusCase(cases: Object[]) {
+    if (cases !== null) {
+      this.focused.next(cases);
+    }
   }
 
   draw() {
@@ -313,6 +351,12 @@ export class WorldViewverService {
           (round.y * size * this.ratioY) / 2 -
           (round.x * size * this.ratioY) / 2;
         context.translate(x, y);
+
+        if (this.focused.getValue() && this.focused.getValue() === vBoxes) {
+          context.globalAlpha = 0.5;
+        } else {
+          context.globalAlpha = 1.0;
+        }
 
         if (vBoxes !== null) {
           for (let vBox of vBoxes) {

@@ -9,6 +9,8 @@ import {
   AfterViewInit,
   ElementRef,
   AfterContentInit,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 
 @Component({
@@ -20,6 +22,9 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
   @ViewChild("canvas") public canvas: ElementRef;
   @Input("character") public character: BehaviorSubject<Object> = null;
   @Input("socket") public socket: BehaviorSubject<Socket> = null;
+  @Output() public focusCase: EventEmitter<Object[]> = new EventEmitter<
+    Object[]
+  >();
 
   constructor(public worldService: WorldViewverService) {}
 
@@ -37,6 +42,9 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
               this.canvas.nativeElement
             );
             this.character.subscribe((chara) => {});
+            this.worldService.focused.subscribe((cases) => {
+              this.focusCase.emit(cases);
+            });
           }
         });
       }
