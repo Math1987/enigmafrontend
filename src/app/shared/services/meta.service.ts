@@ -23,18 +23,22 @@ export class MetaService {
     console.log("build metadatas");
     this.icons.img.src = this.icons.src;
 
-    this.http.get<any>(`${environment.apiURL}/metadatas`).subscribe((res) => {
-      console.log("metadatas", res);
-      this.metaDatas = res;
-      this.metaDatasSubject.next(res);
-    });
-    this.http.get<any>(`${environment.apiURL}/metavalues`).subscribe((res) => {
-      let obj = {};
-      for (let row of res) {
-        obj[row.key_] = row;
-      }
-      this.icons.keys.next(obj);
-    });
+    this.http
+      .get<any>(`${environment.apiURL}/metadatas/metadatas`)
+      .subscribe((res) => {
+        console.log("metadatas", res);
+        this.metaDatas = res;
+        this.metaDatasSubject.next(res);
+      });
+    this.http
+      .get<any>(`${environment.apiURL}/metadatas/metavalues`)
+      .subscribe((res) => {
+        let obj = {};
+        for (let row of res) {
+          obj[row.key_] = row;
+        }
+        this.icons.keys.next(obj);
+      });
   }
   getMetaDatasNow(callBack) {
     if (this.metaDatasSubject.getValue()) {

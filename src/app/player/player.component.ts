@@ -1,7 +1,6 @@
 import { AccountService } from "./../shared/services/account.service";
 import { SocketService } from "./../shared/services/socket.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { JwtToken } from "../shared/models/jwt.token";
 import {
   BehaviorSubject,
   interval,

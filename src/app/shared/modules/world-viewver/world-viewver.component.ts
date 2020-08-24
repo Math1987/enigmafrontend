@@ -34,7 +34,6 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       if (this.socket) {
         this.socket.subscribe((socket) => {
-          console.log(socket);
           if (socket) {
             this.worldService.init(
               this.character,

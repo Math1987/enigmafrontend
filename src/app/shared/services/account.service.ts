@@ -1,6 +1,6 @@
 import { Router } from "@angular/router";
 import { TokenService } from "./token.service";
-import { tap } from "rxjs/operators";
+import { tap, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
@@ -42,7 +42,6 @@ export class AccountService {
     );
   }
   public checkName(name: string) {
-    console.log(name);
     return this.http.get(
       `${environment.apiURL}/account/checkName?name=${name}`
     );

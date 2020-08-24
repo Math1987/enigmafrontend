@@ -8,7 +8,6 @@ import { newArray } from "@angular/compiler/src/util";
   providedIn: "root",
 })
 export class WorldViewverService {
-  
   images = {
     desert: new Image(),
     humanmasculin: new Image(),
@@ -136,7 +135,6 @@ export class WorldViewverService {
     this.canvas = canvas;
     if (this.chara) {
       this.chara.subscribe((newChara) => {
-        console.log("world view", newChara);
         if (newChara && newChara["position"]) {
           this.x = newChara["position"]["x"];
           this.y = newChara["position"]["y"];
@@ -148,6 +146,11 @@ export class WorldViewverService {
     }
     this.socket.on("move", (obj, callback) => {
       this.moveObj(obj);
+    });
+    this.socket.on("attack", (obj, callback) => {
+      if (obj["user"] && obj["target"]) {
+        this.updateObjs([obj["user"], obj["target"]]);
+      }
     });
 
     this.canvas.addEventListener("mousedown", (event) => {
@@ -294,6 +297,21 @@ export class WorldViewverService {
     }
     this.draw();
   }
+  updateObjs(objs: Object[]) {
+    while (objs.length > 0) {
+      for (let arr of this.roundMatrix) {
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i]["id"] && arr[i]["id"] === objs[0]["id"]) {
+            let newObj = {};
+            Object.assign(newObj, objs[0]);
+            arr[i] = newObj;
+          }
+        }
+      }
+      objs.splice(0, 1);
+    }
+    this.draw();
+  }
 
   mouseDown(event) {
     const width = this.canvas.clientWidth;
@@ -308,12 +326,9 @@ export class WorldViewverService {
     let caseX = Math.floor(px / size + 0.5 - py / size / this.ratioY);
     let caseY = Math.floor(py / size / this.ratioY + (px / size + 0.5));
 
-    console.log(caseX, caseY);
-
     for (let i = 0; i < this.viewMatrix.length; i++) {
       let view = this.VIEW_MATRIX[this.rayon][i];
       if (view.x == caseX && view.y == caseY) {
-        console.log("TOUCHE");
         this.focusCase(this.viewMatrix[i]);
         this.draw();
         break;

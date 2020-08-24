@@ -1,3 +1,4 @@
+import { CharaService } from "./chara.service";
 import { TokenService } from "./token.service";
 import { AccountService } from "./account.service";
 import { BehaviorSubject } from "rxjs";
@@ -15,7 +16,8 @@ export class SocketService {
 
   constructor(
     public tokenService: TokenService,
-    public accountService: AccountService
+    public accountService: AccountService,
+    public charaService: CharaService
   ) {
     this.accountService.account.subscribe((account) => {
       if (account) {

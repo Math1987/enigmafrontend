@@ -1,5 +1,4 @@
 import { WorldViewverModule } from "./../shared/modules/world-viewver/world-viewver.module";
-import { MapViewverModule } from "./../shared/modules/map-viewver/map-viewver.module";
 import { NgModule, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PlayerComponent } from "./player.component";
@@ -75,7 +74,6 @@ const MATERIALS = [
     MatListModule,
     ExtendedModule,
     IconsModule,
-    MapViewverModule,
     WorldViewverModule,
   ],
   providers: [],
