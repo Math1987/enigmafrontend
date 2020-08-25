@@ -38,7 +38,6 @@ export class CharaService {
     private accountService: AccountService,
     private metaData: MetaService
   ) {
-    console.log("init chara");
     this.accountService.account.subscribe((account) => {
       if (account && account["chara"]) {
         this.updateLocalChara(account["chara"]);
@@ -47,10 +46,8 @@ export class CharaService {
   }
   updateLocalChara(chara: Object) {
     if (chara) {
-      console.log("update chara");
       this.character.next(chara);
       this.metaData.metaDatasSubject.subscribe((metadatas) => {
-        console.log(metadatas);
         if (metadatas) {
           let skills = [];
           for (let row of metadatas["skill"]) {
@@ -137,13 +134,14 @@ export class CharaService {
   }
 
   create(chara: Chara) {
-    console.log("create chara");
     //chara["id"] = this.userService.getCurrentUser().id;
     this.http
       .post(`${environment.apiURL}/u/chara/create`, chara)
-      .subscribe((newChara) => {
-        if (newChara) {
-          this.accountService.setChara(newChara);
+      .subscribe((createRes) => {
+        console.log("create chara ok", createRes);
+        if (createRes && createRes["chara"]) {
+          this.accountService.setChara(createRes["chara"]);
+          this.character.next(createRes["chara"]);
         }
       });
   }
@@ -163,7 +161,6 @@ export class CharaService {
   }
 
   addSkill(key_: string, adder: number) {
-    console.log("adding value " + key_ + " " + adder);
     return this.http
       .post(`${environment.apiURL}/u/chara/addSkill`, {
         key: key_,

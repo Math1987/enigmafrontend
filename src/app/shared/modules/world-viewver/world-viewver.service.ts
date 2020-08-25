@@ -49,8 +49,10 @@ export class WorldViewverService {
     x: 0,
     y: 0,
   });
-  public focused: BehaviorSubject<Object[]> = new BehaviorSubject(null);
+  posBehaviorSubscription = null;
+  focused: BehaviorSubject<Object[]> = new BehaviorSubject(null);
   chara: BehaviorSubject<Object> = null;
+  charaSubscription = null;
   socket: Socket = null;
   canvas: HTMLCanvasElement = null;
 
@@ -124,6 +126,10 @@ export class WorldViewverService {
       this.VIEW_MATRIX.push(view);
     }
   }
+  destroy() {
+    this.charaSubscription.unsubscribe();
+    this.posBehavior.unsubscribe();
+  }
 
   init(
     chara: BehaviorSubject<Object>,
@@ -133,23 +139,59 @@ export class WorldViewverService {
     this.chara = chara;
     this.socket = socket;
     this.canvas = canvas;
+
+    this.posBehaviorSubscription = this.posBehavior.subscribe((pos) => {
+      if (pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+      }
+    });
+
     if (this.chara) {
-      this.chara.subscribe((newChara) => {
+      this.charaSubscription = this.chara.subscribe((newChara) => {
         if (newChara && newChara["position"]) {
-          this.x = newChara["position"]["x"];
-          this.y = newChara["position"]["y"];
-          this.posBehavior.next({ x: this.x, y: this.y });
-          this.createViewMatrix(4);
-          this.initRounds();
+          if (this.viewMatrix == null || this.viewMatrix.length <= 0) {
+            this.x = newChara["position"]["x"];
+            this.y = newChara["position"]["y"];
+            this.posBehavior.next({ x: this.x, y: this.y });
+            this.createViewMatrix(4);
+            this.initRounds((roundsRes) => {
+              this.moveViewTo(
+                newChara["position"]["x"],
+                newChara["position"]["y"]
+              );
+            });
+          } else if (
+            this.posBehavior.getValue().x != newChara["position"]["x"] ||
+            this.posBehavior.getValue().y != newChara["position"]["y"]
+          ) {
+            this.moveObj(newChara);
+            this.moveViewTo(
+              newChara["position"]["x"],
+              newChara["position"]["y"]
+            );
+          } else {
+            console.log("reinit");
+            this.draw();
+          }
         }
       });
     }
     this.socket.on("move", (obj, callback) => {
-      this.moveObj(obj);
+      console.log("move");
+      if (obj["id"] && obj["id"] !== this.chara.getValue()["id"]) {
+        this.moveObj(obj);
+        this.draw();
+      }
     });
     this.socket.on("attack", (obj, callback) => {
       if (obj["user"] && obj["target"]) {
         this.updateObjs([obj["user"], obj["target"]]);
+      }
+    });
+    this.socket.on("counterAttack", (obj, callback) => {
+      if (obj["counterAttacker"] && obj["attacker"]) {
+        this.updateObjs([obj["counterAttacker"], obj["attacker"]]);
       }
     });
 
@@ -196,7 +238,7 @@ export class WorldViewverService {
       views: viewMatrix,
     };
   }
-  initRounds() {
+  initRounds(callback: Function) {
     let positions = [];
 
     for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
@@ -206,8 +248,7 @@ export class WorldViewverService {
 
     this.getOnPositions(positions, (objs) => {
       this.addPositions(objs);
-      this.draw();
-      this.moveView(0, 0);
+      callback({});
     });
   }
   addPositions(objs) {
@@ -216,6 +257,14 @@ export class WorldViewverService {
         let round = this.ROUND_MATRIX[this.rayon + 1][r];
         let px = round.x + this.x;
         let py = round.y + this.y;
+
+        for (let i = this.roundMatrix[r].length - 1; i >= 0; i--) {
+          let obj = this.roundMatrix[r][i];
+          if (obj["id"] && objs[0]["id"] && obj["id"] === objs[0]["id"]) {
+            console.log("obj removed", obj);
+            this.roundMatrix[r].splice(i, 1);
+          }
+        }
 
         if (px == objs[0].x && py == objs[0].y) {
           this.roundMatrix[r].push(objs[0]);
@@ -227,66 +276,132 @@ export class WorldViewverService {
   getOnPositions(positions: { x: number; y: number }[], callback) {
     this.socket.emit("getOnPositions", positions, callback);
   }
-  moveView(x: number, y: number) {
-    let newCenterX = this.x + x;
-    let newCenterY = this.y + y;
-    let need = [];
-    let newMatrix = [];
+  // moveView(x: number, y: number) {
+  //   let newCenterX = this.x + x;
+  //   let newCenterY = this.y + y;
+  //   let need = [];
+  //   let newMatrix = [];
+  //   for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
+  //     let round = this.ROUND_MATRIX[this.rayon + 1][r];
+  //     let nX = round.x + newCenterX;
+  //     let nY = round.y + newCenterY;
+
+  //     let newArr = [];
+
+  //     for (let r2 = 0; r2 < this.ROUND_MATRIX[this.rayon + 1].length; r2++) {
+  //       let round2 = this.ROUND_MATRIX[this.rayon + 1][r2];
+  //       let oldX = round2.x + this.x;
+  //       let oldY = round2.y + this.y;
+  //       if (nX === oldX && nY === oldY) {
+  //         for (let oldObj of this.roundMatrix[r2]) {
+  //           newArr.push(oldObj);
+  //         }
+  //         break;
+  //       }
+  //     }
+  //     newMatrix.push(newArr);
+  //     if (newArr.length <= 0) {
+  //       need.push({ x: nX, y: nY });
+  //     }
+  //   }
+
+  //   for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
+  //     while (this.roundMatrix[r].length > 0) {
+  //       this.roundMatrix[r].splice(0, 1);
+  //     }
+  //     for (let newObj of newMatrix[r]) {
+  //       this.roundMatrix[r].push(newObj);
+  //     }
+  //   }
+  //   this.x += x;
+  //   this.y += y;
+  //   this.posBehavior.next({ x: this.x, y: this.y });
+
+  //   this.getOnPositions(need, (objs) => {
+  //     this.addPositions(objs);
+  //     this.focused.next(this.roundMatrix[0]);
+  //     this.draw();
+  //   });
+  // }
+  moveViewTo(x: number, y: number) {
+    //1. je prends toutes les positions qu'on retrouvera dans la prochaine vue.
+    //a. je fais un tour de boucle de la nouvelle matrice. Pour chaque pos je verrifie si l'ancienne a une pos commune et l'ajoute.
+    //2. Je demande ces positions.
+    //3. Je construit une nouvelle matrix en fusionnant les nouvelles et les anciennes.
+
+    let posNeeded = [];
+
     for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
       let round = this.ROUND_MATRIX[this.rayon + 1][r];
-      let nX = round.x + newCenterX;
-      let nY = round.y + newCenterY;
+      let newX = round.x + x;
+      let newY = round.y + y;
 
-      let newArr = [];
-
+      let need = true;
       for (let r2 = 0; r2 < this.ROUND_MATRIX[this.rayon + 1].length; r2++) {
         let round2 = this.ROUND_MATRIX[this.rayon + 1][r2];
-        let oldX = round2.x + this.x;
-        let oldY = round2.y + this.y;
-        if (nX === oldX && nY === oldY) {
-          for (let oldObj of this.roundMatrix[r2]) {
-            newArr.push(oldObj);
-          }
-          break;
+        let oldX = round2.x + this.posBehavior.getValue().x;
+        let oldY = round2.y + this.posBehavior.getValue().y;
+        if (newX == oldX && newY == oldY) {
+          need = false;
         }
       }
-      newMatrix.push(newArr);
-      if (newArr.length <= 0) {
-        need.push({ x: nX, y: nY });
+      if (need) {
+        posNeeded.push({ x: newX, y: newY });
       }
     }
+    console.log(posNeeded);
+    this.getOnPositions(posNeeded, (posRes) => {
+      let newMatrix = [];
 
-    for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
-      while (this.roundMatrix[r].length > 0) {
-        this.roundMatrix[r].splice(0, 1);
-      }
-      for (let newObj of newMatrix[r]) {
-        this.roundMatrix[r].push(newObj);
-      }
-    }
-    this.x += x;
-    this.y += y;
-    this.posBehavior.next({ x: this.x, y: this.y });
-    this.draw();
+      for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
+        let round = this.ROUND_MATRIX[this.rayon + 1][r];
+        let newX = round.x + x;
+        let newY = round.y + y;
 
-    this.getOnPositions(need, (objs) => {
-      this.addPositions(objs);
+        newMatrix.push([]);
+
+        for (let r2 = 0; r2 < this.ROUND_MATRIX[this.rayon + 1].length; r2++) {
+          let round2 = this.ROUND_MATRIX[this.rayon + 1][r2];
+          let oldX = round2.x + this.posBehavior.getValue().x;
+          let oldY = round2.y + this.posBehavior.getValue().y;
+          if (newX == oldX && newY == oldY) {
+            for (let obj of this.roundMatrix[r2]) {
+              newMatrix[r].push(obj);
+            }
+          }
+        }
+        for (let i = posRes.length - 1; i >= 0; i--) {
+          if (posRes[i].x == newX && posRes[i].y == newY) {
+            newMatrix[r].push(posRes[i]);
+            posRes.splice(i, 1);
+          }
+        }
+      }
+      for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
+        while (this.roundMatrix[r].length > 0) {
+          this.roundMatrix[r].splice(0, 1);
+        }
+        for (let newObj of newMatrix[r]) {
+          this.roundMatrix[r].push(newObj);
+        }
+      }
+      this.posBehavior.next({ x: x, y: y });
       this.focused.next(this.roundMatrix[0]);
       this.draw();
     });
   }
+
   moveObj(obj: Object) {
     //1-tu trouve l'objet => l'effacer de la case.
     //2-tu trouve la position nouvelle de l'objet => l'ajouter dans la case
 
     for (let mats of this.roundMatrix) {
       for (let i = mats.length - 1; i >= 0; i--) {
-        if (mats[i]["id"] === obj["id"]) {
+        if (mats[i]["id"] == obj["id"]) {
           mats.splice(i, 1);
         }
       }
     }
-
     for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
       let round = this.ROUND_MATRIX[this.rayon + 1][r];
       let px = round.x + this.x;
@@ -295,7 +410,6 @@ export class WorldViewverService {
         this.roundMatrix[r].push(obj);
       }
     }
-    this.draw();
   }
   updateObjs(objs: Object[]) {
     while (objs.length > 0) {

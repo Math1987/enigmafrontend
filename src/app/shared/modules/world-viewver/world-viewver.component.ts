@@ -1,3 +1,4 @@
+import { CharaService } from "./../../services/chara.service";
 import { WorldViewverService } from "./world-viewver.service";
 import { Socket } from "socket.io";
 import { BehaviorSubject } from "rxjs";
@@ -11,6 +12,7 @@ import {
   AfterContentInit,
   Output,
   EventEmitter,
+  OnDestroy,
 } from "@angular/core";
 
 @Component({
@@ -18,7 +20,7 @@ import {
   templateUrl: "./world-viewver.component.html",
   styleUrls: ["./world-viewver.component.scss"],
 })
-export class WorldViewverComponent implements OnInit, AfterViewInit {
+export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("canvas") public canvas: ElementRef;
   @Input("character") public character: BehaviorSubject<Object> = null;
   @Input("socket") public socket: BehaviorSubject<Socket> = null;
@@ -26,9 +28,15 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
     Object[]
   >();
 
-  constructor(public worldService: WorldViewverService) {}
+  constructor(
+    public worldService: WorldViewverService,
+    public charaService: CharaService
+  ) {}
 
   ngOnInit(): void {}
+  ngOnDestroy() {
+    this.worldService.destroy();
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -58,12 +66,13 @@ export class WorldViewverComponent implements OnInit, AfterViewInit {
       this.character.getValue()["move"] > 0
     ) {
       this.socket.getValue().emit("move", x, y, (moverRes) => {
-        if (moverRes) {
+        if (moverRes && moverRes["chara"]) {
+          this.charaService.updateLocalChara(moverRes["chara"]);
           // let newChara = this.character.getValue();
           // newChara["position"]["x"] += x;
           // newChara["position"]["y"] += y;
           //this.character.next(newChara);
-          this.worldService.moveView(x, y);
+          //this.worldService.moveView(x, y);
         }
       });
     }

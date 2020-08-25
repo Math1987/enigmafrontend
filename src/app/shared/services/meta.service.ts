@@ -13,20 +13,18 @@ export class MetaService {
 
   icons = {
     img: new Image(),
-    src: "assets/images/icons.png",
-    rangeX: 16,
-    rangeY: 6,
+    src: "assets/images/icones.png",
+    rangeX: 4,
+    rangeY: 4,
     keys: new BehaviorSubject<any>(null),
   };
 
   constructor(private http: HttpClient) {
-    console.log("build metadatas");
     this.icons.img.src = this.icons.src;
 
     this.http
       .get<any>(`${environment.apiURL}/metadatas/metadatas`)
       .subscribe((res) => {
-        console.log("metadatas", res);
         this.metaDatas = res;
         this.metaDatasSubject.next(res);
       });

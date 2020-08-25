@@ -21,7 +21,6 @@ export class SocketService {
   ) {
     this.accountService.account.subscribe((account) => {
       if (account) {
-        console.log("init socket");
         this.socket = io.connect(`${environment.backURL}`, {
           query: { token: tokenService.token },
         });

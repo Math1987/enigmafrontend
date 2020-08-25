@@ -1,3 +1,4 @@
+import { RankComponent } from "./rank/rank.component";
 import { Route, RouterModule } from "@angular/router";
 import { PlayerComponent } from "./player.component";
 import { MapComponent } from "./map/map.component";
@@ -38,6 +39,7 @@ const GAME_ROUTES: Route[] = [
         children: [
           { path: "map", component: MapComponent },
           { path: "perso", component: CharacterComponent },
+          { path: "classement", component: RankComponent },
         ],
       },
 

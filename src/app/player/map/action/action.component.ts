@@ -38,7 +38,9 @@ export class ActionComponent implements OnInit {
   }
   attack() {
     this.socketService.socket.emit("attack", this.target["id"], (res) => {
-      this.charaService.updateLocalChara(res);
+      if (res && res["user"]) {
+        this.charaService.updateLocalChara(res["user"]);
+      }
     });
 
     // this.http

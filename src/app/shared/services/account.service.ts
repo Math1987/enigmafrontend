@@ -18,11 +18,9 @@ export class AccountService {
     private tokenService: TokenService,
     private router: Router
   ) {
-    console.log("build account");
     if (this.tokenService.getToken()) {
-      console.log(this.tokenService.getToken());
       this.readAccount(this.tokenService.getToken()).subscribe((accountRes) => {
-        console.log("acount:", accountRes);
+        console.log(accountRes);
         if (accountRes) {
           this.account.next(accountRes);
         } else {
@@ -36,7 +34,6 @@ export class AccountService {
   destroy() {}
 
   public checkEmail(email: string) {
-    console.log(email);
     return this.http.get(
       `${environment.apiURL}/account/checkEmail?email=${email}`
     );
@@ -60,7 +57,6 @@ export class AccountService {
       .post<string>(`${environment.apiURL}/account/signin`, credentials)
       .pipe(
         tap((accountRes: string) => {
-          console.log(accountRes);
           if (accountRes && accountRes["token"] && accountRes) {
             this.tokenService.setToken(accountRes["token"]);
             this.account.next(accountRes);

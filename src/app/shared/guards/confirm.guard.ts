@@ -40,34 +40,29 @@ export class ConfirmGuard implements CanActivate {
     | UrlTree {
     console.log("confirm guard");
 
-    if (localStorage.getItem("confirm")) {
-      this.http
-        .post(`${environment.apiURL}/account/confirm`, {
-          code: Object.keys(route.queryParams)[0],
-        })
-        .subscribe((confirmRes) => {
-          console.log(confirmRes);
-          if (confirmRes && confirmRes["email"] && confirmRes["password"]) {
-            this.accountService
-              .signIn({
-                email: confirmRes["email"],
-                password: confirmRes["password"],
-              })
-              .subscribe((signin) => {
-                if (signin) {
-                  localStorage.removeItem("confirm");
-                  this.router.navigate(["/u/bienvenue"]);
-                  alert(
-                    "merci pour votre inscription! \n Nous allons vous rediriger vers votre compte."
-                  );
-                }
-              });
-          }
-        });
-      return true;
-    } else {
-      console.log("no confirm found");
-      return true;
-    }
+    this.http
+      .post(`${environment.apiURL}/account/confirm`, {
+        code: Object.keys(route.queryParams)[0],
+      })
+      .subscribe((confirmRes) => {
+        console.log(confirmRes);
+        if (confirmRes && confirmRes["email"] && confirmRes["password"]) {
+          this.accountService
+            .signIn({
+              email: confirmRes["email"],
+              password: confirmRes["password"],
+            })
+            .subscribe((signin) => {
+              if (signin) {
+                localStorage.removeItem("confirm");
+                this.router.navigate(["/u/bienvenue"]);
+                alert(
+                  "merci pour votre inscription! \n Nous allons vous rediriger vers votre compte."
+                );
+              }
+            });
+        }
+      });
+    return true;
   }
 }

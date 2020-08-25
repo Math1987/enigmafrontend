@@ -1,7 +1,7 @@
-<div fxLayout="row wrap">
+<div fxLayout="row nowrap">
   <div class="map-viewver">
     <app-world-viewver
-    [@pops]="mapPops"
+      [@pops]="mapPops"
       #worldViewver
       [character]="charaService.character"
       [socket]="socketService.socketObservable"
@@ -14,6 +14,7 @@
     *ngIf="focused | async; let objs"
     fxLayout="row wrap"
     fxLayoutAlign="start start"
+    fxLayout="row wrap"
   >
     <div
       *ngFor="let obj of objs"

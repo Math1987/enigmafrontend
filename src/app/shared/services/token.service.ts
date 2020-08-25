@@ -7,7 +7,6 @@ export class TokenService {
   token: string = null;
 
   constructor() {
-    console.log("build token service");
     if (localStorage.getItem("token")) {
       this.token = localStorage.getItem("token");
     }

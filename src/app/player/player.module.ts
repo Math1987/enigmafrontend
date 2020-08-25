@@ -30,6 +30,7 @@ import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.componen
 import { GameComponent } from "./game/game.component";
 import { ActionComponent } from "./map/action/action.component";
 import { ViewComponent } from "./map/view/view.component";
+import { RankComponent } from './rank/rank.component';
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -60,6 +61,7 @@ const MATERIALS = [
     PlayerToolbarComponent,
     ActionComponent,
     ViewComponent,
+    RankComponent,
   ],
   imports: [
     CommonModule,
