@@ -147,7 +147,6 @@ export class SignupComponent implements OnInit {
   create() {
     this.accountService.signUp(this.formGroup.value).subscribe((res) => {
       if (res) {
-        localStorage.setItem("confirm", "wait");
         // this.router.navigate(["/connexion/confirmer"]);
         // this.authService.signIn(res).subscribe((signin) => {
         //   this.router.navigate(["confirmer"]);

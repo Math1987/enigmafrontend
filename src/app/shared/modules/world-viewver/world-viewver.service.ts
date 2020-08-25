@@ -127,8 +127,12 @@ export class WorldViewverService {
     }
   }
   destroy() {
-    this.charaSubscription.unsubscribe();
-    this.posBehavior.unsubscribe();
+    try {
+      this.charaSubscription.unsubscribe();
+      //this.posBehavior.unsubscribe();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   init(
@@ -192,6 +196,12 @@ export class WorldViewverService {
     this.socket.on("counterAttack", (obj, callback) => {
       if (obj["counterAttacker"] && obj["attacker"]) {
         this.updateObjs([obj["counterAttacker"], obj["attacker"]]);
+      }
+    });
+    this.socket.on("die", (obj, callback) => {
+      console.log("die", obj);
+      if (obj["chara"] && obj["chara"]["id"] === this.chara.getValue()["id"]) {
+        this.chara.next(obj["chara"]);
       }
     });
 

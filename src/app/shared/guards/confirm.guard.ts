@@ -54,7 +54,6 @@ export class ConfirmGuard implements CanActivate {
             })
             .subscribe((signin) => {
               if (signin) {
-                localStorage.removeItem("confirm");
                 this.router.navigate(["/u/bienvenue"]);
                 alert(
                   "merci pour votre inscription! \n Nous allons vous rediriger vers votre compte."
