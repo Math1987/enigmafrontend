@@ -205,7 +205,7 @@ export class WorldViewverService {
       }
     });
 
-    this.canvas.addEventListener("mousedown", (event) => {
+    document.addEventListener("mousedown", (event) => {
       this.mouseDown(event);
     });
   }
@@ -444,8 +444,10 @@ export class WorldViewverService {
       width / this.rayon / 2,
       height / this.rayon / 2 / this.ratioY
     );
-    let px = event.clientX - width / 2;
-    let py = event.clientY - width / 2;
+    let px =
+      event.clientX - this.canvas.getBoundingClientRect().left - width / 2;
+    let py =
+      event.clientY - this.canvas.getBoundingClientRect().top - height / 2;
 
     let caseX = Math.floor(px / size + 0.5 - py / size / this.ratioY);
     let caseY = Math.floor(py / size / this.ratioY + (px / size + 0.5));

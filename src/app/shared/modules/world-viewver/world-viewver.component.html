@@ -1,9 +1,35 @@
-<canvas #canvas class="canvas"></canvas>
-<button class="button" (click)="move(0, -1)">move+X</button>
-<button class="button" (click)="move(0, 1)">move-X</button>
-<button class="button" (click)="move(1, 0)">move+Y</button>
-<button class="button" (click)="move(-1, 0)">move-Y</button>
-<p style="color: white;" *ngIf="worldService.posBehavior | async; let pos">
-  position
-  {{ pos["x"] }}x, {{ pos["y"] }}y
-</p>
+<div class="world-view-container" *ngIf="character | async; let chara">
+  <canvas #canvas class="canvas"></canvas>
+  <button
+    [disabled]="chara['move'] <= 0"
+    class="button-lg button top left"
+    (click)="move(0, -1)"
+  >
+    -x
+  </button>
+  <button
+    [disabled]="chara['move'] <= 0"
+    class="button-lg button bottom right"
+    (click)="move(0, 1)"
+  >
+    +x
+  </button>
+  <button
+    [disabled]="chara['move'] <= 0"
+    class="button-lg button top right"
+    (click)="move(1, 0)"
+  >
+    +y
+  </button>
+  <button
+    [disabled]="chara['move'] <= 0"
+    class="button-lg button bottom left"
+    (click)="move(-1, 0)"
+  >
+    -Y
+  </button>
+  <p style="color: white;" *ngIf="worldService.posBehavior | async; let pos">
+    position
+    {{ pos["x"] }}x, {{ pos["y"] }}y
+  </p>
+</div>
