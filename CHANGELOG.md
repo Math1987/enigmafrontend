@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/Math1987/enigmafrontend/compare/v0.0.6...v0.0.7) (2020-08-25)
+
+
+### Features
+
+* (re)active routing guards ([cefea98](https://github.com/Math1987/enigmafrontend/commit/cefea9804758f26845a3ab88fca091ba7d0812dc))
+* add functions in metadataService to give all metadatas as obj, used for mattooltip in icones ([d8b645c](https://github.com/Math1987/enigmafrontend/commit/d8b645c6d8ce7a3e0cc92f94c46351087460b074))
+* add resourceActions as deplacement and actions in player's bar ([18b38ef](https://github.com/Math1987/enigmafrontend/commit/18b38ef35376b74fccaba32011fd0d527285fb54))
+* add socketon die in world viewver ([a5ea083](https://github.com/Math1987/enigmafrontend/commit/a5ea08332a0402db1f7b123260fb82430cb464e3))
+* add view cash system ([2aaa04c](https://github.com/Math1987/enigmafrontend/commit/2aaa04cf5310d14b828a259c2d2e1b8e0984f8bd))
+* create map-viewver module ([413a0af](https://github.com/Math1987/enigmafrontend/commit/413a0af9b964680673050fb79288375f386bd7b7))
+* implement view service width matrix for viewver's component drawing ([fdd2f29](https://github.com/Math1987/enigmafrontend/commit/fdd2f29b39e0a554d2705134edf9f13f731462fa))
+* move and attack ([d28d6e9](https://github.com/Math1987/enigmafrontend/commit/d28d6e93f07f72d606de510965add4a7ce6fad22))
+* move players ok (need clean code and comments) ([6e41ccb](https://github.com/Math1987/enigmafrontend/commit/6e41ccbe1139cb87475b733446cfdcb7c40a0761))
+* resources and icon module ([13fe41a](https://github.com/Math1987/enigmafrontend/commit/13fe41a7dace5d6ebc46da0893f6e13a551e3882))
+* update move for player, used socket ([cd17f82](https://github.com/Math1987/enigmafrontend/commit/cd17f825b5f771ffca93c73ebe93ecb8ad3d0fa6))
+
+
+### Bug Fixes
+
+* comme back to replay subject for user, chara observables in services, cleanning usage in templates (using public services instead of creating new observables/using functions), clean routing, app structure connection supose to be OK ([7eaffe0](https://github.com/Math1987/enigmafrontend/commit/7eaffe0a0e73977fb959e43881f88410de6c67d6))
+* destroy subscriptions in worldviewver ([08c5d70](https://github.com/Math1987/enigmafrontend/commit/08c5d70be93649f43fb9a397fe4f22fec29ea373))
+* icon system; get number of icon from backend in metavalues ([01f7f28](https://github.com/Math1987/enigmafrontend/commit/01f7f28bcf6351bb9e6869f52c9b8608da68b7ed))
+* set scale animation with correct value (fix error on chrome or other browsers) ([ae51a98](https://github.com/Math1987/enigmafrontend/commit/ae51a984691da5cd9c9be4c66b72cef42c71edb8))
+* set user services (as userService, charaService, valueService) init and destroy function  used in player's guard (canActivate or canDeactivate)...in place of destroying lazyloaded  module seems not possible ([ef269e6](https://github.com/Math1987/enigmafrontend/commit/ef269e65ff640c391a132c5f1de1ca570f4263b0))
+* use BehaviorSubject witht skil(1) in pipes instead of ReplaySubject in guards ([9b2b8db](https://github.com/Math1987/enigmafrontend/commit/9b2b8db91bc274bdc565a27fb60e3cb301b8e2a5))
+
 ### [0.0.6](https://github.com/Math1987/enigmafrontend/compare/v0.0.5...v0.0.6) (2020-05-30)
 
 
