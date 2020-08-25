@@ -1,3 +1,5 @@
+import { AdminGuard } from "./../shared/guards/admin.guard";
+import { GameGuard } from "./../shared/guards/game.guard";
 import { RankComponent } from "./rank/rank.component";
 import { Route, RouterModule } from "@angular/router";
 import { PlayerComponent } from "./player.component";
@@ -18,17 +20,18 @@ const GAME_ROUTES: Route[] = [
   {
     path: "",
     component: PlayerComponent,
-    // canActivate: [AuthGuard, PlayerGuard],
-    // canDeactivate: [PlayerGuard],
+    canActivate: [PlayerGuard],
+    canDeactivate: [PlayerGuard],
     children: [
       {
         path: "bienvenue",
         component: CreateComponent,
-        // canActivate: [CreateCharaGuard],
+        canActivate: [CreateCharaGuard],
       },
       { path: "profil", component: ProfilComponent },
       {
         path: "admin",
+        canActivate: [AdminGuard],
         loadChildren: () =>
           import("./../admin/admin.module").then((m) => m.AdminModule),
       },
@@ -36,6 +39,7 @@ const GAME_ROUTES: Route[] = [
       {
         path: "game",
         component: GameComponent,
+        canActivate: [GameGuard],
         children: [
           { path: "map", component: MapComponent },
           { path: "perso", component: CharacterComponent },

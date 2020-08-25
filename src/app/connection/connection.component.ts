@@ -59,6 +59,5 @@ export class ConnectionComponent implements OnInit {
     } else {
       return false;
     }
-    return true;
   }
 }

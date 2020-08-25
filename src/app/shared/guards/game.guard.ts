@@ -1,5 +1,5 @@
 import { map } from "rxjs/operators";
-import { AccountService } from "./../services/account.service";
+import { AccountService } from "../services/account.service";
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
@@ -13,7 +13,7 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class ConnexionGuard implements CanActivate {
+export class GameGuard implements CanActivate {
   constructor(private router: Router, private accountService: AccountService) {}
 
   /**
@@ -32,15 +32,13 @@ export class ConnexionGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log("connection guard");
     return this.accountService.getAccount().pipe(
       map((account) => {
-        console.log(account);
-        if (account) {
-          this.router.navigate(["u"]);
-          return false;
-        } else {
+        if (account && account["chara"]) {
           return true;
+        } else {
+          this.router.navigate(["u/bienvenue"]);
+          return false;
         }
       })
     );

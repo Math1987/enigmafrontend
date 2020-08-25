@@ -147,6 +147,9 @@ export class SignupComponent implements OnInit {
   create() {
     this.accountService.signUp(this.formGroup.value).subscribe((res) => {
       if (res) {
+        alert(
+          "un email de confirmation vous a été envoyé.\n Vous pourrez activer votre compte en cliquant sur le lien."
+        );
         // this.router.navigate(["/connexion/confirmer"]);
         // this.authService.signIn(res).subscribe((signin) => {
         //   this.router.navigate(["confirmer"]);

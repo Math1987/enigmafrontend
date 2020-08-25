@@ -1,23 +1,29 @@
 import { Router } from "@angular/router";
 import { TokenService } from "./token.service";
-import { tap, map } from "rxjs/operators";
+import { tap, map, first } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from "../../../environments/environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class AccountService {
-  account: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  private actualChara = null;
+  private account: ReplaySubject<Object> = new ReplaySubject<Object>(null);
 
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router
   ) {
+    console.log("build accountService");
+    this.account.subscribe((account) => {
+      this.actualChara = account;
+    });
+
     if (this.tokenService.getToken()) {
       this.readAccount(this.tokenService.getToken()).subscribe((accountRes) => {
         console.log(accountRes);
@@ -27,6 +33,8 @@ export class AccountService {
           this.account.next(null);
         }
       });
+    } else {
+      this.account.next(null);
     }
   }
 
@@ -72,11 +80,22 @@ export class AccountService {
     });
   }
 
+  getAccount() {
+    return this.account; // this.account.pipe(first((x) => x > 0));
+  }
+
   setChara(chara: Object) {
-    let account = this.account.getValue();
+    let account = this.actualChara;
     let newObj = {};
     Object.assign(newObj, account);
     newObj["chara"] = chara;
     this.account.next(newObj);
+  }
+
+  logOut() {
+    this.account.next(null);
+    this.tokenService.removeToken();
+    this.router.navigate(["connexion"]);
+    window.location.reload();
   }
 }

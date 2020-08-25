@@ -11,7 +11,7 @@ export class RankService {
     private http: HttpClient,
     private accountService: AccountService
   ) {
-    this.accountService.account.subscribe((account) => {
+    this.accountService.getAccount().subscribe((account) => {
       if (account) {
         this.http
           .get(

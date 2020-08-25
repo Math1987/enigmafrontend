@@ -38,7 +38,7 @@ export class CharaService {
     private accountService: AccountService,
     private metaData: MetaService
   ) {
-    this.accountService.account.subscribe((account) => {
+    this.accountService.getAccount().subscribe((account) => {
       if (account && account["chara"]) {
         this.updateLocalChara(account["chara"]);
       }
@@ -134,16 +134,15 @@ export class CharaService {
   }
 
   create(chara: Chara) {
-    //chara["id"] = this.userService.getCurrentUser().id;
-    this.http
-      .post(`${environment.apiURL}/u/chara/create`, chara)
-      .subscribe((createRes) => {
+    return this.http.post(`${environment.apiURL}/u/chara/create`, chara).pipe(
+      map((createRes) => {
         console.log("create chara ok", createRes);
         if (createRes && createRes["chara"]) {
           this.accountService.setChara(createRes["chara"]);
           this.character.next(createRes["chara"]);
         }
-      });
+      })
+    );
   }
 
   updateLocalValues(values) {

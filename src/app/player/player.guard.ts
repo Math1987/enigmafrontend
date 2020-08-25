@@ -1,3 +1,4 @@
+import { AccountService } from "./../shared/services/account.service";
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
@@ -10,14 +11,18 @@ import {
 import { Observable } from "rxjs";
 import { PlayerComponent } from "./player.component";
 import { CharaService } from "../shared/services/chara.service";
-import { skip } from "rxjs/operators";
+import { skip, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
 export class PlayerGuard
   implements CanActivate, CanDeactivate<PlayerComponent> {
-  constructor(private charaService: CharaService, private router: Router) {}
+  constructor(
+    private charaService: CharaService,
+    private router: Router,
+    private accountService: AccountService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,16 +33,27 @@ export class PlayerGuard
     | boolean
     | UrlTree {
     console.log("player guard start");
-    this.charaService.init();
 
-    this.charaService.character.pipe().subscribe((res) => {
-      console.log("player guard chara pipe");
-      if (!res && !state.url.includes("bienvenue")) {
-        //this.router.navigate(["/u/bienvenue"]);
-      }
-    });
+    return this.accountService.getAccount().pipe(
+      map((account) => {
+        console.log(account);
+        if (account) {
+          return true;
+        } else {
+          this.router.navigate(["connexion"]);
+          return false;
+        }
+      })
+    );
 
-    return true;
+    // this.charaService.character.pipe().subscribe((res) => {
+    //   console.log("player guard chara pipe");
+    //   if (!res && !state.url.includes("bienvenue")) {
+    //     //this.router.navigate(["/u/bienvenue"]);
+    //   }
+    // });
+
+    // return true;
   }
   canDeactivate(
     component: PlayerComponent,

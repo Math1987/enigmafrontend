@@ -1,3 +1,4 @@
+import { AccountService } from "./../services/account.service";
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
@@ -14,7 +15,7 @@ import { map, skip } from "rxjs/operators";
   providedIn: "root",
 })
 export class CreateCharaGuard implements CanActivate {
-  constructor(private charaService: CharaService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router) {}
   /**
    * check if the user got a character registed and actived.
    * use characterService's ReplaySubject character
@@ -32,9 +33,10 @@ export class CreateCharaGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.charaService.character.pipe(
+    return this.accountService.getAccount().pipe(
       map((res) => {
-        if (res) {
+        console.log("guard chara", res);
+        if (res && res["chara"]) {
           this.router.navigate(["u/map"]);
           return false;
         } else {

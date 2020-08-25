@@ -37,7 +37,8 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private charaService: CharaService,
-    public metaService: MetaService
+    public metaService: MetaService,
+    public router: Router
   ) {
     this.formGroup = new FormGroup({
       name: new FormControl("", Validators.required),
@@ -57,7 +58,9 @@ export class CreateComponent implements OnInit {
 
   create() {
     if (this.formGroup.valid) {
-      this.charaService.create(this.formGroup.value);
+      this.charaService.create(this.formGroup.value).subscribe((chara) => {
+        this.router.navigate(["u/game/perso"]);
+      });
     }
   }
 }

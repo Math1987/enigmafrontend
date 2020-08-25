@@ -92,7 +92,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * in the appropriate place.
    */
   public deconnection(): void {
-    window.location.reload();
+    this.accountService.logOut();
+    //window.location.reload();
   }
 
   ngOnDestroy(): void {

@@ -19,7 +19,7 @@ export class SocketService {
     public accountService: AccountService,
     public charaService: CharaService
   ) {
-    this.accountService.account.subscribe((account) => {
+    this.accountService.getAccount().subscribe((account) => {
       if (account) {
         this.socket = io.connect(`${environment.backURL}`, {
           query: { token: tokenService.token },

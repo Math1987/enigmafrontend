@@ -11,7 +11,7 @@ const ACCOUNT_ROUTES: Route[] = [
   {
     path: "u",
     component: ConnectionComponent,
-    //  canActivate: [ConnexionGuard]
+    canActivate: [ConnexionGuard],
   },
   {
     path: "confirmer",
