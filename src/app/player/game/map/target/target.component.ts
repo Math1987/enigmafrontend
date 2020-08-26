@@ -36,10 +36,8 @@ export class TargetComponent implements OnInit {
           this.user["position"]["x"] == chara["position"]["x"] &&
           this.user["position"]["y"] == chara["position"]["y"]
         ) {
-          console.log("canAttack");
           return true;
         } else {
-          console.log("canot attack");
           return false;
         }
       })

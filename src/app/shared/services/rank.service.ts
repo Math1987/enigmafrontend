@@ -22,7 +22,6 @@ export class RankService {
             `${environment.backURL}/api/rank/kills?world=${account["world"]}&id=${account["id"]}`
           )
           .subscribe((killsRes) => {
-            console.log(killsRes);
             if (Array.isArray(killsRes)) {
               this.kills.next(killsRes);
             }

@@ -76,9 +76,16 @@ export class MapComponent implements OnInit, AfterViewInit {
           let target = {};
           for (let obj of cases) {
             if (this.metadatasService.getTypeOf(obj["key"]) === "ground") {
-              target = obj;
+              Object.assign(
+                target,
+                this.metadatasService.getObj(obj["key"]),
+                obj
+              );
+              target["name"] = target["name_fr"];
+              console.log(target);
             }
           }
+
           return target;
         } else {
           return {};

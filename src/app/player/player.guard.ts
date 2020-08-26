@@ -34,7 +34,6 @@ export class PlayerGuard
     | UrlTree {
     return this.accountService.getAccount().pipe(
       map((account) => {
-        console.log(account);
         if (account) {
           return true;
         } else {
