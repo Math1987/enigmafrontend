@@ -17,7 +17,7 @@ export class CharaService {
   resources: BehaviorSubject<Object> = new BehaviorSubject(null);
   playTokens: BehaviorSubject<Object> = new BehaviorSubject(null);
 
-  actualCharacter: Chara = null;
+  actualCharacter: Object = null;
 
   subscription: Subscription = null;
 
@@ -42,6 +42,9 @@ export class CharaService {
       if (account && account["chara"]) {
         this.updateLocalChara(account["chara"]);
       }
+    });
+    this.character.subscribe((chara) => {
+      this.actualCharacter = chara;
     });
   }
   updateLocalChara(chara: Object) {

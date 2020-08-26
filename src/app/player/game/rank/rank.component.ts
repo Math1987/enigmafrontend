@@ -1,4 +1,4 @@
-import { RankService } from "./../../shared/services/rank.service";
+import { RankService } from "./../../../shared/services/rank.service";
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 
@@ -14,12 +14,8 @@ export class RankComponent implements OnInit {
   constructor(public rankService: RankService) {}
 
   ngOnInit(): void {
-
-    this.rankService.getKills().subscribe( kills =>{
-
-      this.dataSource.data = kills ;
-
-    })
-
+    this.rankService.getKills().subscribe((kills) => {
+      this.dataSource.data = kills;
+    });
   }
 }

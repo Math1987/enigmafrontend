@@ -1,10 +1,10 @@
 import { AdminGuard } from "./../shared/guards/admin.guard";
 import { GameGuard } from "./../shared/guards/game.guard";
-import { RankComponent } from "./rank/rank.component";
+import { RankComponent } from "./game/rank/rank.component";
 import { Route, RouterModule } from "@angular/router";
 import { PlayerComponent } from "./player.component";
-import { MapComponent } from "./map/map.component";
-import { CharacterComponent } from "./character/character.component";
+import { MapComponent } from "./game/map/map.component";
+import { CharacterComponent } from "./game/character/character.component";
 import { CreateComponent } from "./create/create.component";
 import { CreateCharaGuard } from "../shared/guards/createChara.guard";
 import { ProfilComponent } from "./profil/profil.component";

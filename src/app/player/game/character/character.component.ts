@@ -1,7 +1,7 @@
-import { CharaService } from "./../../shared/services/chara.service";
+import { CharaService } from "./../../../shared/services/chara.service";
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { pops } from "../../shared/animations/pops";
+import { pops } from "../../../shared/animations/pops";
 import { map } from "rxjs/operators";
 
 /**

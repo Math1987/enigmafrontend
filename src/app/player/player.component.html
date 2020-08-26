@@ -1,5 +1,5 @@
 <div
-  class="fullSize"
+  class="player-container"
   fxLayout="column nowrap"
   fxLayoutAlign="start center"
   *ngIf="accountService.getAccount() | async; let account"
@@ -57,12 +57,9 @@
     </span>
   </mat-toolbar>
 
-  <!--div [@pops]="containerAnimation" class="playerContainer"  fxLayout="column nowrap" >
-    <router-outlet></router-outlet>
-  </div-->
   <div
     [@pops]="containerAnimation"
-    class="playerContainer"
+    class="game-container"
     fxLayout="column nowrap"
   >
     <router-outlet></router-outlet>

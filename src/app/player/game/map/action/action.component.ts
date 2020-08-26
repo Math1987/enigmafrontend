@@ -1,6 +1,5 @@
-import { CharaService } from "./../../../shared/services/chara.service";
-import { SocketService } from "./../../../shared/services/socket.service";
-import { environment } from "./../../../../environments/environment";
+import { CharaService } from "./../../../../shared/services/chara.service";
+import { SocketService } from "./../../../../shared/services/socket.service";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, Input } from "@angular/core";
 

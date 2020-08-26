@@ -13,8 +13,8 @@ import {
   FlexModule,
   FlexLayoutModule,
 } from "@angular/flex-layout";
-import { MapComponent } from "./map/map.component";
-import { CharacterComponent } from "./character/character.component";
+import { MapComponent } from "./game/map/map.component";
+import { CharacterComponent } from "./game/character/character.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTableModule } from "@angular/material/table";
@@ -29,9 +29,10 @@ import { ProfilComponent } from "./profil/profil.component";
 import { IconsModule } from "../shared/modules/icons/icons.module";
 import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.component";
 import { GameComponent } from "./game/game.component";
-import { ActionComponent } from "./map/action/action.component";
-import { ViewComponent } from "./map/view/view.component";
-import { RankComponent } from "./rank/rank.component";
+import { ActionComponent } from "./game/map/action/action.component";
+import { ViewComponent } from "./game/map/view/view.component";
+import { RankComponent } from "./game/rank/rank.component";
+import { ViewPlayerComponent } from "./game/map/view-player/view-player.component";
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -64,6 +65,7 @@ const MATERIALS = [
     ActionComponent,
     ViewComponent,
     RankComponent,
+    ViewPlayerComponent,
   ],
   imports: [
     CommonModule,

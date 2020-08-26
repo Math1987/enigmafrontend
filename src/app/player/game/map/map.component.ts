@@ -1,12 +1,11 @@
-import { AccountService } from "./../../shared/services/account.service";
+import { AccountService } from "./../../../shared/services/account.service";
 import { BehaviorSubject } from "rxjs";
-import { CharaService } from "./../../shared/services/chara.service";
-import { SocketService } from "./../../shared/services/socket.service";
-import { Drawer } from "./../../shared/models/drawer";
-import { environment } from "./../../../environments/environment";
+import { CharaService } from "./../../../shared/services/chara.service";
+import { SocketService } from "./../../../shared/services/socket.service";
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { pops } from "src/app/shared/animations/pops";
+import { map } from "rxjs/operators";
 
 /**
  * Map component
@@ -43,5 +42,26 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
   focus(cases: Object[]) {
     this.focused.next(cases);
+  }
+  getFocused() {
+    return this.focused.pipe(
+      map((cases) => {
+        if (Array.isArray(cases)) {
+          let newFocused = [];
+          for (let obj of cases) {
+            if (
+              obj["id"] &&
+              obj["id"] === this.charaService.actualCharacter["id"]
+            ) {
+            } else {
+              newFocused.push(obj);
+            }
+          }
+          return newFocused;
+        } else {
+          return [];
+        }
+      })
+    );
   }
 }
