@@ -35,7 +35,6 @@ export class CreateCharaGuard implements CanActivate {
     | UrlTree {
     return this.accountService.getAccount().pipe(
       map((res) => {
-        console.log("guard chara", res);
         if (res && res["chara"]) {
           this.router.navigate(["u/map"]);
           return false;

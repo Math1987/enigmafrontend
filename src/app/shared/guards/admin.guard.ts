@@ -40,7 +40,6 @@ export class AdminGuard implements CanActivate {
     | UrlTree {
     return this.accountService.getAccount().pipe(
       map((account) => {
-        console.log(account);
         if (account && account["admin"]) {
           return false;
         } else {

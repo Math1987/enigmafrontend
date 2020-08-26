@@ -4,7 +4,10 @@
   [@pops]="skillsAnimator"
   *ngIf="charaService.skills | async; let skills"
 >
-  <h1>Compétences {{ (charaService.character | async)["xp"] }}</h1>
+  <div class="title">
+    <h2>Compétences {{ (charaService.character | async)["xp"] }}</h2>
+  </div>
+
   <div class="skills" fxLayout="row wrap" fxLayoutAlign="space-around center">
     <div
       *ngFor="let skill of skills"

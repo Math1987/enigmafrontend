@@ -1,54 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import './theme';
+@import "./theme";
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
 }
 
-
 @font-face {
   font-family: Roboto;
-  src: url("https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap") format("opentype");
+  src: url("https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap")
+    format("opentype");
 }
 
-.light-colors{
-  background-color : mat-color($primary, default);
+.light-colors {
+  background-color: mat-color($primary, default);
   color: mat-color($light-foreground-palette, text);
 }
-.dark-colors{
-  background-color : mat-color($dark-p, default);
+.dark-colors {
+  background-color: mat-color($dark-p, default);
   color: mat-color($dark-foreground-palette, text);
 }
 
 // Utilities
-.dib{
+.dib {
   display: inline-block;
 }
-.buttonForm{
+.buttonForm {
   width: 100%;
 }
 
 // Main
-html{
+html {
   height: 100%;
   background-color: $background;
 }
 
+.title {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+}
 
-
-mat-card{
+mat-card {
   border-top: 15px solid mat-color($primary, lighter);
 
-  mat-card-title{
+  mat-card-title {
     margin-top: -36px !important;
     text-transform: uppercase;
     text-align: center;
 
-    &>span{
+    & > span {
       display: inline-block;
       width: 150px;
       background-color: mat-color($primary, darker);
@@ -60,11 +67,12 @@ mat-card{
     }
   }
 
-  mat-card-content{
+  mat-card-content {
     margin-top: 20px;
   }
 
-  mat-card-title, mat-card-content{
+  mat-card-title,
+  mat-card-content {
     display: flex !important;
     justify-content: center;
   }

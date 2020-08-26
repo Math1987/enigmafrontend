@@ -17,6 +17,7 @@ import { MapComponent } from "./map/map.component";
 import { CharacterComponent } from "./character/character.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatTableModule } from "@angular/material/table";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { CreateComponent } from "./create/create.component";
@@ -30,7 +31,7 @@ import { PlayerToolbarComponent } from "./player-toolbar/player-toolbar.componen
 import { GameComponent } from "./game/game.component";
 import { ActionComponent } from "./map/action/action.component";
 import { ViewComponent } from "./map/view/view.component";
-import { RankComponent } from './rank/rank.component';
+import { RankComponent } from "./rank/rank.component";
 
 /**
  * Player module is lazy loaded if the user is authenticated (from connection's route or with local token)
@@ -48,6 +49,7 @@ const MATERIALS = [
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatTableModule,
 ];
 
 @NgModule({

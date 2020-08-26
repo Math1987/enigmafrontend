@@ -42,11 +42,5 @@ export class ActionComponent implements OnInit {
         this.charaService.updateLocalChara(res["user"]);
       }
     });
-
-    // this.http
-    //   .post(`${environment.apiURL}/chara/attack`, { target: this.target })
-    //   .subscribe((resAttack) => {
-    //     console.log("attack res");
-    //   });
   }
 }

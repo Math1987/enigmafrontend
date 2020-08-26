@@ -175,14 +175,12 @@ export class WorldViewverService {
               newChara["position"]["y"]
             );
           } else {
-            console.log("reinit");
             this.draw();
           }
         }
       });
     }
     this.socket.on("move", (obj, callback) => {
-      console.log("move");
       if (obj["id"] && obj["id"] !== this.chara.getValue()["id"]) {
         this.moveObj(obj);
         this.draw();
@@ -199,7 +197,6 @@ export class WorldViewverService {
       }
     });
     this.socket.on("die", (obj, callback) => {
-      console.log("die", obj);
       if (obj["chara"] && obj["chara"]["id"] === this.chara.getValue()["id"]) {
         this.chara.next(obj["chara"]);
       }
@@ -271,7 +268,6 @@ export class WorldViewverService {
         for (let i = this.roundMatrix[r].length - 1; i >= 0; i--) {
           let obj = this.roundMatrix[r][i];
           if (obj["id"] && objs[0]["id"] && obj["id"] === objs[0]["id"]) {
-            console.log("obj removed", obj);
             this.roundMatrix[r].splice(i, 1);
           }
         }
@@ -359,7 +355,6 @@ export class WorldViewverService {
         posNeeded.push({ x: newX, y: newY });
       }
     }
-    console.log(posNeeded);
     this.getOnPositions(posNeeded, (posRes) => {
       let newMatrix = [];
 

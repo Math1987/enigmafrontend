@@ -38,14 +38,11 @@ export class ConfirmGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log("confirm guard");
-
     this.http
       .post(`${environment.apiURL}/account/confirm`, {
         code: Object.keys(route.queryParams)[0],
       })
       .subscribe((confirmRes) => {
-        console.log(confirmRes);
         if (confirmRes && confirmRes["email"] && confirmRes["password"]) {
           this.accountService
             .signIn({

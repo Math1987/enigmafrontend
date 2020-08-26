@@ -97,7 +97,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("destroy player");
     // if (this.subscription) {
     //   this.subscription.unsubscribe();
     // }

@@ -136,7 +136,6 @@ export class CharaService {
   create(chara: Chara) {
     return this.http.post(`${environment.apiURL}/u/chara/create`, chara).pipe(
       map((createRes) => {
-        console.log("create chara ok", createRes);
         if (createRes && createRes["chara"]) {
           this.accountService.setChara(createRes["chara"]);
           this.character.next(createRes["chara"]);

@@ -2,7 +2,7 @@
   class="fullSize"
   fxLayout="column nowrap"
   fxLayoutAlign="start center"
-  *ngIf="accountService.account | async; let account"
+  *ngIf="accountService.getAccount() | async; let account"
 >
   <mat-toolbar
     color="accent"

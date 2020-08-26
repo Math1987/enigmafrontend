@@ -32,8 +32,6 @@ export class PlayerGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log("player guard start");
-
     return this.accountService.getAccount().pipe(
       map((account) => {
         console.log(account);
@@ -45,15 +43,6 @@ export class PlayerGuard
         }
       })
     );
-
-    // this.charaService.character.pipe().subscribe((res) => {
-    //   console.log("player guard chara pipe");
-    //   if (!res && !state.url.includes("bienvenue")) {
-    //     //this.router.navigate(["/u/bienvenue"]);
-    //   }
-    // });
-
-    // return true;
   }
   canDeactivate(
     component: PlayerComponent,

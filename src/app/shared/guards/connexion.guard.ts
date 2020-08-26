@@ -32,10 +32,8 @@ export class ConnexionGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log("connection guard");
     return this.accountService.getAccount().pipe(
       map((account) => {
-        console.log(account);
         if (account) {
           this.router.navigate(["u"]);
           return false;

@@ -11,7 +11,7 @@ import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
   providedIn: "root",
 })
 export class AccountService {
-  private actualChara = null;
+  private actualAccount = null;
   private account: ReplaySubject<Object> = new ReplaySubject<Object>(null);
 
   constructor(
@@ -19,20 +19,25 @@ export class AccountService {
     private tokenService: TokenService,
     private router: Router
   ) {
-    console.log("build accountService");
     this.account.subscribe((account) => {
-      this.actualChara = account;
+      this.actualAccount = account;
     });
 
     if (this.tokenService.getToken()) {
-      this.readAccount(this.tokenService.getToken()).subscribe((accountRes) => {
-        console.log(accountRes);
-        if (accountRes) {
-          this.account.next(accountRes);
-        } else {
+      this.readAccount(this.tokenService.getToken()).subscribe(
+        (accountRes) => {
+          if (accountRes) {
+            this.account.next(accountRes);
+          } else {
+            this.tokenService.removeToken();
+            this.account.next(null);
+          }
+        },
+        (error) => {
+          this.tokenService.removeToken();
           this.account.next(null);
         }
-      });
+      );
     } else {
       this.account.next(null);
     }
@@ -80,12 +85,15 @@ export class AccountService {
     });
   }
 
+  getActualAccount() {
+    return this.actualAccount;
+  }
   getAccount() {
     return this.account; // this.account.pipe(first((x) => x > 0));
   }
 
   setChara(chara: Object) {
-    let account = this.actualChara;
+    let account = this.actualAccount;
     let newObj = {};
     Object.assign(newObj, account);
     newObj["chara"] = chara;
