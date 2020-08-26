@@ -1,7 +1,12 @@
-<button
-  *ngIf="canAttack()"
-  (click)="attack()"
-  [disabled]="user['actions'] <= 0"
->
-  attaquer
-</button>
+<div *ngIf="disabled">
+  <app-icons
+    style="opacity: 0.5"
+    [size]="48"
+    [key]="key"
+    (click)="use()"
+  ></app-icons>
+</div>
+
+<div *ngIf="!disabled">
+  <app-icons [size]="48" [key]="key" (click)="use()"></app-icons>
+</div>

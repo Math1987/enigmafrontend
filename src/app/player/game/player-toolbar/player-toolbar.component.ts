@@ -1,7 +1,7 @@
-import { CharaService } from "./../../shared/services/chara.service";
+import { CharaService } from "./../../../shared/services/chara.service";
 import { Component, OnInit } from "@angular/core";
-import { MetaService } from "../../shared/services/meta.service";
-import { pops } from "../../shared/animations/pops";
+import { MetaService } from "../../../shared/services/meta.service";
+import { pops } from "../../../shared/animations/pops";
 
 @Component({
   selector: "app-player-container",

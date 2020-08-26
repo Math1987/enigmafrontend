@@ -27,6 +27,7 @@ export class MetaService {
       .subscribe((res) => {
         this.metaDatas = res;
         this.metaDatasSubject.next(res);
+        console.log(res);
       });
     this.http
       .get<any>(`${environment.apiURL}/metadatas/metavalues`)
@@ -74,5 +75,20 @@ export class MetaService {
       }
     }
     return obj;
+  }
+
+  getTypeOf(key_: string) {
+    let type = "";
+    for (let key in this.metaDatas) {
+      for (let obj of this.metaDatas[key]) {
+        if (obj["key_"] === key_) {
+          console.log(key, obj);
+          type = key;
+          break;
+        }
+      }
+    }
+
+    return type;
   }
 }

@@ -1,3 +1,4 @@
+import { MetaService } from "./../../../shared/services/meta.service";
 import { AccountService } from "./../../../shared/services/account.service";
 import { BehaviorSubject } from "rxjs";
 import { CharaService } from "./../../../shared/services/chara.service";
@@ -20,11 +21,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   mapPops = "start";
 
   focused: BehaviorSubject<Object[]> = new BehaviorSubject([]);
+  focused_ground: BehaviorSubject<Object[]> = new BehaviorSubject(null);
 
   constructor(
     public accountService: AccountService,
     public charaService: CharaService,
-    public socketService: SocketService
+    public socketService: SocketService,
+    public metadatasService: MetaService
   ) {
     this.mapPops = "start";
   }
@@ -53,13 +56,32 @@ export class MapComponent implements OnInit, AfterViewInit {
               obj["id"] &&
               obj["id"] === this.charaService.actualCharacter["id"]
             ) {
-            } else {
+            } else if (
+              this.metadatasService.getTypeOf(obj["key"]) !== "ground"
+            ) {
               newFocused.push(obj);
             }
           }
           return newFocused;
         } else {
           return [];
+        }
+      })
+    );
+  }
+  getFocusedGround() {
+    return this.focused.pipe(
+      map((cases) => {
+        if (Array.isArray(cases) && cases.length > 0) {
+          let target = {};
+          for (let obj of cases) {
+            if (this.metadatasService.getTypeOf(obj["key"]) === "ground") {
+              target = obj;
+            }
+          }
+          return target;
+        } else {
+          return {};
         }
       })
     );

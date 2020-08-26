@@ -1,7 +1,7 @@
 import { CharaService } from "./../../../../shared/services/chara.service";
 import { SocketService } from "./../../../../shared/services/socket.service";
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-action",
@@ -9,8 +9,13 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./action.component.scss"],
 })
 export class ActionComponent implements OnInit {
+  @Input("key") public key: string = "";
+  @Input("disabled") public disabled: boolean = false;
   @Input("user") public user: Object = null;
   @Input("target") public target: Object = null;
+  @Output("click") public click: EventEmitter<boolean> = new EventEmitter<
+    boolean
+  >();
 
   constructor(
     private http: HttpClient,
@@ -35,11 +40,9 @@ export class ActionComponent implements OnInit {
       return false;
     }
   }
-  attack() {
-    this.socketService.socket.emit("attack", this.target["id"], (res) => {
-      if (res && res["user"]) {
-        this.charaService.updateLocalChara(res["user"]);
-      }
-    });
+  use() {
+    if (!this.disabled) {
+      this.click.emit(true);
+    }
   }
 }

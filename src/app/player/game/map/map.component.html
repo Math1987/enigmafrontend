@@ -1,10 +1,5 @@
-<div class="map-content" fxLayout="row nowrap">
-  <div
-    class="left"
-    fxLayout="column nowrap"
-    fxLayoutAlign="space-around center"
-    fxLayoutGap="20px"
-  >
+<div style="width: 100%; min-height: 100%; display: flex; flex-direction: row">
+  <div class="left">
     <div class="map-viewver">
       <app-world-viewver
         [@pops]="mapPops"
@@ -26,29 +21,23 @@
     </div>
   </div>
 
-  <div
-    class="left"
-    fxLayout="column nowrap"
-    fxLayoutAlign="center center"
-    fxLayoutGap="20px"
-  >
-    <div
-      *ngIf="getFocused() | async; let objs"
-      fxLayout="row wrap"
-      fxLayoutAlign="start start"
-      fxLayout="row wrap"
-    >
-      <div
-        *ngFor="let obj of objs"
-        class="target"
-        fxLayout="column nowrap"
-        fxLayoutAlign="start center"
-      >
-        <app-view [target]="obj"></app-view>
-        <app-action
-          [user]="charaService.character | async"
-          [target]="obj"
-        ></app-action>
+  <div class="right">
+    <div class="objs">
+      <div *ngFor="let obj of getFocused() | async">
+        <app-target [user]="obj"></app-target>
+        <!-- <div class="target">
+          <app-view [target]="obj"></app-view>
+          <app-action
+            [user]="charaService.character | async"
+            [target]="obj"
+          ></app-action>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="ground">
+      <div class="target">
+        <app-view [target]="getFocusedGround() | async"></app-view>
       </div>
     </div>
   </div>

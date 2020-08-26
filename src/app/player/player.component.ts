@@ -33,7 +33,7 @@ import { pops } from "../shared/animations/pops";
  * When build, check token status and kik out if not valid
  */
 @Component({
-  selector: "app-game",
+  selector: "app-player",
   templateUrl: "./player.component.html",
   styleUrls: ["./player.component.scss"],
   animations: [

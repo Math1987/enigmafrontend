@@ -1,67 +1,54 @@
-<div
-  class="player-container"
-  fxLayout="column nowrap"
-  fxLayoutAlign="start center"
+<mat-toolbar
   *ngIf="accountService.getAccount() | async; let account"
+  color="accent"
+  class="toolbar"
+  fxLayoutGap="15px"
+  [@intro]="'normal'"
+  (@intro.done)="startContent($event)"
 >
-  <mat-toolbar
-    color="accent"
-    class="toolbar"
-    fxLayoutGap="15px"
-    [@intro]="'normal'"
-    (@intro.done)="startContent($event)"
-  >
-    <a mat-icon-button routerLink="map"><mat-icon>home</mat-icon></a>
-    <div fxFlex="auto">
-      <!-- <a mat-icon-button  *ngIf="account.admin" routerLink="admin"  ><mat-icon>tune</mat-icon></a> -->
-    </div>
-
-    <div
-      class="playerMenu"
-      fxLayoutGap="0%"
-      fxFlex="auto"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-      fxFlex="1 1 100%"
-      *ngIf="charaService.character | async as chara; else createChara"
-      [@intro]="'normal'"
-    >
-      <button mat-button routerLink="game/map">carte</button>
-      <button mat-button routerLink="game/perso">perso</button>
-      <button mat-button routerLink="forum">forum</button>
-      <button mat-button routerLink="game/classement">classement</button>
-    </div>
-
-    <ng-template #createChara>
-      <div fxFlex="auto">
-        <span routerLink="bienvenue">créer un personnage</span>
-      </div>
-    </ng-template>
-
-    <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <button
-        mat-fab
-        color="accent"
-        class="buttonUser link"
-        [mat-menu-trigger-for]="menu"
-      >
-        <img
-          [src]="account.avatarPath || 'assets/images/homme.png'"
-          class="iconUser"
-        />
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="deconnection()">deconnexion</button>
-        <button mat-menu-item routerLink="profil">profil</button>
-      </mat-menu>
-    </span>
-  </mat-toolbar>
+  <a mat-icon-button routerLink="map"><mat-icon>home</mat-icon></a>
+  <div fxFlex="auto">
+    <!-- <a mat-icon-button  *ngIf="account.admin" routerLink="admin"  ><mat-icon>tune</mat-icon></a> -->
+  </div>
 
   <div
-    [@pops]="containerAnimation"
-    class="game-container"
-    fxLayout="column nowrap"
+    class="playerMenu"
+    fxLayoutGap="0%"
+    fxFlex="auto"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxFlex="1 1 100%"
+    *ngIf="charaService.character | async as chara; else createChara"
+    [@intro]="'normal'"
   >
-    <router-outlet></router-outlet>
+    <button mat-button routerLink="game/map">carte</button>
+    <button mat-button routerLink="game/perso">perso</button>
+    <button mat-button routerLink="forum">forum</button>
+    <button mat-button routerLink="game/classement">classement</button>
   </div>
-</div>
+
+  <ng-template #createChara>
+    <div fxFlex="auto">
+      <span routerLink="bienvenue">créer un personnage</span>
+    </div>
+  </ng-template>
+
+  <span fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <button
+      mat-fab
+      color="accent"
+      class="buttonUser link"
+      [mat-menu-trigger-for]="menu"
+    >
+      <img
+        [src]="account.avatarPath || 'assets/images/homme.png'"
+        class="iconUser"
+      />
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="deconnection()">deconnexion</button>
+      <button mat-menu-item routerLink="profil">profil</button>
+    </mat-menu>
+  </span>
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -1,12 +1,19 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
 .fullsize {
   width: 100%;
   height: 100%;
 }
 .toolbar {
-  position: fixed;
   padding: 0px;
   margin: 0px;
   z-index: 10000;
+  position: fixed;
 }
 .buttonUser {
   overflow: hidden;
@@ -45,6 +52,9 @@
   visibility: visible;
   opacity: 1;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
 }
 .game-container {
   position: relative;
@@ -52,4 +62,7 @@
   width: 100%;
   height: 100%;
   visibility: visible;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
 }
