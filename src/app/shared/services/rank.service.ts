@@ -19,7 +19,7 @@ export class RankService {
       if (account) {
         this.http
           .get(
-            `${environment.backURL}/api/rank/kills?world=${account["world"]}&id=${account["id"]}`
+            `${environment.apiURL}/rank/kills?world=${account["world"]}&id=${account["id"]}`
           )
           .subscribe((killsRes) => {
             if (Array.isArray(killsRes)) {

@@ -69,6 +69,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       })
     );
   }
+  getImg(target) {
+    return `assets/images/${target["key"]}_illu.png`;
+  }
   getFocusedGround() {
     return this.focused.pipe(
       map((cases) => {

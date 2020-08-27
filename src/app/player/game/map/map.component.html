@@ -1,43 +1,55 @@
-<div style="width: 100%; min-height: 100%; display: flex; flex-direction: row">
+<div
+  [ngClass.lt-md]="'global-container-lt-md'"
+  [ngClass.gt-sm]="'global-container-gt-sm'"
+>
   <div class="left">
-    <div class="map-viewver">
-      <app-world-viewver
-        [@pops]="mapPops"
-        #worldViewver
-        [character]="charaService.character"
-        [socket]="socketService.socketObservable"
-        (focusCase)="focus($event)"
-      >
-      </app-world-viewver>
-    </div>
+    <app-world-viewver
+      [ngClass.lt-md]="'map-viewver-lt-md'"
+      [ngClass.gt-sm]="'map-viewver'"
+      [@pops]="mapPops"
+      #worldViewver
+      [character]="charaService.character"
+      [socket]="socketService.socketObservable"
+      (focusCase)="focus($event)"
+    >
+    </app-world-viewver>
 
     <div
+      [ngClass.lt-md]="'chara-viewver-lt-md'"
+      [ngClass.gt-sm]="'chara-viewver'"
       *ngIf="charaService.character | async; let chara"
-      class="target"
-      fxLayout="column nowrap"
-      fxLayoutAlign="start center"
     >
-      <app-view-player [target]="chara"></app-view-player>
+      <div [ngClass.lt-md]="'chara-lt-md'" [ngClass.gt-sm]="'chara'">
+        <img [src]="getImg(chara)" />
+      </div>
+
+      <div [ngClass.lt-md]="'historic-lt-md'" [ngClass.gt-sm]="'historic'">
+        <h2>historique</h2>
+      </div>
     </div>
   </div>
 
-  <div class="right">
-    <div class="objs">
+  <div [ngClass.lt-md]="'right-lt-md'" [ngClass.gt-sm]="'right-objs'">
+    <div [ngClass.lt-md]="'objs-lt-md'" [ngClass.gt-sm]="'objs'">
       <div *ngFor="let obj of getFocused() | async">
-        <app-target [user]="obj"></app-target>
-        <!-- <div class="target">
-          <app-view [target]="obj"></app-view>
-          <app-action
-            [user]="charaService.character | async"
-            [target]="obj"
-          ></app-action>
-        </div> -->
+        <app-target
+          [ngClass.lt-md]="'target-lt-md'"
+          [ngClass.gt-sm]="'target'"
+          [user]="obj"
+        ></app-target>
       </div>
     </div>
 
-    <div class="ground">
-      <div class="target">
-        <app-view [target]="getFocusedGround() | async"></app-view>
+    <div
+      [ngClass.lt-md]="'ground-lt-md'"
+      [ngClass.gt-sm]="'ground'"
+      *ngIf="getFocusedGround() | async; let ground"
+    >
+      <div
+        [ngClass.lt-md]="'ground-content-lt-md'"
+        [ngClass.gt-sm]="'ground-content'"
+      >
+        <img [src]="getImg(ground)" />
       </div>
     </div>
   </div>
