@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs";
 import { CharaService } from "./../../../shared/services/chara.service";
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -15,6 +16,7 @@ import { map } from "rxjs/operators";
 })
 export class CharacterComponent implements OnInit {
   skillsAnimator: string = "start";
+  selected: number = 0;
 
   constructor(private http: HttpClient, public charaService: CharaService) {}
 
@@ -40,5 +42,8 @@ export class CharacterComponent implements OnInit {
       //   skill.value = res["skill"];
       // }
     });
+  }
+  select(index: number) {
+    this.selected = index;
   }
 }

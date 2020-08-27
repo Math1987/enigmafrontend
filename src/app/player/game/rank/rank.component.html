@@ -1,8 +1,13 @@
-<div class="title">
+<div class="title" [ngClass.lt-md]="'title-lt-md'">
   <h2>classement des meilleurs tueurs</h2>
 </div>
 <div class="rank-container">
-  <table class="rank" mat-table [dataSource]="dataSource">
+  <table
+    class="rank"
+    [ngClass]="'rank-lt-md'"
+    mat-table
+    [dataSource]="dataSource"
+  >
     <ng-container matColumnDef="name">
       <th lat-mat-header-cell *matHeaderCellDef>joueur</th>
       <td mat-cell *matCellDef="let player">{{ player["name"] }}</td>

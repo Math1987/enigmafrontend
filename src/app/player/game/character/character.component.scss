@@ -1,8 +1,21 @@
-.skills{
-  background-color: rgba(255,255,255,0.1);
+.skill {
+  background-color: white; // rgba(255,255,255,0.1);
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 10px;
+  font-size: 22px;
 }
-.skill{
-  background-color: rgba(255,255,255,0.56);
-  padding : 10px ;
-  margin : 10px ;
+.skill-lt-md {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid gray;
+  padding: 4px;
+  margin: 4px;
+  font-size: 12px;
+}
+.skill-lt-md-selected {
+  border: 1px solid gray;
+  padding: 4px;
+  margin: 4px;
+  font-size: 12px;
+  background-color: white;
 }

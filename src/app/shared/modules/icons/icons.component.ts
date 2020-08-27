@@ -16,7 +16,7 @@ import { MetaService } from "../../services/meta.service";
 export class IconsComponent implements OnInit, AfterViewInit {
   @Input("number") public numb: number = 0;
   @Input("key") public key: string = null;
-  @Input("size") public size: number = 64;
+  @Input("size") public size: number = 0;
   @Input("disabled") public disabled: boolean = false;
   @ViewChild("icon") icon: ElementRef;
 
@@ -39,6 +39,14 @@ export class IconsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    if (this.size == 0) {
+      if (window.innerWidth < 600) {
+        this.size = 32;
+      } else {
+        this.size = 64;
+      }
+    }
+
     this.metaService.icons.keys.subscribe((keys) => {
       if (keys) {
         if (this.key && keys[this.key] && keys[this.key]["icon"]) {

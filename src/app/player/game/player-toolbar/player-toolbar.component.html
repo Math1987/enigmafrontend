@@ -3,6 +3,7 @@
   fxLayoutGap="10px"
   fxLayoutAlign="space-between center"
   [@pops]="popsAnimator"
+  [ngClass.lt-md]="'lt-mg'"
 >
   <div
     *ngIf="charaService.resources | async; let resources"
@@ -12,8 +13,10 @@
       *ngFor="let res of resources"
       fxLayout="row nowrap"
       fxLayoutAlign="center center"
+      style="margin: 0 5px 0 5px"
     >
-      <app-icons [size]="32" [key]="res.key_"></app-icons>
+      <app-icons fxHide.lt-md [size]="32" [key]="res.key_"></app-icons>
+      <app-icons fxHide.gt-sm [size]="20" [key]="res.key_"></app-icons>
       {{ res.value }}
     </div>
   </div>
@@ -26,8 +29,10 @@
       *ngFor="let res of resources"
       fxLayout="row nowrap"
       fxLayoutAlign="center center"
+      style="margin: 0 5px 0 5px"
     >
-      <app-icons [size]="32" [key]="res.key_"></app-icons>
+      <app-icons fxHide.lt-md [size]="32" [key]="res.key_"></app-icons>
+      <app-icons fxHide.gt-sm [size]="20" [key]="res.key_"></app-icons>
       {{ res.value }}
     </div>
   </div>

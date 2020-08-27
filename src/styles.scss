@@ -47,6 +47,15 @@ html {
   width: 100%;
   text-align: center;
 }
+.title-lt-md {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+}
+.lt-mg {
+  font-size: 10px;
+}
 
 mat-card {
   border-top: 15px solid mat-color($primary, lighter);

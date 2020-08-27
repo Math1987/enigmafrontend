@@ -21,6 +21,7 @@
     >
       <div [ngClass.lt-md]="'chara-lt-md'" [ngClass.gt-sm]="'chara'">
         <img [src]="getImg(chara)" />
+        {{ chara["life"] }}/{{ chara["life_max"] }}
       </div>
 
       <div [ngClass.lt-md]="'historic-lt-md'" [ngClass.gt-sm]="'historic'">
