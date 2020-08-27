@@ -28,8 +28,10 @@
   >
     -Y
   </button>
-  <!-- <p style="color: white;" *ngIf="worldService.posBehavior | async; let pos">
-    position
+  <p class="position" *ngIf="worldService.posBehavior | async; let pos">
     {{ pos["x"] }}x, {{ pos["y"] }}y
-  </p> -->
+  </p>
+  <p class="position-selected" *ngIf="getFocusedPosition() | async; let pos">
+    {{ pos["x"] }}x, {{ pos["y"] }}y
+  </p>
 </div>

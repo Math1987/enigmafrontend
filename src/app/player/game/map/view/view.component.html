@@ -1,5 +1,5 @@
-<div class="viewver">
-  <p>{{ target["name"] }}</p>
+<div class="viewver" [ngClass.lt-md]="'lt-md'">
+  {{ target["name"] }}
   <img class="img" [src]="getImg()" />
-  <p *ngIf="target['life']">{{ getLife() }}</p>
+  {{ getLife() }}
 </div>

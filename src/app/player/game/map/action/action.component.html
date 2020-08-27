@@ -8,5 +8,6 @@
 </div>
 
 <div *ngIf="!disabled">
-  <app-icons [size]="48" [key]="key" (click)="use()"></app-icons>
+  <app-icons fxHide.lt-md [size]="48" [key]="key" (click)="use()"></app-icons>
+  <app-icons fxHide.gt-sm [size]="24" [key]="key" (click)="use()"></app-icons>
 </div>

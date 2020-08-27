@@ -2,7 +2,7 @@
   *ngIf="metaService.metaDatasSubject | async; let metaDatas"
   class="createPannel"
   [@start]="'normal'"
-  style="margin-bottom: 200px;"
+  style="margin-bottom: 200px"
   fxLayout="column nowrap"
   fxLayoutAlign="center center"
 >
@@ -41,7 +41,7 @@
         [ngClass.lt-md]="{ test2: true }"
       >
         <mat-card-title><span>Choix de la race</span></mat-card-title>
-        <mat-card-content class="d-flex justify-content-around">
+        <mat-card-content class="d-flex justify-content-around container">
           <img
             *ngFor="let currentRace of metaDatas['races']"
             (click)="formGroup.controls.race.setValue(currentRace['key_'])"
@@ -60,7 +60,7 @@
         [ngClass.lt-md]="{ test2: true }"
       >
         <mat-card-title><span>Choix de la religion</span></mat-card-title>
-        <mat-card-content class="d-flex justify-content-around">
+        <mat-card-content class="d-flex justify-content-around container">
           <img
             *ngFor="let currentReligion of metaDatas['religions']"
             (click)="
@@ -77,7 +77,7 @@
     </div>
 
     <div
-      style="height: 100%;"
+      style="height: 100%"
       fxLayout="column nowrap"
       fxLayoutAlign="center center"
       fxLayoutGap="20px"

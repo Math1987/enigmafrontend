@@ -1,27 +1,45 @@
 <mat-card fxFlex="100%">
   <mat-card-title><span>Connexion</span></mat-card-title>
-  <mat-card-content fxLayout="column nowrap" >
+  <mat-card-content fxLayout="column nowrap">
     <form
       fxLayout="column nowrap"
       fxLayoutAlign="center start"
-      [formGroup]="formGroup" (ngSubmit)="login()"
+      [formGroup]="formGroup"
+      (ngSubmit)="login()"
     >
       <mat-form-field>
-        <input matInput type="text" formControlName="email" placeholder="email">
-        <mat-error>{{formGroup.get('email').errors | inputMail:'signIn' }}</mat-error>
+        <input
+          matInput
+          type="text"
+          formControlName="email"
+          placeholder="email"
+        />
+        <mat-error>{{
+          formGroup.get("email").errors | inputMail: "signIn"
+        }}</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input type="password" matInput formControlName="password" placeholder="mot de passe">
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="mot de passe"
+        />
         <mat-error> mot de passe invalid</mat-error>
       </mat-form-field>
 
-      <button type="submitLogin" class="buttonForm" mat-raised-button color="accent" [disabled]="!formGroup.valid">jouer</button>
-
-
+      <button
+        type="submitLogin"
+        class="buttonForm"
+        mat-raised-button
+        color="accent"
+        [disabled]="!formGroup.valid"
+      >
+        jouer
+      </button>
     </form>
 
-
-
+    <!-- 
     <div
       fxFlex="100%"
       fxLayout="row nowrap"
@@ -31,13 +49,6 @@
     >
       <button  mat-button type="button" mb-fab #loginRef class="googleButton" ></button>
       <button mat-button type="button" mb-fab #loginRef class="facebookButton" ></button>
-    </div>
-
+    </div> -->
   </mat-card-content>
 </mat-card>
-
-
-
-
-
-

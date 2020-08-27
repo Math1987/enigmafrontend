@@ -32,3 +32,16 @@
 .right {
   right: 0px;
 }
+
+.position {
+  position: absolute;
+  left: 25%;
+  top: 0px;
+  color: black;
+}
+.position-selected {
+  position: absolute;
+  left: 75%;
+  bottom: 0px;
+  color: black;
+}

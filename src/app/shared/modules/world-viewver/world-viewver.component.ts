@@ -14,6 +14,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from "@angular/core";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-world-viewver",
@@ -76,6 +77,15 @@ export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     }
+  }
+  getFocusedPosition() {
+    return this.worldService.focused.pipe(
+      map((arrFocus) => {
+        if (arrFocus && arrFocus.length > 0 && arrFocus[0]["x"]) {
+          return { x: arrFocus[0]["x"], y: arrFocus[0]["y"] };
+        }
+      })
+    );
   }
 
   updateLocalPositions(positions: []) {}
