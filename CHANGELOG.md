@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/Math1987/enigmafrontend/compare/v0.0.7...v0.0.8) (2020-08-28)
+
+
+### Features
+
+* historic ([a505f2a](https://github.com/Math1987/enigmafrontend/commit/a505f2ae2b53a675df1679fa102cbaedbdaf6e4d))
+
+
+### Bug Fixes
+
+* historic ([73d36dd](https://github.com/Math1987/enigmafrontend/commit/73d36dd9fc93832946321444dbd239f350da59c0))
+
 ### [0.0.7](https://github.com/Math1987/enigmafrontend/compare/v0.0.6...v0.0.7) (2020-08-25)
 
 
