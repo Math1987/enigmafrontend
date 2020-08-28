@@ -11,4 +11,9 @@ export class HistoricComponent implements OnInit {
   constructor(public charaService: CharaService) {}
 
   ngOnInit(): void {}
+  getDate(timeStamp) {
+    return ` ${new Date(timeStamp).getHours()}h:${new Date(
+      timeStamp
+    ).getMinutes()}m`;
+  }
 }

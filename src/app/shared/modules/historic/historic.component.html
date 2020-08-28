@@ -1,22 +1,16 @@
 <div class="historic">
   <p
-    *ngFor="
-      let row of (charaService.character | async)['historic'] | keyvalue;
-      let chara
-    "
+    *ngFor="let row of (charaService.character | async)['historic']; let chara"
   >
-    {{ row.value["message"] }}.
-    <span *ngIf="row.value['key_'] === 'attack'"
-      >D100={{ row.value["D100"] }} => dégâts={{ row.value["power"] }}</span
+    {{ row["message"] }}.
+    <span *ngIf="row['key_'] === 'attack'"
+      >D100={{ row["D100"] }} => dégâts={{ row["power"] }}</span
     >
-    <span *ngIf="row.value['key_'] === 'counterAttack'"
-      >D100={{ row.value["D100"] }} => dégâts={{ row.value["power"] }}</span
+    <span *ngIf="row['key_'] === 'counterAttack'"
+      >D100={{ row["D100"] }} => dégâts={{ row["power"] }}</span
     >
-    <span *ngIf="row.value['key_'] === 'pass'"
-      >+{{ row.value["action"] }} actions, +{{
-        row.value["move"]
-      }}
-      déplacements</span
+    <span *ngIf="row['key_'] === 'pass'"
+      >+{{ row["action"] }} actions, +{{ row["move"] }} déplacements</span
     >
   </p>
 </div>
