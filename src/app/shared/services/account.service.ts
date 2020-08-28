@@ -20,6 +20,7 @@ export class AccountService {
     private router: Router
   ) {
     this.account.subscribe((account) => {
+      console.log(account);
       this.actualAccount = account;
     });
 

@@ -1,3 +1,4 @@
+import { HistoricModule } from './../shared/modules/historic/historic.module';
 import { WorldViewverModule } from "./../shared/modules/world-viewver/world-viewver.module";
 import { NgModule, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -83,6 +84,7 @@ const MATERIALS = [
     ExtendedModule,
     IconsModule,
     WorldViewverModule,
+    HistoricModule
   ],
   providers: [],
 })

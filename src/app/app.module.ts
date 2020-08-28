@@ -8,13 +8,14 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from "./shared/interceptors/auth.interceptor";
 import { AnimationService } from "./shared/services/animation.service";
+import { ReversePipe } from './shared/pipes/reverse.pipe';
 
 /**
  * Main app component import and provide necessary systems for all modules.
  * All the modules will be load as lazy loading (see app-routing.module)
  */
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ReversePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

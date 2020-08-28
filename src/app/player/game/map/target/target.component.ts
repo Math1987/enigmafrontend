@@ -18,7 +18,9 @@ export class TargetComponent implements OnInit {
 
   ngOnInit(): void {}
   attack() {
+    console.log("attack");
     this.socketService.socket.emit("attack", this.user["id"], (res) => {
+      console.log(res);
       if (res && res["user"]) {
         this.charaService.updateLocalChara(res["user"]);
       }

@@ -24,10 +24,9 @@
         {{ chara["life"] }}/{{ chara["life_max"] }}
       </div>
 
-      <div
-        [ngClass.lt-md]="'historic-lt-md'"
-        [ngClass.gt-sm]="'historic'"
-      ></div>
+      <div [ngClass.lt-md]="'historic-lt-md'" [ngClass.gt-sm]="'historic'">
+        <app-historic></app-historic>
+      </div>
     </div>
   </div>
 

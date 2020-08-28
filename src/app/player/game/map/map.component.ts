@@ -37,6 +37,32 @@ export class MapComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.mapPops = "normal";
     }, 50);
+
+    this.socketService.socketObservable.subscribe((socket) => {
+      if (socket) {
+        socket.on("attack", (objs) => {
+          if (objs["user"]["id"] === this.charaService.actualCharacter["id"]) {
+            this.charaService.updateLocalChara(objs["user"]);
+          } else if (
+            objs["target"]["id"] === this.charaService.actualCharacter["id"]
+          ) {
+            this.charaService.updateLocalChara(objs["target"]);
+          }
+        });
+        socket.on("counterAttack", (objs) => {
+          if (
+            objs["attacker"]["id"] === this.charaService.actualCharacter["id"]
+          ) {
+            this.charaService.updateLocalChara(objs["attacker"]);
+          } else if (
+            objs["counterAttacker"]["id"] ===
+            this.charaService.actualCharacter["id"]
+          ) {
+            this.charaService.updateLocalChara(objs["counterAttacker"]);
+          }
+        });
+      }
+    });
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -85,7 +111,6 @@ export class MapComponent implements OnInit, AfterViewInit {
                 obj
               );
               target["name"] = target["name_fr"];
-              console.log(target);
             }
           }
 

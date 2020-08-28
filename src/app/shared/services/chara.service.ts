@@ -44,6 +44,7 @@ export class CharaService {
       }
     });
     this.character.subscribe((chara) => {
+      console.log(chara);
       this.actualCharacter = chara;
     });
   }
