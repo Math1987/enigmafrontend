@@ -80,6 +80,24 @@ export class AccountService {
         })
       );
   }
+  resetPassword( email, callBack ){
+    this.http.post(`${environment.apiURL}/account/resetPassword`, {email : email}).subscribe( err => {
+      console.log('fail', err);
+      callBack(err);
+    }, resp => {
+      console.log(resp.status);
+      if ( resp.status == 404 ){
+        callBack(false);
+      }else{
+        callBack(true);
+      }
+    });
+  }
+  confirmResetPassword( code, password, callback){
+    this.http.post(`${environment.apiURL}/account/confirmResetPassword`, {code : code, password : password}).subscribe( err => {}, res => {
+      callback(res);
+    })
+  }
   readAccount(token: string) {
     return this.http.post(`${environment.apiURL}/account/readAccount`, {
       token: token,

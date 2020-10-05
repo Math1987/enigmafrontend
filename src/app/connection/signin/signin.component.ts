@@ -69,6 +69,7 @@ export class SigninComponent implements OnInit {
   login() {
     if (this.formGroup.valid) {
       this.accountService.signIn(this.formGroup.value).subscribe((res) => {
+        console.log(res);
         // this.router.navigate(["u"]);
       });
     }
@@ -113,5 +114,26 @@ export class SigninComponent implements OnInit {
       js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "google-jssdk");
+  }
+  forgotPassword(){
+    let email = prompt( 'entrez votre email')
+    if ( email ){
+      this.accountService.resetPassword(email, (res) => {
+
+          if ( res ){
+            alert('Merci. Un email de confirmation vous a été envoyé');
+          }else{
+            alert("cet email n'est pas valid");
+          }
+          
+
+          // this.router.navigate(["/connexion/confirmer"]);
+          // this.authService.signIn(res).subscribe((signin) => {
+          //   this.router.navigate(["confirmer"]);
+          // });
+        
+      })
+    }
+
   }
 }
