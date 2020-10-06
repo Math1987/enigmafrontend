@@ -69,7 +69,13 @@ export class SigninComponent implements OnInit {
   login() {
     if (this.formGroup.valid) {
       this.accountService.signIn(this.formGroup.value).subscribe((res) => {
-        console.log(res);
+
+        console.log(res) ;
+
+
+      },(err) => {
+        console.log(err);
+        alert('mot de passe incorrect.');
         // this.router.navigate(["u"]);
       });
     }
