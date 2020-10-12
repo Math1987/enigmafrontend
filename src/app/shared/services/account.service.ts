@@ -119,6 +119,21 @@ export class AccountService {
     this.account.next(newObj);
   }
 
+  removeAccount( callback ){
+
+    this.http.get(`${environment.apiURL}/account/removeAccount`).subscribe( accountRes => {
+
+      console.log(accountRes);
+
+    }, err => {
+
+      console.log(err);
+
+    });
+    callback('done');
+    
+  }
+
   logOut() {
     this.account.next(null);
     this.tokenService.removeToken();

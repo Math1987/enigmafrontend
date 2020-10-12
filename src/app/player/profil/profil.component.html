@@ -27,8 +27,7 @@
 
           <span fxFlex="auto" #nameDisplay>{{ user.name }}</span>
           <mat-button-toggle id="test"
-            ><mat-icon>edit</mat-icon></mat-button-toggle
-          >
+            ><mat-icon>edit</mat-icon></mat-button-toggle>
         </div>
 
         <div class="profil-raw" fxLayout="start center" fxLayoutGap="10px">
@@ -65,6 +64,9 @@
           </mat-button-toggle>
         </div>
       </div>
+      <p>date d'inscription: {{user.inscription}}</p>
     </mat-card-content>
+
+    <button mat-raised-button color="warn" (click)="removeAccount()">supprimer compte</button>
   </mat-card>
 </div>

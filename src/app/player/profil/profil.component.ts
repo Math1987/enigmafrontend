@@ -47,6 +47,18 @@ export class ProfilComponent implements OnInit {
     public charaService: CharaService
   ) {}
 
+  removeAccount(){
+
+    if ( confirm('êtes vous certain(e) de vouloir supprimer définitivement votre accompte (et à tout jamais) ??' )){
+
+      this.accountService.removeAccount( accountRes => {
+
+      });
+
+    }
+
+  }
+
   /**
    * take the userService's currentUser observable's pointer
    */
