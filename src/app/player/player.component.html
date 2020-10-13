@@ -1,3 +1,4 @@
+<div *ngIf="!imageLoaderObservable" class="loading" fxLayout="column nowrap" fxLayoutAlign="center center"><h3>chargement...</h3></div>
 <mat-toolbar
   *ngIf="accountService.getAccount() | async; let account"
   color="accent"
@@ -73,4 +74,4 @@
     </mat-menu>
   </span>
 </mat-toolbar>
-<router-outlet style="margin-top: 50px"></router-outlet>
+<router-outlet *ngIf="imageLoaderObservable" style="margin-top: 50px"></router-outlet>

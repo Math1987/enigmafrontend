@@ -69,6 +69,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   public containerAnimation: string = "start";
 
+  public imageLoader = {
+    'assets/images/icones.png' : new Image()
+  }
+  public imageLoaderObservable = false ;
+
+
   constructor(
     public accountService: AccountService,
     private http: HttpClient,
@@ -84,6 +90,47 @@ export class PlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
   public startContent(event) {
     this.containerAnimation = "normal";
+
+
+    this.metaService.metaDatasSubject.subscribe( metadatas => {
+      console.log('metadatas in player', metadatas);
+      for ( let key in metadatas ) {
+        for ( let obj of metadatas[key] ){
+          console.log(obj ['img']);
+
+          if ( !this.imageLoader[obj['img']] ){
+            this.imageLoader[obj['img']] = new Image();
+          }
+
+        }
+      }
+      for ( let key in this.imageLoader ){
+        this.imageLoader[key]['src'] = this.imageLoader[key] ;
+      }
+      console.log(this.imageLoader);
+
+        let loaderInterval = setInterval(()=> {
+
+          let completed = 0 ;
+          for ( let key in this.imageLoader ){
+  
+            if ( this.imageLoader[key].complete ){
+              completed ++ ;
+            }
+  
+          }
+          console.log('loading image', completed);
+          if ( completed >= Object.keys(this.imageLoader).length ){
+            this.imageLoaderObservable = true ;
+            clearInterval(loaderInterval);
+          }
+  
+        },50);
+  
+
+    })
+    
+
   }
 
   /**
