@@ -52,7 +52,7 @@
           fxFlex="100%"
           fxFlexAlign="center"
         >
-          <img class="profil-avatar" [src]="user.avatarPath" />
+          <img class="profil-avatar" [src]="img" />
           <mat-button-toggle class="avatar-upload" (click)="openAvatarFile()">
             <mat-icon>cloud_upload</mat-icon>*
             <input
@@ -62,9 +62,14 @@
               (change)="setAvatarFile($event)"
             />
           </mat-button-toggle>
+          <div *ngIf="img !== 'assets/images/humain.png' && img !== user.img"  >
+            <button mat-raised-button (click)="validateImg()">valider</button>
+            <button mat-raised-button color="warn" (click)="cancelImg()">anuler</button>
+          </div>
+
         </div>
       </div>
-      <p>date d'inscription: {{user.inscription}}</p>
+      <p>date d'inscription: {{user.inscription | date: 'dd:MMMM:yyyy:hh:mm'}}</p>
     </mat-card-content>
 
     <button mat-raised-button color="warn" (click)="removeAccount()">supprimer compte</button>

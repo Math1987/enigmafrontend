@@ -104,6 +104,21 @@ export class AccountService {
     });
   }
 
+  updateAccount(values){
+
+    console.log('UPDATE VALUES', values);
+
+    this.http.post(`${environment.apiURL}/account/update`,values ).subscribe( updateRes => {
+
+      if ( updateRes ){
+        this.account.next(updateRes);
+      }
+      
+
+    })
+
+  }
+
   getActualAccount() {
     return this.actualAccount;
   }

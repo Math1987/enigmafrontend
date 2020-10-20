@@ -11,6 +11,8 @@ import {
   trigger,
 } from "@angular/animations";
 
+import { Sharp } from "sharp";
+
 /**
  * profil component give a visual interface containing all the user personnal informations
  * as name, email, avatar etc..
@@ -31,12 +33,19 @@ import {
     ]),
   ],
 })
+
+
+
+
 export class ProfilComponent implements OnInit {
+
+
+  img = null ;
+
   openAvatarFile() {
     let input_ = document.getElementById("avatarInputFile") as HTMLInputElement;
     input_.click();
   }
-  setAvatarFile(event) {}
 
   /**
    * ProfileComponent is build when Player's module is lazy loaded (if user is connected)
@@ -62,5 +71,54 @@ export class ProfilComponent implements OnInit {
   /**
    * take the userService's currentUser observable's pointer
    */
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.accountService.getAccount().subscribe( account => {
+
+      if ( account['img']){
+        this.img = account['img'];
+      }else{
+        this.img = "assets/images/humain.png";
+      }
+
+    });
+
+  }
+  
+  validateImg(){
+
+    this.accountService.updateAccount({img: this.img});
+
+  }
+  cancelImg(){
+    if ( this.accountService.getActualAccount().img ){
+      this.img = this.accountService.getActualAccount().img ;
+    }else{
+      this.img = "assets/images/humain.png"
+    }
+  }
+
+  setAvatarFile( avatar ){
+
+    console.log('ACCOUNT', this.accountService.getActualAccount());
+
+    console.log(avatar.target.files[0]);
+
+    let oldImg = new Image();
+    oldImg.addEventListener('load', () => {
+
+      const elem = document.createElement('canvas');
+      elem.width = 128;
+      elem.height = 128*(oldImg.height / oldImg.width) ;
+      const ctx = elem.getContext('2d');
+      ctx.drawImage(oldImg, 0, 0, 128, 128*(oldImg.height / oldImg.width));
+      const data = ctx.canvas.toDataURL();
+
+      this.img = data ;
+    
+
+    });
+    oldImg.src = window.URL.createObjectURL(avatar.target.files[0]);
+
+  }
 }
