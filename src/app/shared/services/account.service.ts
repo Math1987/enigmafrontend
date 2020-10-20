@@ -94,8 +94,10 @@ export class AccountService {
     });
   }
   confirmResetPassword( code, password, callback){
-    this.http.post(`${environment.apiURL}/account/confirmResetPassword`, {code : code, password : password}).subscribe( err => {}, res => {
+    this.http.post(`${environment.apiURL}/account/confirmResetPassword`, {code : code, password : password}).subscribe( res => {
       callback(res);
+    }, err => {
+      callback(err);
     })
   }
   readAccount(token: string) {
@@ -139,13 +141,15 @@ export class AccountService {
     this.http.get(`${environment.apiURL}/account/removeAccount`).subscribe( accountRes => {
 
       console.log(accountRes);
+      callback(accountRes);
 
     }, err => {
 
       console.log(err);
+      callback(err);
 
     });
-    callback('done');
+
     
   }
 

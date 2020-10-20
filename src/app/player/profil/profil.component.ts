@@ -12,6 +12,7 @@ import {
 } from "@angular/animations";
 
 import { Sharp } from "sharp";
+import { Router } from '@angular/router';
 
 /**
  * profil component give a visual interface containing all the user personnal informations
@@ -52,6 +53,7 @@ export class ProfilComponent implements OnInit {
    * @param userService: give the observable currentUser
    */
   constructor(
+    private router : Router,
     public accountService: AccountService,
     public charaService: CharaService
   ) {}
@@ -61,6 +63,10 @@ export class ProfilComponent implements OnInit {
     if ( confirm('êtes vous certain(e) de vouloir supprimer définitivement votre accompte (et à tout jamais) ??' )){
 
       this.accountService.removeAccount( accountRes => {
+
+        alert('votre compte a bien été éradiqué de façon totale et définitive.');
+        this.accountService.logOut();
+        this.router.navigate(['']);
 
       });
 
