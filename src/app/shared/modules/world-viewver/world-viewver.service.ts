@@ -143,6 +143,8 @@ export class WorldViewverService {
     this.chara = chara;
     this.socket = socket;
     this.canvas = canvas;
+    this.canvas.width = 1024 ;
+    this.canvas.height = 512 ;
 
     this.posBehaviorSubscription = this.posBehavior.subscribe((pos) => {
       if (pos) {

@@ -26,9 +26,9 @@
   background-color: blanchedalmond;
 }
 .map-viewver {
-  width: 600px;
-  height: 300px;
-  border: 1px solid gray;
+  padding : 30px ;
+  width: 90%;
+  height: 90% ;
 }
 .map-viewver-lt-md {
   width: 90vw;
@@ -36,7 +36,7 @@
   border: 1px solid gray;
 }
 .chara-viewver {
-  width: 600px;
+  min-width: 32px;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -75,12 +75,14 @@
   background-size: cover;
 }
 .historic {
+  background-color: white ;
   margin: 10px;
   border: 1px solid gray;
-  width: 60%;
+  width: 90%;
   height: 212px;
 }
 .historic-lt-md {
+
   margin: 5px;
   border: 1px solid gray;
   width: 60%;
@@ -101,7 +103,7 @@
 }
 .left {
   border: 1px solid black;
-  width: 50vw;
+  width: 75vw;
   height: 100%;
   display: flex;
   flex-direction: column;

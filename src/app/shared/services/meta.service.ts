@@ -75,6 +75,9 @@ export class MetaService {
     }
     return obj;
   }
+  get(){
+    return this.metaDatasSubject.getValue();
+  }
 
   getObj(key_: string) {
     let obj = null;

@@ -1,5 +1,7 @@
 <div class="world-view-container" *ngIf="character | async; let chara">
-  <canvas #canvas class="canvas"></canvas>
+  <canvas #canvas class="canvas">
+    
+  </canvas>
   <button
     [disabled]="chara['move'] <= 0"
     class="button-lg button top left"

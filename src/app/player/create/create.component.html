@@ -82,6 +82,34 @@
       fxLayoutAlign="center center"
       fxLayoutGap="20px"
     >
+
+
+    <mat-card
+    id="clan-selection"
+    [ngClass.gt-sm]="{ test: true }"
+    [ngClass.lt-md]="{ test2: true }"
+  >
+    <mat-card-title><span>Choix du clan</span></mat-card-title>
+    <mat-card-content class="choices-container">
+
+      <div class="choice" 
+      *ngFor="let clan of metaDatas['clan']"
+      (click)="selectClan(clan)"
+      >
+          <img
+          [src]="'/assets/images/man.png'"
+          [matTooltip]="clan['name_fr']"
+        />
+        <p>{{clan['name_fr']}}</p>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+
+
+
+
       <mat-card
         id="name-selection"
         [ngClass.gt-sm]="{ test: true }"

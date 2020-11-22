@@ -54,3 +54,30 @@ mat-card {
 .button:hover {
   background-color: lightblue;
 }
+
+
+.choices-container{
+  width : 100% ;
+  display: flex ;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+.choice{
+  height : 100% ;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column ;
+  justify-content: center;
+  margin : 0.25rem ;
+}
+.choice p{
+  text-align: center;
+}
+.choice img{
+
+  border-radius: 50% ;
+}

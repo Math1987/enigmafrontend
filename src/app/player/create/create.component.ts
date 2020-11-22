@@ -45,6 +45,7 @@ export class CreateComponent implements OnInit {
       sexe: new FormControl("masculin"),
       race: new FormControl("human"),
       religion: new FormControl("godWater"),
+      clan: new FormControl("clan"),
     });
 
     //this.metaDatasSubject = metaService.metaDatasSubject;
@@ -54,6 +55,11 @@ export class CreateComponent implements OnInit {
 
   setGender(gender) {
     this.formGroup.controls.sexe.setValue(gender);
+  }
+  selectClan(clan){
+    console.log(clan.key_);
+    this.formGroup.controls.clan.setValue(clan.key_);
+    console.log(this.formGroup.value);
   }
 
   create() {
