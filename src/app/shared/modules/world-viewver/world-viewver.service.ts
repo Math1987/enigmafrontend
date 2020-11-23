@@ -479,6 +479,7 @@ export class WorldViewverService {
     context.save();
     context.translate(width / 2, height / 2 - size / 4);
 
+    context.globalAlpha = 1.0;
     for (let z = 0; z < 3; z++) {
       for (let i = 0; i < this.VIEW_MATRIX[this.rayon].length; i++) {
         let round = this.VIEW_MATRIX[this.rayon][i];
@@ -490,10 +491,25 @@ export class WorldViewverService {
           (round.x * size * this.ratioY) / 2;
         context.translate(x, y);
 
-        if (this.focused.getValue() && this.focused.getValue() === vBoxes) {
-          context.globalAlpha = 0.5;
+        if (this.focused.getValue() && this.focused.getValue() === vBoxes ) {
+          context.filter = 'contrast(1.5)';
+          if ( z == 1 ){
+
+            let sizeWithRatio = this.ratioY*size ;
+            
+            context.beginPath();
+            context.moveTo(0,size/2);
+            context.lineTo(size/2, size/2 - sizeWithRatio*0.5);
+            context.lineTo(0, size/2 - sizeWithRatio);
+            context.lineTo(-size/2, size/2 - sizeWithRatio*0.5);
+            context.lineTo(0,size/2);
+            context.strokeStyle="white";
+            context.stroke();
+
+          }
+
         } else {
-          context.globalAlpha = 1.0;
+          context.filter = 'contrast(1)';
         }
 
         if (vBoxes !== null) {
