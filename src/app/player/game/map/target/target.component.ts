@@ -26,6 +26,20 @@ export class TargetComponent implements OnInit {
       }
     });
   }
+  isAttackable(){
+    return this.charaService.character.pipe(
+      map((chara) => {
+        if (
+          chara &&
+          (!this.user["clan"] || this.user['clan'] !== chara['clan'])
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
   canAttack() {
     return this.charaService.character.pipe(
       map((chara) => {
