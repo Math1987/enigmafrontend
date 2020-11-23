@@ -99,6 +99,7 @@
           <img
           [src]="'/assets/images/man.png'"
           [matTooltip]="clan['name_fr']"
+          [class.active]="formGroup.controls.clan.value === clan['key_']"
         />
         <p>{{clan['name_fr']}}</p>
       </div>

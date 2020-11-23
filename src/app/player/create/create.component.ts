@@ -45,7 +45,7 @@ export class CreateComponent implements OnInit {
       sexe: new FormControl("masculin"),
       race: new FormControl("human"),
       religion: new FormControl("godWater"),
-      clan: new FormControl("clan"),
+      clan: new FormControl("badclan"),
     });
 
     //this.metaDatasSubject = metaService.metaDatasSubject;
