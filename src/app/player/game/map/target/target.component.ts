@@ -10,6 +10,7 @@ import { map } from "rxjs/operators";
 })
 export class TargetComponent implements OnInit {
   @Input("user") public user: Object = null;
+  @Input("ground") public ground : Object = null ;
 
   constructor(
     private socketService: SocketService,
@@ -31,7 +32,8 @@ export class TargetComponent implements OnInit {
       map((chara) => {
         if (
           chara &&
-          (!this.user["clan"] || this.user['clan'] !== chara['clan'])
+          (!this.user["clan"] || this.user['clan'] !== chara['clan']) && 
+          this.ground && this.ground['key'] !== "neutral"
         ) {
           return true;
         } else {

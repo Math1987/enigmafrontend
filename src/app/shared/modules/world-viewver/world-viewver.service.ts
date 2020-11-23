@@ -10,6 +10,7 @@ import { newArray } from "@angular/compiler/src/util";
 export class WorldViewverService {
   images = {
     desert: new Image(),
+    neutral : new Image(),
     humanmasculin: new Image(),
     humanfeminine: new Image(),
     dwarfmasculin: new Image(),
@@ -21,6 +22,7 @@ export class WorldViewverService {
   };
   zOrder = {
     desert: 0,
+    neutral: 0,
     humanmasculin: 2,
     humanfeminine: 2,
     dwarfmasculin: 2,

@@ -99,10 +99,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     return `assets/images/${target["key"]}_illu.png`;
   }
 
-  getClan(){
-    let clan = '' ;
-    return this.metadatasService.get()['clan']['darkclan']['name_fr'] ;// this.charaService.actualCharacter['clan'];
-  }
 
   getFocusedGround() {
     return this.focused.pipe(

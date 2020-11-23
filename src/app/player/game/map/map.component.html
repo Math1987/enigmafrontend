@@ -41,6 +41,7 @@
           [ngClass.lt-md]="'target-lt-md'"
           [ngClass.gt-sm]="'target'"
           [user]="obj"
+          [ground]="getFocusedGround() | async"
         ></app-target>
       </div>
     </div>
@@ -55,6 +56,7 @@
         [ngClass.gt-sm]="'ground-content'"
       >
         <img [src]="getImg(ground)" />
+        <p>{{ground['name_fr']}}</p>
       </div>
     </div>
   </div>
