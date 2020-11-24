@@ -1,1 +1,7 @@
 <p>admin works!</p>
+<form >
+    <input #admin type="text" placeholder="admin">
+    <input #password type="password" placeholder="mot de passe">
+</form>
+<button (click)="connect(admin.value, password.value)">ok</button>
+<router-outlet></router-outlet>

@@ -11,6 +11,7 @@ export class WorldViewverService {
   images = {
     desert: new Image(),
     neutral : new Image(),
+
     humanmasculin: new Image(),
     humanfeminine: new Image(),
     dwarfmasculin: new Image(),
@@ -19,10 +20,13 @@ export class WorldViewverService {
     elffeminine: new Image(),
     vampiremasculin: new Image(),
     vampirefeminine: new Image(),
+
+    squeleton : new Image()
   };
   zOrder = {
     desert: 0,
     neutral: 0,
+
     humanmasculin: 2,
     humanfeminine: 2,
     dwarfmasculin: 2,
@@ -31,6 +35,8 @@ export class WorldViewverService {
     elffeminine: 2,
     vampiremasculin: 2,
     vampirefeminine: 2,
+
+    squeleton : 1
   };
 
   ROUND_MATRIX = null;
@@ -263,7 +269,9 @@ export class WorldViewverService {
     });
   }
   addPositions(objs) {
+
     while (objs.length > 0) {
+      console.log( objs[0]);
       for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
         let round = this.ROUND_MATRIX[this.rayon + 1][r];
         let px = round.x + this.x;
@@ -433,6 +441,7 @@ export class WorldViewverService {
       }
       objs.splice(0, 1);
     }
+    console.log('update objs', objs);
     this.draw();
   }
 

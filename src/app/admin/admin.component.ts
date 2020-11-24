@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../shared/services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    public adminService : AdminService
+  ) {
 
   }
 
   ngOnInit(): void {
+  }
+  connect(admin, password){
+    console.log('connect', admin, password);
+    this.adminService.login( admin ,password ,logRes => {
+      if ( logRes ){
+        alert('Bienvenue cher administarteur.');
+      }else{
+        alert(`Vos identifiants ne sont pas correct.`);
+      }
+
+    });
   }
 
 }

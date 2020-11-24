@@ -9,7 +9,7 @@ import {AdminRouting} from './admin.routing';
  */
 @NgModule({
   declarations: [
-    AdminComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,
