@@ -10,9 +10,11 @@ import { AdminWorldSocketService } from './admin-world-socket.service';
 })
 export class AdminWorldComponent implements OnInit {
 
-
   worlds : ReplaySubject<any> = new ReplaySubject();
   world : BehaviorSubject<any> = new BehaviorSubject(null);
+
+  chara : BehaviorSubject<Object> = new BehaviorSubject({ position : {x : 0, y : 0}});
+  focusedCase : BehaviorSubject<Object[]> = new BehaviorSubject(null);
 
   constructor(
     public adminService : AdminService,
@@ -24,12 +26,24 @@ export class AdminWorldComponent implements OnInit {
     this.adminService.getWorlds().subscribe(worlds => {
 
       this.worlds.next(worlds);
-
       this.world.next(worlds[0]) ;
+
+      this.chara.next({position : { x : 0, y : 0}});
       
       console.log("admin worlds", worlds)
     });
 
+  }
+  move(event){
+    console.log('move', event);
+    let newChara = this.chara.getValue();
+    newChara['position']['x'] += event.x ;
+    newChara['position']['y'] += event.y ;
+    this.chara.next(newChara);
+  }
+  focus(cases){
+    console.log('focusing', cases);
+    this.focusedCase.next(cases);
   }
   selectWorld(){
 

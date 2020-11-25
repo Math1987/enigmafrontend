@@ -11,11 +11,29 @@
     <p>width:{{ww['width']}}</p>
     <p>height:{{ww['height']}}</p>
 
-    <app-world-viewver
-      class="map" 
-      [socket]="socketService.socketObservable"
-    >
-    </app-world-viewver>
+    <div class="map">  
+        <app-world-viewver
+            [socket]="socketService.socketObservable"
+            [character]="chara"
+            (moveRequest)="move($event)"
+            (focusCase)="focus($event)"
+            >
+        </app-world-viewver>
+    </div>
+    <div *ngIf="focusedCase | async ; let case">
+        test
+        <div *ngFor="let obj of case">
+            <h3>name: {{obj['name']}}</h3>
+            <div *ngFor="let val of obj | keyvalue">
+                <p>{{val['key']}}:</p>
+                <input *ngIf="val['key'] | keyFree else justShow" [value]="val['value']">
+                <ng-template #justShow> {{val['value']}}</ng-template>
+                <br>
+            </div>
+            <!-- <p>{{ obj | json}}</p> -->
+            <!-- <input *ngFor="let val in obj" type="text"> -->
+        </div>
+    </div>
 
 </div>
 

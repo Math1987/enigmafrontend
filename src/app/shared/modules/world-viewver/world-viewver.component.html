@@ -3,28 +3,28 @@
     
   </canvas>
   <button
-    [disabled]="chara['move'] <= 0"
+    [disabled]="chara['move'] && chara['move'] <= 0"
     class="button-lg button top left"
     (click)="moveEvent(0, -1)"
   >
     -x
   </button>
   <button
-    [disabled]="chara['move'] <= 0"
+    [disabled]="chara['move'] && chara['move'] <= 0"
     class="button-lg button bottom right"
     (click)="moveEvent(0, 1)"
   >
     +x
   </button>
   <button
-    [disabled]="chara['move'] <= 0"
+    [disabled]="chara['move'] && chara['move'] <= 0"
     class="button-lg button top right"
     (click)="moveEvent(1, 0)"
   >
     +y
   </button>
   <button
-    [disabled]="chara['move'] <= 0"
+    [disabled]="chara['move'] && chara['move'] <= 0"
     class="button-lg button bottom left"
     (click)="moveEvent(-1, 0)"
   >

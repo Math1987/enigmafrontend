@@ -37,6 +37,9 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class AppComponent implements OnInit{
 
+
+  test = 'bonjour' ;
+
   constructor(
     private animationService: AnimationService
   ) {

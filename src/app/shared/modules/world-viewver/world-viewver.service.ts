@@ -179,7 +179,10 @@ export class WorldViewverService {
             this.posBehavior.getValue().x != newChara["position"]["x"] ||
             this.posBehavior.getValue().y != newChara["position"]["y"]
           ) {
-            this.moveObj(newChara);
+
+            if ( newChara['id'] ){
+              this.moveObj(newChara);
+            }
             this.moveViewTo(
               newChara["position"]["x"],
               newChara["position"]["y"]
@@ -191,7 +194,7 @@ export class WorldViewverService {
       });
     }
     this.socket.on("move", (obj, callback) => {
-      if (obj["id"] && obj["id"] !== this.chara.getValue()["id"]) {
+      if ( obj["id"] && obj["id"] !== this.chara.getValue()["id"]) {
         this.moveObj(obj);
         this.draw();
       }
@@ -264,6 +267,7 @@ export class WorldViewverService {
     }
 
     this.getOnPositions(positions, (objs) => {
+
       this.addPositions(objs);
       callback({});
     });
@@ -367,6 +371,10 @@ export class WorldViewverService {
       }
     }
     this.getOnPositions(posNeeded, (posRes) => {
+
+
+
+
       let newMatrix = [];
 
       for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
@@ -387,12 +395,14 @@ export class WorldViewverService {
           }
         }
         for (let i = posRes.length - 1; i >= 0; i--) {
+
           if (posRes[i].x == newX && posRes[i].y == newY) {
             newMatrix[r].push(posRes[i]);
             posRes.splice(i, 1);
           }
         }
       }
+
       for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
         while (this.roundMatrix[r].length > 0) {
           this.roundMatrix[r].splice(0, 1);
@@ -403,6 +413,7 @@ export class WorldViewverService {
       }
       this.posBehavior.next({ x: x, y: y });
       this.focused.next(this.roundMatrix[0]);
+
       this.draw();
     });
   }
@@ -490,8 +501,11 @@ export class WorldViewverService {
     context.translate(width / 2, height / 2 - size / 4);
 
     context.globalAlpha = 1.0;
+
     for (let z = 0; z < 3; z++) {
       for (let i = 0; i < this.VIEW_MATRIX[this.rayon].length; i++) {
+
+        
         let round = this.VIEW_MATRIX[this.rayon][i];
         let vBoxes = this.viewMatrix[i];
 

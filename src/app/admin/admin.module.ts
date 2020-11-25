@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
 import {AdminRouting} from './admin.routing';
+import { SharedModule } from '../shared/modules/shared/shared.module';
 
 /**
  * This module is loaded from player module if connected.

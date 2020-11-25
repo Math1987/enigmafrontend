@@ -9,6 +9,8 @@ import { AdminService } from '../shared/services/admin.service';
 })
 export class AdminComponent implements OnInit {
 
+  test= "bonjour";
+
   constructor(
     public adminService : AdminService,
     public router : Router

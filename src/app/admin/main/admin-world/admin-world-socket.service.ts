@@ -24,7 +24,10 @@ export class AdminWorldSocketService {
       if (admin) {
 
         this.socket = io.connect(`${environment.backURL}`, {
-          query: { token: tokenService.token },
+          query: {
+             token: tokenService.token,
+             worldName : "world1"
+            },
         });
         this.socketObservable.next(this.socket);
       }

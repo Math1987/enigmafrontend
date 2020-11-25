@@ -23,7 +23,7 @@ import { map } from "rxjs/operators";
 })
 export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild("canvas") public canvas: ElementRef;
+
   @Input("character") public character: BehaviorSubject<Object> = null;
   @Input("socket") public socket: BehaviorSubject<Socket> = null;
   @Output() public focusCase: EventEmitter<Object[]> = new EventEmitter<
@@ -33,11 +33,15 @@ export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
     {x : number, y : number}
   >();
 
+  @ViewChild("canvas") public canvas: ElementRef;
+
   constructor(
     public worldService: WorldViewverService
   ) {}
 
   ngOnInit(): void {}
+
+
   ngOnDestroy() {
     this.worldService.destroy();
   }
@@ -47,6 +51,9 @@ export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     setTimeout(() => {
+
+      console.log('ngAfterViewInit canvas', this.canvas );
+
       if (this.socket) {
         this.socket.subscribe((socket) => {
           if (socket) {
