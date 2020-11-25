@@ -5,6 +5,7 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { environment } from 'src/environments/environment';
 import * as io from "socket.io-client";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AdminWorldSocketService {
 
   constructor(
     public tokenService: TokenService,
-    public adminService : AdminService
+    public adminService : AdminService,
+    public http : HttpClient
   ) {
     this.adminService.getAdmin().subscribe((admin) => {
      
@@ -41,4 +43,5 @@ export class AdminWorldSocketService {
     //   }
     // });
   }
+
 }

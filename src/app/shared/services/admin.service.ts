@@ -67,4 +67,20 @@ export class AdminService {
     return subscription ;
   }
 
+
+  updateWorldValue(worldName, obj, key, value, callback){
+    console.log('update world value', value);
+    this.http.post(`${environment.apiURL}/admin/updateWorldValue`, {
+      worldName : worldName,
+      target : obj,
+      key : key,
+      value : value
+    }).subscribe( res => {
+      console.log(res);
+      callback(true);
+    }, err => {
+      console.log('err', err);
+    })
+  }
+
 }

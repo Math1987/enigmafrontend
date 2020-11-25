@@ -26,12 +26,15 @@
             <h3>name: {{obj['name']}}</h3>
             <div *ngFor="let val of obj | keyvalue">
                 <p>{{val['key']}}:</p>
-                <input *ngIf="val['key'] | keyFree else justShow" [value]="val['value']">
+                <div *ngIf="val['key'] | keyFree else justShow" >
+                    <input #input [value]="val['value']">
+                    <button (click)="sendUpdate(obj, val['key'], input.value )">send update</button>
+                </div>
+
                 <ng-template #justShow> {{val['value']}}</ng-template>
                 <br>
             </div>
-            <!-- <p>{{ obj | json}}</p> -->
-            <!-- <input *ngFor="let val in obj" type="text"> -->
+
         </div>
     </div>
 

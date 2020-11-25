@@ -49,4 +49,11 @@ export class AdminWorldComponent implements OnInit {
 
   }
 
+  sendUpdate(obj, key, newValue){
+    console.log('send update', this.world.getValue(), obj, key, newValue);
+    this.adminService.updateWorldValue(this.world.getValue()['name'], obj, key, newValue, res => {
+
+    })
+  }
+
 }
