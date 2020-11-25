@@ -9,19 +9,15 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 })
 export class MainComponent implements OnInit {
 
-  worlds : ReplaySubject<any> = new ReplaySubject();
+  test = new BehaviorSubject('bonjour');
 
   constructor(
     public adminService : AdminService
   ) { }
 
-  ngOnInit(): void {
-
-    this.adminService.getWorlds().subscribe(worlds => {
-      this.worlds.next(worlds);
-      console.log("admin worlds", worlds)
-    });
-
+  ngOnInit(): void {}
+  logOut(){
+    this.adminService.logOut();
   }
 
 }

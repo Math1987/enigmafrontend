@@ -29,12 +29,12 @@ const GAME_ROUTES: Route[] = [
         canActivate: [CreateCharaGuard],
       },
       { path: "profil", component: ProfilComponent },
-      {
-        path: "admin",
-        canActivate: [AdminGuard],
-        loadChildren: () =>
-          import("./../admin/admin.module").then((m) => m.AdminModule),
-      },
+      // {
+      //   path: "admin",
+      //   canActivate: [AdminGuard],
+      //   loadChildren: () =>
+      //     import("./../admin/admin.module").then((m) => m.AdminModule),
+      // },
 
       {
         path: "game",

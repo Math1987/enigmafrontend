@@ -3,6 +3,7 @@ import {Route, RouterModule} from '@angular/router';
 import {AdminComponent} from './admin.component';
 import {AdminGuard} from '../shared/guards/admin.guard';
 import { MainComponent } from './main/main.component';
+import { AdminLoginGuard } from '../shared/guards/admin-login.guard';
 
 /**
  * Connection component is lazy loaded and got no specific route below
@@ -10,12 +11,19 @@ import { MainComponent } from './main/main.component';
  */
 const ACCOUNT_ROUTES: Route[] = [
   {
-    path: 'login', component: AdminComponent
+    path: 'login', component: AdminComponent,
+    canActivate: [AdminLoginGuard],
   },
   {
-    path : 'main',
+    path : ':admin',
+    canActivate: [AdminGuard],
     loadChildren: () => import("./main/main.module").then((m) => m.MainModule)
   },
+  {
+    path : '**', 
+    redirectTo : 'login', 
+    pathMatch : 'full'
+  }
 ];
 
 export const AdminRouting = RouterModule.forChild(ACCOUNT_ROUTES);

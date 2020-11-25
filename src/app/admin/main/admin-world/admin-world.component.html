@@ -1,0 +1,23 @@
+<h2>Admin Worlds</h2>
+<div *ngIf="worlds | async; let ws">
+    <button *ngFor="let world of ws ;"
+    (click)="selectWorld()">
+        {{world['name']}}
+    </button>
+</div>
+
+<div *ngIf="world | async ; let ww">
+    <h3>{{ww['name']}}</h3>
+    <p>width:{{ww['width']}}</p>
+    <p>height:{{ww['height']}}</p>
+
+    <app-world-viewver
+      class="map" 
+      [socket]="socketService.socketObservable"
+    >
+    </app-world-viewver>
+
+</div>
+
+
+<router-outlet></router-outlet>

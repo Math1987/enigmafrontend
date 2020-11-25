@@ -9,6 +9,7 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { AdminService } from '../services/admin.service';
 
 /**
  * Guard canActivate if the user is authenticated and have admin rights.
@@ -17,19 +18,9 @@ import { map } from "rxjs/operators";
   providedIn: "root",
 })
 export class AdminGuard implements CanActivate {
-  /**
-   * AdminGuard block the user's admin access if not admin rights
-   * @param userService: used to check admin rights
-   */
-  constructor(private accountService: AccountService, private router: Router) {}
 
-  /**
-   * check of iserService's currentUser ReplaySubject is actived
-   * then check actual currentUser if him admin's rights are ok
-   * if not, kik of, else allow admin's route.
-   * @param route
-   * @param state
-   */
+  constructor(private adminService: AdminService, private router: Router) {}
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -38,13 +29,15 @@ export class AdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.accountService.getAccount().pipe(
-      map((account) => {
-        if (account && account["admin"]) {
-          return false;
+    return this.adminService.getAdmin().pipe(
+      map((admin) => {
+        console.log('ACCOUNT READ IN ADMIN', admin);
+        if (admin) {
+          route.url[0].path = admin['admin'] ;
+          return true;
         } else {
-          this.router.navigate(["u"]);
-          return false;
+          this.router.navigate(["/admin/login"]);
+          return true;
         }
       })
     );

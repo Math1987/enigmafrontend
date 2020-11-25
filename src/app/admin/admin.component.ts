@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from '../shared/services/admin.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { AdminService } from '../shared/services/admin.service';
 export class AdminComponent implements OnInit {
 
   constructor(
-    public adminService : AdminService
+    public adminService : AdminService,
+    public router : Router
   ) {
 
   }
@@ -20,7 +22,8 @@ export class AdminComponent implements OnInit {
     console.log('connect', admin, password);
     this.adminService.login( admin ,password ,logRes => {
       if ( logRes ){
-        alert('Bienvenue cher administarteur.');
+        //alert('Bienvenue cher administarteur.');
+
       }else{
         alert(`Vos identifiants ne sont pas correct.`);
       }

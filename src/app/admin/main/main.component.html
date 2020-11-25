@@ -1,4 +1,11 @@
-<p>main works!</p>
-<div *ngIf="worlds | async; let ws">
-    {{ws | json}}
+<button (click)="logOut()">logout</button>
+<button [routerLink]="'users'">users</button>
+<button [routerLink]="'worlds'">worlds</button>
+<button [routerLink]="'patterns'">patterns</button>
+<button [routerLink]="'calculs'">calculs</button>
+
+<div *ngIf="test | async">
+    test
 </div>
+
+<router-outlet></router-outlet>
