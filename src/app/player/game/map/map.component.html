@@ -11,6 +11,7 @@
       [character]="charaService.character"
       [socket]="socketService.socketObservable"
       (focusCase)="focus($event)"
+      (moveRequest)="moveRequest($event)"
     >
     </app-world-viewver>
     <div [ngClass.lt-md]="'historic-lt-md'" [ngClass.gt-sm]="'historic'">

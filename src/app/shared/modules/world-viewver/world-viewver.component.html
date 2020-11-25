@@ -5,28 +5,28 @@
   <button
     [disabled]="chara['move'] <= 0"
     class="button-lg button top left"
-    (click)="move(0, -1)"
+    (click)="moveEvent(0, -1)"
   >
     -x
   </button>
   <button
     [disabled]="chara['move'] <= 0"
     class="button-lg button bottom right"
-    (click)="move(0, 1)"
+    (click)="moveEvent(0, 1)"
   >
     +x
   </button>
   <button
     [disabled]="chara['move'] <= 0"
     class="button-lg button top right"
-    (click)="move(1, 0)"
+    (click)="moveEvent(1, 0)"
   >
     +y
   </button>
   <button
     [disabled]="chara['move'] <= 0"
     class="button-lg button bottom left"
-    (click)="move(-1, 0)"
+    (click)="moveEvent(-1, 0)"
   >
     -Y
   </button>

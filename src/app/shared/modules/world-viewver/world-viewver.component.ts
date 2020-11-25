@@ -22,21 +22,27 @@ import { map } from "rxjs/operators";
   styleUrls: ["./world-viewver.component.scss"],
 })
 export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @ViewChild("canvas") public canvas: ElementRef;
   @Input("character") public character: BehaviorSubject<Object> = null;
   @Input("socket") public socket: BehaviorSubject<Socket> = null;
   @Output() public focusCase: EventEmitter<Object[]> = new EventEmitter<
     Object[]
   >();
+  @Output() public moveRequest : EventEmitter<{x : number, y : number}> = new EventEmitter<
+    {x : number, y : number}
+  >();
 
   constructor(
-    public worldService: WorldViewverService,
-    public charaService: CharaService
+    public worldService: WorldViewverService
   ) {}
 
   ngOnInit(): void {}
   ngOnDestroy() {
     this.worldService.destroy();
+  }
+  updateObjs(objs, callback){
+    this.worldService.updateObjs(objs);
   }
 
   ngAfterViewInit() {
@@ -59,25 +65,11 @@ export class WorldViewverComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 300);
   }
 
-  move(x: number, y: number) {
-    if (
-      this.socket.getValue() &&
-      this.character.getValue() &&
-      this.character.getValue()["move"] &&
-      this.character.getValue()["move"] > 0
-    ) {
-      this.socket.getValue().emit("move", x, y, (moverRes) => {
-        if (moverRes && moverRes["chara"]) {
-          this.charaService.updateLocalChara(moverRes["chara"]);
-          // let newChara = this.character.getValue();
-          // newChara["position"]["x"] += x;
-          // newChara["position"]["y"] += y;
-          //this.character.next(newChara);
-          //this.worldService.moveView(x, y);
-        }
-      });
-    }
+  moveEvent(x: number, y: number) {
+    this.moveRequest.emit({x : x, y : y});
   }
+
+
   getFocusedPosition() {
     return this.worldService.focused.pipe(
       map((arrFocus) => {

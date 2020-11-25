@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { pops } from "src/app/shared/animations/pops";
 import { map } from "rxjs/operators";
+import { WorldViewverComponent } from 'src/app/shared/modules/world-viewver/world-viewver.component';
 
 /**
  * Map component
@@ -18,8 +19,9 @@ import { map } from "rxjs/operators";
   animations: [pops],
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  mapPops = "start";
 
+  @ViewChild('worldViewver') worldViewver : WorldViewverComponent ;
+  mapPops = "start";
   focused: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   focused_ground: BehaviorSubject<Object[]> = new BehaviorSubject(null);
 
@@ -40,7 +42,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.socketService.socketObservable.subscribe((socket) => {
       if (socket) {
+
         socket.on("attack", (objs) => {
+
           if (objs["user"]["id"] === this.charaService.actualCharacter["id"]) {
             this.charaService.updateLocalChara(objs["user"]);
           } else if (
@@ -50,6 +54,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         });
         socket.on("counterAttack", (objs) => {
+
           if (
             objs["attacker"]["id"] === this.charaService.actualCharacter["id"]
           ) {
@@ -61,12 +66,16 @@ export class MapComponent implements OnInit, AfterViewInit {
             this.charaService.updateLocalChara(objs["counterAttacker"]);
           }
         });
+
       }
     });
   }
   ngAfterViewInit() {
     setTimeout(() => {
       this.mapPops = "normal";
+
+      console.log('viewver component:', this.worldViewver);
+
     }, 50);
   }
   focus(cases: Object[]) {
@@ -99,6 +108,27 @@ export class MapComponent implements OnInit, AfterViewInit {
     return `assets/images/${target["key"]}_illu.png`;
   }
 
+  moveRequest( values :  { x : number, y : number}){
+
+    if (
+      this.socketService.socket &&
+      this.charaService.character.getValue() &&
+      this.charaService.character.getValue()["move"] &&
+      this.charaService.character.getValue()["move"] > 0
+    ) {
+      this.socketService.socket.emit("move", values.x, values.y, (moverRes) => {
+        if (moverRes && moverRes["chara"]) {
+          this.charaService.updateLocalChara(moverRes["chara"]);
+          // let newChara = this.character.getValue();
+          // newChara["position"]["x"] += x;
+          // newChara["position"]["y"] += y;
+          //this.character.next(newChara);
+          //this.worldService.moveView(x, y);
+        }
+      });
+    }
+
+  }
 
   getFocusedGround() {
     return this.focused.pipe(

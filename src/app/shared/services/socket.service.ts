@@ -11,6 +11,7 @@ import * as io from "socket.io-client";
   providedIn: "root",
 })
 export class SocketService {
+  
   socket: Socket = null;
   socketObservable: BehaviorSubject<Socket> = new BehaviorSubject(null);
 

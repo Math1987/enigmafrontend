@@ -271,7 +271,6 @@ export class WorldViewverService {
   addPositions(objs) {
 
     while (objs.length > 0) {
-      console.log( objs[0]);
       for (let r = 0; r < this.ROUND_MATRIX[this.rayon + 1].length; r++) {
         let round = this.ROUND_MATRIX[this.rayon + 1][r];
         let px = round.x + this.x;
