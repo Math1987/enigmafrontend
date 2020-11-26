@@ -7,6 +7,7 @@
   fxLayoutAlign="center center"
 >
   <form
+    *ngIf="world | async; let world"
     [formGroup]="formGroup"
     (ngSubmit)="create()"
     class="fullscreen"
@@ -93,15 +94,16 @@
     <mat-card-content class="choices-container">
 
       <div class="choice" 
-      *ngFor="let clan of metaDatas['clan']"
+      *ngFor="let clan of world['clans']"
       (click)="selectClan(clan)"
       >
           <img
           [src]="'/assets/images/man.png'"
-          [matTooltip]="clan['name_fr']"
+          [ngStyle]="{'background-color': clan['color']}"
+          [matTooltip]="clan['key_']"
           [class.active]="formGroup.controls.clan.value === clan['key_']"
         />
-        <p>{{clan['name_fr']}}</p>
+        <p>{{clan['key_']}}</p>
       </div>
 
 

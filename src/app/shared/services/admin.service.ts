@@ -76,8 +76,7 @@ export class AdminService {
       key : key,
       value : value
     }).subscribe( res => {
-      console.log(res);
-      callback(true);
+      callback(res);
     }, err => {
       console.log('err', err);
     })

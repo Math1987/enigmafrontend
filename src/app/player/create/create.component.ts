@@ -11,6 +11,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { WorldService } from 'src/app/shared/services/world.service';
 
 @Component({
   selector: "app-create",
@@ -29,15 +30,20 @@ import {
   ],
 })
 export class CreateComponent implements OnInit {
+
+
   formGroup: FormGroup;
   name: string = "";
   religion: string = "godWater";
 
   metaDatasSubject: ReplaySubject<any>;
 
+  world = new ReplaySubject() ;
+
   constructor(
     private charaService: CharaService,
     public metaService: MetaService,
+    public worldService : WorldService,
     public router: Router
   ) {
     this.formGroup = new FormGroup({
@@ -47,6 +53,11 @@ export class CreateComponent implements OnInit {
       religion: new FormControl("godWater"),
       clan: new FormControl("badclan"),
     });
+
+    this.worldService.getFreeWorld().subscribe( world => {
+      console.log('we got a free world here', world );
+      this.world.next(world);
+    })
 
     //this.metaDatasSubject = metaService.metaDatasSubject;
   }

@@ -10,9 +10,20 @@
     <h3>{{ww['name']}}</h3>
     <p>width:{{ww['width']}}</p>
     <p>height:{{ww['height']}}</p>
+    <p>{{ww | json}}</p>
 
+    <br>
+    <h3>clans:</h3>
+    <div *ngFor="let clan of ww['clans']">
+        <br>
+        <p>key: {{clan['key_']}}</p>
+        <p>color :  {{clan['color']}}</p>
+        <p>img : {{clan['img']}}</p>
+    </div>
+    <br>
     <div class="map">  
         <app-world-viewver
+            #viewver
             [socket]="socketService.socketObservable"
             [character]="chara"
             (moveRequest)="move($event)"
@@ -30,7 +41,6 @@
                     <input #input [value]="val['value']">
                     <button (click)="sendUpdate(obj, val['key'], input.value )">send update</button>
                 </div>
-
                 <ng-template #justShow> {{val['value']}}</ng-template>
                 <br>
             </div>
