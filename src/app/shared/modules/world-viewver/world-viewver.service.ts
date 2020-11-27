@@ -200,8 +200,12 @@ export class WorldViewverService {
       }
     });
     this.socket.on("attack", (obj, callback) => {
-      if (obj["user"] && obj["target"]) {
-        this.updateObjs([obj["user"], obj["target"]]);
+      console.log('attack here', obj);
+      if (obj["attacker"] && obj["datas"] && obj['datas']['status'] === "dammages") {
+        this.updateObjs([obj["attacker"], obj["receiver"]]);
+      }else if ( obj["attacker"] && obj["datas"] && obj['datas']['status'] === "kill" ){
+        this.updateObjs([obj["attacker"]]);
+        this.removeObjs([obj["receiver"]]);
       }
     });
     this.socket.on("counterAttack", (obj, callback) => {
@@ -452,6 +456,20 @@ export class WorldViewverService {
       objs.splice(0, 1);
     }
     console.log('update objs', objs);
+    this.draw();
+  }
+  removeObjs(objs: Object[]) {
+    while (objs.length > 0) {
+      for (let arr of this.roundMatrix) {
+        for (let i = arr.length-1 ; i >= 0 ; i--) {
+          if (arr[i]["id"] && arr[i]["id"] === objs[0]["id"]) {
+            arr.splice(i,1);
+          }
+        }
+      }
+      objs.splice(0, 1);
+    }
+    console.log('remove objs', objs);
     this.draw();
   }
 

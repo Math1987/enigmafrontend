@@ -67,6 +67,11 @@ export class AdminService {
     return subscription ;
   }
 
+  pass(worldName){
+    this.http.get(`${environment.apiURL}/admin/pass?world=${worldName}`).subscribe( res => {
+      console.log('pass done', res);
+    })
+  }
 
   updateWorldValue(worldName, obj, key, value, callback){
     console.log('update world value', value);
@@ -80,6 +85,18 @@ export class AdminService {
     }, err => {
       console.log('err', err);
     })
+  }
+  updateConstantValue(worldName, key, value, callback){
+    console.log('update world constant', value);
+    this.http.post(`${environment.apiURL}/admin/updateWorldConstantValue`, {
+      worldName : worldName,
+      key : key,
+      value : value
+    }).subscribe( res => {
+      callback(res);
+    }, err => {
+      console.log('err', err);
+    }) 
   }
 
 }

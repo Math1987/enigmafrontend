@@ -1,7 +1,7 @@
 <h2>Admin Worlds</h2>
 <div *ngIf="worlds | async; let ws">
     <button *ngFor="let world of ws ;"
-    (click)="selectWorld()">
+    (click)="selectWorld(world)">
         {{world['name']}}
     </button>
 </div>
@@ -11,6 +11,20 @@
     <p>width:{{ww['width']}}</p>
     <p>height:{{ww['height']}}</p>
     <p>{{ww | json}}</p>
+
+    <br>
+
+    <input [value]="ww['width']"  #width placeholder="width">
+    <button (click)="test(ww['name'], 'width', width.value)">send update</button>
+    <br>
+    <input [value]="ww['height']"  #height placeholder="height">
+    <button (click)="test(ww['name'], 'height', height.value )">send update</button>
+    <br>
+    <input [value]="ww['squeletons']"  #squeletons placeholder="squeletons">
+    <button (click)="test(ww['name'], 'squeletons', squeletons.value )">send update</button>
+    
+    <br>
+    <button (click)="pass()">pass</button>
 
     <br>
     <h3>clans:</h3>

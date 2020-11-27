@@ -62,6 +62,16 @@ export class AdminWorldComponent implements OnInit {
     }
   }
 
+  pass(){
+    this.adminService.pass(this.world.getValue()['name']);
+  }
+
+  test(worldName, key, value){
+    this.adminService.updateConstantValue(worldName, key, value, res => {
+        console.log('res', res );
+    });
+  }
+
   sendUpdate(obj, key, newValue){
     console.log('send update', this.world.getValue(), obj, key, newValue);
     this.adminService.updateWorldValue(this.world.getValue()['name'], obj, key, newValue, res => {

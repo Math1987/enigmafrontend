@@ -45,12 +45,12 @@ export class MapComponent implements OnInit, AfterViewInit {
 
         socket.on("attack", (objs) => {
 
-          if (objs["user"]["id"] === this.charaService.actualCharacter["id"]) {
-            this.charaService.updateLocalChara(objs["user"]);
+          if (objs["attacker"]["id"] === this.charaService.actualCharacter["id"]) {
+            this.charaService.updateLocalChara(objs["attacker"]);
           } else if (
-            objs["target"]["id"] === this.charaService.actualCharacter["id"]
+            objs["receiver"]["id"] === this.charaService.actualCharacter["id"]
           ) {
-            this.charaService.updateLocalChara(objs["target"]);
+            this.charaService.updateLocalChara(objs["receiver"]);
           }
         });
         socket.on("counterAttack", (objs) => {
