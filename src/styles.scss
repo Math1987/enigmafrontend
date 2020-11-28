@@ -16,6 +16,51 @@ body {
   margin : 0px ;
   padding: 0px ;
   box-sizing: border-box ;
+
+  font-family: 'Sansita Swashed', cursive;
+  font-family: 'Syne Mono', monospace;
+  font-family: 'Syne Tactile', cursive;
+
+}
+
+$title-background : linear-gradient(50deg,  $light-blue, transparent ); ;
+$title-border-radius : 0.5rem ;
+
+h1{
+  color : $yellow-light ;
+  text-align: center;
+  font-size: 3rem ;
+  font-family: 'Cinzel Decorative', cursive;
+  text-shadow: $red 0px 0px 3px;
+
+  background: -webkit-linear-gradient($yellow-light , $yellow-light );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+h2{
+  color:$yellow-light ;
+  padding-bottom: 2rem ;
+  text-align: center;
+}
+
+
+button{
+  background-color: $light-blue ;
+  color : white ;
+  transition: 1s !important ;
+  width : 100% ;
+  margin: 1rem ;
+}
+
+::selection{
+  background-color: $yellow-light;
+  color : red ;
+}
+
+
+form{
+  display: flex ;
+  flex-flow: column nowrap ;
 }
 
 @font-face {
@@ -47,6 +92,7 @@ html {
   background-color: $background;
 }
 
+
 .title {
   background-color: white;
   width: 100%;
@@ -63,32 +109,40 @@ html {
 }
 
 mat-card {
-  border-top: 15px solid mat-color($primary, lighter);
 
+  margin : 0px ;
+  padding : 0px !important ;
+  height: 100% ;
+
+  flex-flow: column nowrap !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+
+  background : linear-gradient(180deg, $yellow-light, $dark-orange   ) !important ;
+  
   mat-card-title {
-    margin-top: -36px !important;
+    width : 100% ;
+    background :linear-gradient(0deg, $orange 10%, transparent ) !important ;
+    border-bottom: 1px solid $yellow-light ;
+    font-size: 3rem ;
+    color : white !important ;
     text-transform: uppercase;
     text-align: center;
 
-    & > span {
-      display: inline-block;
-      width: 150px;
-      background-color: mat-color($primary, darker);
-      padding: 4px 8px;
-      color: mat-color($dark-foreground-palette, text);
-      font-weight: 300;
-      font-size: 12px;
-      @include mat-elevation(2);
-    }
+    padding : 1rem 0px ;
+    margin : 0px ;
+    color : $red ;
+    
   }
 
   mat-card-content {
-    margin-top: 20px;
+    margin : 1.75rem !important ;
+    display : flex !important ;
+    flex-flow: column nowrap !important;
+    flex-direction: column ;
+    justify-content: center ;
+    align-items: center;
   }
 
-  mat-card-title,
-  mat-card-content {
-    display: flex !important;
-    justify-content: center;
-  }
 }

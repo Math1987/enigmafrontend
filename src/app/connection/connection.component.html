@@ -1,42 +1,11 @@
+<h1 [@intro]="introAnimation">Enigma JDR</h1>
+<h2 [@intro]="introAnimation">jeu de rôle en tour par tour</h2>
 
-<div
-  fxLayoutAlign="center start"
-  style="height: 100%"
-  class="connection-main"
+<div [@intro]="introAnimation" class="cards-container">
 
-  [ngClass]="{
-     'connection-main-center' : heightIn(),
-     'connection-main-safe' : !heightIn()
-    }"
-
->
-  <div
-    id = "signContent"
-    fxLayout="column nowrap"
-    fxFlex.lt-sm="100%"
-    fxFlex.gt-xs="400px"
-
-
-    [ngClass.lt-sm]="{
-     'connection-sm' : true,
-     'height-center' : heightIn(),
-     'height-safe' : !heightIn()
-    }"
-
-    [ngClass.gt-xs]="{
-      'connection-normal' : true,
-     'height-center' : heightIn(),
-     'height-safe' : !heightIn()
-    }"
-
-  >
-
-    <app-signin [@intro]="introAnimation" class="signin" ></app-signin>
-    <p></p>
-    <app-signup [@intro]="introAnimation" class="signout" ></app-signup>
-
-  </div>
-
+  <app-signin [@intro]="introAnimation"></app-signin>
+  <p></p>
+  <app-signup [@intro]="introAnimation"></app-signup>
 
 </div>
 

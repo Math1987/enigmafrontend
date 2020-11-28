@@ -22,7 +22,7 @@ import { AnimationService } from "../shared/services/animation.service";
         "start",
         style({
           opacity: 0.0,
-          transform: "scale(0.9,0.9)",
+          transform: "scale(0.98,0.98)",
         })
       ),
       state(

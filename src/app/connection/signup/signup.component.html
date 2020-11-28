@@ -1,9 +1,7 @@
-<mat-card fxFlex="100%">
+<mat-card>
   <mat-card-title><span>Créer un compte</span></mat-card-title>
-  <mat-card-content fxLayout="column nowrap">
+  <mat-card-content>
     <form
-      fxLayout="column nowrap"
-      fxLayoutAlign="center start"
       [formGroup]="formGroup" (ngSubmit)="create()"
     >
       <mat-form-field>
@@ -23,7 +21,7 @@
         <mat-error>les mots de passe ne correspondent pas</mat-error>
       </mat-form-field>
 
-      <button class="buttonForm" type="submitLogin" mat-raised-button color="accent"  [disabled]="!formGroup.valid">créer</button>
+      <button type="submitLogin" mat-raised-button color="primary"  [disabled]="!formGroup.valid">créer</button>
     </form>
   </mat-card-content>
 </mat-card>

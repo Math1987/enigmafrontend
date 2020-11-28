@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export let pops = trigger('pops', [
   state('start', style({
     opacity: 0.0,
-    transform: 'scale(0.9,0.9)'
+    transform: 'scale(0.95,0.95)'
   })),
   state('normal', style({
     opacity: 1.0,

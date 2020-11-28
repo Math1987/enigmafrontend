@@ -1,9 +1,7 @@
-<mat-card fxFlex="100%">
+<mat-card>
   <mat-card-title><span>Connexion</span></mat-card-title>
   <mat-card-content fxLayout="column nowrap">
     <form
-      fxLayout="column nowrap"
-      fxLayoutAlign="center start"
       [formGroup]="formGroup"
       (ngSubmit)="login()"
     >
@@ -27,12 +25,12 @@
         />
         <mat-error> mot de passe invalid</mat-error>
       </mat-form-field>
-      <p (click)="forgotPassword()" class="forgetPassword">mot de passe oublié ?</p>
+      <p style="color: black " (click)="forgotPassword()" class="forgetPassword">mot de passe oublié ?</p>
+      <br>
       <button
         type="submitLogin"
-        class="buttonForm"
         mat-raised-button
-        color="accent"
+        color="primary"
         [disabled]="!formGroup.valid"
       >
         jouer

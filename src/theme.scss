@@ -2,8 +2,19 @@
 
 @include mat-core();
 
+$mainColor : #82ccdd ;
+$yellow-light : #f6b93b ;
+$light-blue : #82ccdd ;
+$red : #eb2f06 ;
+$blue : #1e3799 ;
+$orange : #fa983a ;
+$dark-orange :rgb(75, 47, 20) ;
+$dark-blue : rgb(0,0,50);
+
+
+
 // default theme:
-$primary: mat-palette($mat-brown,400, 200, 600);
+$primary: mat-palette($mat-yellow,900, 900, 900);
 $accent: mat-palette($mat-indigo, 400, 100, 800);
 $warn:    mat-palette($mat-red);
 $theme: mat-light-theme($primary, $accent, $warn);
